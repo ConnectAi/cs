@@ -40,15 +40,25 @@ if (process.argv.length === 3) {
 //	MODULES
 ////////////////
 app.config = require("./config");
-app.Controller = require("./modules/Controller");
-app.Model = require("./modules/Model");
+app.utilities = require("./system/utilities");
+app.Controller = require("./system/Controller");
+app.Model = require("./system/Model");
 
 
 ////////////////
 //	ROUTES
 ////////////////
 app.get("/", function(req, res) {
-	res.send("Hello.");
+	var dad = {
+		first: "Peter",
+		last: "Griffen"
+	};
+
+	var son = Object.assign(dad, {
+		first: "Chris"
+	});
+
+	res.json(son);
 });
 
 
