@@ -38,6 +38,12 @@
 
 
 ////////////////
+//	MODULES
+////////////////
+	app.config = require("./config");
+
+
+////////////////
 //	ROUTES
 ////////////////
 	app.get("/", function(req, res){
