@@ -1,14 +1,15 @@
 {
-	"name": "node-framework",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "nodemon --exec \"node --harmony\" app.js"
-	},
-	"dependencies": {
-		"express": "3.2.6",
-		"ejs": "*",
-		"stylus": "*",
-		"mysql": "~2.0.0-alpha8"
-	}
+  "name": "node-framework",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon --exec \"node --harmony\" app.js"
+  },
+  "dependencies": {
+    "express": "3.2.6",
+    "ejs": "*",
+    "stylus": "*",
+    "mysql": "~2.0.0-alpha8",
+    "traceur": "0.0.3"
+  }
 }
