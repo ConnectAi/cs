@@ -1,6 +1,7 @@
-var controllers = ["User"].map(function(name){
+var controllers = ["user"].reduce(function(controllers, name){
 	var controller = require("./" + name);
-	return controller;
-});
+	controllers[name] = new app.Controller(name, controller);
+	return controllers;
+}, {});
 
 module.exports = controllers;
