@@ -40,9 +40,9 @@ if (process.argv.length === 3) {
 //	MODULES
 ////////////////
 app.config = require("./config");
-app.utilities = require("./system/utilities");
-app.Controller = require("./system/Controller");
-app.Model = require("./system/Model");
+app.utilities = require("./internal/utilities");
+app.Controller = require("./internal/Controller");
+app.Model = require("./internal/Model");
 
 
 ////////////////
