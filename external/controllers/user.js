@@ -5,8 +5,8 @@ var User = {
 		res.json([2, 4, 6, 8]);
 	},
 
-	"post test"(req, res) {
-		res.json([2, 4, 6, 8]);
+	test(req, res) {
+		res.render("user/get");
 	}
 };
 
