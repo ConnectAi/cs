@@ -1,0 +1,11 @@
+☐ create the req/res extended functionality
+☐ inheritance of controllers
+	so that we can have constructors
+☐ read FS for controllers
+☐ create DB class and methods
+☐ create logging functions
+☐ get layouts working
+	☐ multiple layouts
+	☐ overrides
+☐ adapters
+	☐

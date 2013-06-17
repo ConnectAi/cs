@@ -51,16 +51,7 @@
 	app.controllers = require("./external/controllers");
 
 	app.get("/", function(req, res) {
-		var dad = {
-			first: "Peter",
-			last: "Griffen"
-		};
-
-		var son = Object.assign(dad, {
-			first: "Chris"
-		});
-
-		res.json(son);
+		res.json({});
 	});
 
 

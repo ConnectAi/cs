@@ -1,5 +1,3 @@
-// http://traceur-compiler.googlecode.com/git/demo/repl.html
-
 var defaultHandler = function(route) {
 	return function(req, res) {
 		res.render(route);
@@ -15,7 +13,7 @@ class Controller {
 	buildRoutes(routes) {
 		for (var route in routes) {
 			var handler = routes[route];
-			var url = route.match(/^(?:(get|post|put|delete)\s+)?\/?([\w\-]+)$/);
+			var url = route.match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
 
 			if (url){
 				var verb = url[1] || "get";
