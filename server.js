@@ -42,7 +42,7 @@
 ////////////////
 //	MODULES
 ////////////////
-	app.config = require("./config");
+	app.config = require("./internal/config");
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
 	app.Controller = require("./internal/Controller");

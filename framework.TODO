@@ -10,3 +10,7 @@
 ☐ adapters
 ✔ abstract router @done (13-06-17 20:38)
 ✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)
+☐ move controllers/index to /internal
+☐ make external router
+☐ move views to /external
+
