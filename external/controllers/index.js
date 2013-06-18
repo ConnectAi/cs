@@ -1,9 +1,21 @@
+var fs = require("fs");
+
+// Build list of files in this directory (other than this file).
+var files = fs
+	.readdirSync(__dirname)
+	.map(function(file){
+		return file.replace(/\.\w+/, "");
+	})
+	.filter(function(file){
+		return file !== "index";
+	});
+
 // Build controllers object from files in the controllers folder.
-// TODO: Create array from fs.
-var controllers = ["user"].reduce(function(controllers, name) {
-	var Controller = require("./" + name);
-	controllers[name] = new Controller(name);
-	return controllers;
-}, {});
+var controllers = files
+	.reduce(function(controllers, name) {
+		var Controller = require("./" + name);
+		controllers[name] = new Controller(name);
+		return controllers;
+	}, {});
 
 module.exports = controllers;
