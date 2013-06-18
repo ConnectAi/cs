@@ -9,14 +9,15 @@
 ////////////////
 //	GLOBALS
 ////////////////
-	global.app = express();
+	global.app = {};
+	global.server = express();
 	global.log = console.log;
 
 
 ////////////////
 //	SETUP
 ////////////////
-	app.set("port", process.env.PORT || 3000)
+	server.set("port", process.env.PORT || 3000)
 		.set("views", __dirname + "/views")
 		.set("view engine", "ejs")
 		.use(express.favicon())
@@ -25,14 +26,14 @@
 		.use(express.methodOverride())
 		.use(express.cookieParser("Shh! It's a secret."))
 		.use(express.session())
-		.use(app.router)
+		.use(server.router)
 		.use(require("stylus").middleware(__dirname + "/public"))
 		.use(express.static(path.join(__dirname, "public")));
 
 	//	Run in passed-in environment.
 	//	Defaults to "development".
 	if (process.argv.length === 3) {
-		app.set("env", process.argv[2]);
+		server.set("env", process.argv[2]);
 	}
 
 
@@ -58,8 +59,8 @@
 //	START
 ////////////////
 	var start = function() {
-		http.createServer(app).listen(app.get("port"), function() {
-			log("Framework listening at http://%s:%d [%s]", "localhost", app.get("port"), app.get("env"));
+		http.createServer(server).listen(server.get("port"), function() {
+			log("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 	};
 

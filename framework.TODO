@@ -9,4 +9,4 @@
 	☐ overrides
 ☐ adapters
 ✔ abstract router @done (13-06-17 20:38)
-☐ make the global variable a custom object, instead of express' app
+✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)

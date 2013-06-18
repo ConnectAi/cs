@@ -25,7 +25,7 @@ class Controller {
 					handler = defaultHandler(path);
 				}
 
-				app[verb]("/" + path, handler);
+				server[verb]("/" + path, handler);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-app.get("/:controller/:action/:id?", function(req, res, next) {
+server.get("/:controller/:action/:id?", function(req, res, next) {
 	res.locals({
 		req,
 		res,
