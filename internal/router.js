@@ -1,14 +1,11 @@
 server.get("/:controller/:action/:id?", function(req, res, next) {
 	// Cache params (this is necessary).
-	var controller = req.params.controller,
-		action = req.params.action,
-		id = req.params.id;
+	var {controller, action, id} = req.params;
 
 	// Extending req.
 
 	// Extending res.
 	res.view = function(path, data = {}) {
-		log(controller, action);
 		var path = controller + "/" + action;
 		res.render(path, data);
 	};
@@ -21,9 +18,9 @@ server.get("/:controller/:action/:id?", function(req, res, next) {
 		session: req.session,
 		params: req.params,
 
-		controller: controller,
-		action: action,
-		id: id,
+		controller,
+		action,
+		id,
 
 		title: server.get("name") + " | " + action + " " + controller
 	});
