@@ -1,14 +1,9 @@
-// TODO: Extend Controller.
-var User = {
-	get() {},
+class User extends app.Controller {
+	get() {}
 
 	"post list"(req, res) {
 		res.json([2, 4, 6, 8]);
-	},
-
-	test(req, res) {
-		res.render("user/get");
 	}
-};
+}
 
 module.exports = User;
