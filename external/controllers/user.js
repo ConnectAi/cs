@@ -1,5 +1,7 @@
 class User extends app.Controller {
-	get() {}
+	get(req, res) {
+		res.view();
+	}
 
 	"post list"(req, res) {
 		res.json([2, 4, 6, 8]);

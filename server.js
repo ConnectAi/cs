@@ -17,7 +17,9 @@
 ////////////////
 //	SETUP
 ////////////////
-	server.set("port", process.env.PORT || 3000)
+	server
+		.set("port", process.env.PORT || 3000)
+		.set("name", "[framework]")
 		.set("views", __dirname + "/views")
 		.set("view engine", "ejs")
 		.use(express.favicon())
