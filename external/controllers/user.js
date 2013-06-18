@@ -7,13 +7,6 @@ var User = {
 	},
 
 	test(req, res) {
-		res.locals({
-			req,
-			res,
-			session: req.session,
-			params: req.params
-		});
-
 		res.render("user/get");
 	}
 };

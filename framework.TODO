@@ -1,4 +1,4 @@
-☐ create the req/res extended functionality
+✔ create the req/res extended functionality @done (13-06-17 20:34)
 ☐ inheritance of controllers
 	so that we can have constructors
 ☐ read FS for controllers
@@ -8,4 +8,5 @@
 	☐ multiple layouts
 	☐ overrides
 ☐ adapters
-	☐
+☐ abstract router
+☐ make the global variable a custom object, instead of express' app

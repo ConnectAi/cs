@@ -37,22 +37,31 @@
 
 
 ////////////////
+//	ROUTES
+////////////////
+	app.get("/:controller/:action/:id?", function(req, res, next) {
+		res.locals({
+			req,
+			res,
+			session: req.session,
+			params: req.params,
+			controller: req.params.controller,
+			action: req.params.action,
+			id: req.params.id
+		});
+
+		next();
+	});
+
+
+////////////////
 //	MODULES
 ////////////////
 	app.config = require("./config");
 	app.utilities = require("./internal/utilities");
 	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
-
-
-////////////////
-//	ROUTES
-////////////////
 	app.controllers = require("./external/controllers");
-
-	app.get("/", function(req, res) {
-		res.json({});
-	});
 
 
 ////////////////
