@@ -12,12 +12,13 @@
 ✔ abstract router @done (13-06-17 20:38)
 ✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)
 ☐ move controllers/index to /internal
-☐ make external routes override/create routes
+☐ move models/index to /internal
+✔ make external routes override/create routes @done (13-06-19 09:09)
 ✔ move views to /external @done (13-06-18 19:25)
-☐ move route functions from controller to router
+✔ move route functions from controller to router @done (13-06-19 09:09)
 ☐ res.toConsole()
 	☐ res.console.log(), res.console.warn()
 ☐ uppercase models/controllers
 ☐ post issue on google github
 ✔ get index routes working @done (13-06-19 08:54)
-☐ make creating/accessing routes easier
+✔ make creating/accessing routes easier @done (13-06-19 09:08)
