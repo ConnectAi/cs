@@ -1,9 +1,9 @@
-var external = "../external/config";
+var external = require("../external/config");
+var defaults = {};
 
-var db = require(external + "/db"),
-	routes = require(external + "/routes");
-
-module.exports = {
-	db: db[db.adapter],
-	routes
+var config = {
+	db: external.database[external.database.adapter],
+	routes: external.routes
 };
+
+module.exports = config;
