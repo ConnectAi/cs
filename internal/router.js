@@ -1,3 +1,23 @@
+class Route {
+	constructor(controller, action = "index", verb = "get") {
+		this.controller = controller;
+		this.action = action;
+		this.verb = verb;
+	}
+
+	get path() {
+		var path = "/" + this.controller;
+		if(this.action !== "index") {
+			path += "/" + this.action;
+		}
+		return path;
+	}
+
+	get view() {
+		return this.controller + "/" + this.action;
+	}
+}
+
 var defaultHandler = function(path) {
 	return function(req, res) {
 		res.render(path);
@@ -35,18 +55,14 @@ var buildRoutes = function(object) {
 			var url = (""+route).match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
 
 			if (url) {
-				var verb = url[1] || "get";
-				var action = url[2];
-				var path = object.name + "/" + action;
-				var route = "/" + object.name;
-				if (action !== "index") route += "/" + action;
+				var route = new Route(object.name, url[2], url[1]);
 
 				var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
 				if (isEmpty) {
-					handler = defaultHandler(path);
+					handler = defaultHandler(route.view);
 				}
 
-				server[verb](route, handler.bind(object));
+				server[route.verb](route.path, handler.bind(object));
 			}
 		});
 };
