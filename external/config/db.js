@@ -1,9 +1,9 @@
 module.exports = {
 	adapter: "mysql",
-	mysql : {
+	mysql: {
 		host: "localhost",
 		user: "root",
-		pass: "root",
+		password: "root",
 		database: "surrogate"
 	}
 };

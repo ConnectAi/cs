@@ -45,9 +45,9 @@
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
 	app.Controller = require("./internal/Controller");
-	app.Model = require("./internal/Model");
 	app.controllers = require("./external/controllers");
 	app.config = require("./internal/config");
+	app.Model = require("./internal/Model");
 
 
 ////////////////
