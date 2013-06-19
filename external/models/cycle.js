@@ -1,6 +1,7 @@
 class Cycle extends app.Model {
-	getAsdf() {
-		return 6;
+	constructor() {
+		super();
+		this.table = "cycle";
 	}
 }
 

@@ -4,7 +4,9 @@ var mysql = require('mysql');
 db.connect();
 
 class Model {
-	constructor() {}
+	constructor() {
+		this.primaryKey = "id";
+	}
 
 	query(q, fn = ()=>{}) {
 		db.query(q, (err, res) => {
@@ -16,6 +18,10 @@ class Model {
 				fn(res);
 			}
 		});
+	}
+
+	save(data, table = this.table, primaryKey = this.primaryKey) {
+		return {data, table, primaryKey};
 	}
 
 	// db query to get a single value

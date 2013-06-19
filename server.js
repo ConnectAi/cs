@@ -49,6 +49,8 @@
 	app.config = require("./internal/config");
 	app.Model = require("./internal/Model");
 	app.models = require("./external/models");
+	// Lets us access an instance of a model, for convenience.
+	app.db = new app.Model();
 
 
 ////////////////
