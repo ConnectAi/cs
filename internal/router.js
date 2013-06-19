@@ -1,13 +1,23 @@
+var defaultHandler = function(route) {
+	return function(req, res) {
+		res.render(route);
+	};
+};
+
 var getRoutes = function(object) {
 	var routes = [];
 	for (var route in object) {
-		if (typeof object[route] === "function") {
+		var handler = object[route];
+		if (typeof handler === "function") {
 			routes.push(route);
-		} else if (typeof object[route] === "object") {
-			// if (!("action" in object)) {
-			// 	object.action = "index";
-			// }
-			// routes.push(app.controllers[object.controller][action]);
+		} else if (typeof handler === "object") {
+			var {controller, action} = handler;
+
+			if (!("action" in handler)) {
+				handler.action = "index";
+			}
+
+			routes.push(app.controllers[controller][action]);
 		}
 
 	}
@@ -15,11 +25,10 @@ var getRoutes = function(object) {
 };
 
 var buildRoutes = function(object) {
-	// log(object)
 	var routes = getRoutes(object);
 	routes.forEach(function(route) {
 		var handler = object[route];
-		var url = route.match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
+		var url = (""+route).match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
 
 		if (url) {
 			var verb = url[1] || "get";
@@ -66,9 +75,12 @@ server.get("/:controller/:action/:id?", function(req, res, next) {
 	next();
 });
 
-buildRoutes(app.config.routes);
+var start = function() {
+	buildRoutes(app.config.routes);
+};
 
 module.exports = {
 	getRoutes,
-	buildRoutes
+	buildRoutes,
+	start
 };

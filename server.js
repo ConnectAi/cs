@@ -42,12 +42,12 @@
 ////////////////
 //	MODULES
 ////////////////
-	app.config = require("./internal/config");
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
 	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
 	app.controllers = require("./external/controllers");
+	app.config = require("./internal/config");
 
 
 ////////////////
@@ -64,6 +64,8 @@
 		http.createServer(server).listen(server.get("port"), function() {
 			log("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
+
+		app.router.start();
 	};
 
 exports.start = start;
