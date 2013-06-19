@@ -19,3 +19,5 @@
 	☐ res.console.log(), res.console.warn()
 ☐ uppercase models/controllers
 ☐ post issue on google github
+✔ get index routes working @done (13-06-19 08:54)
+☐ make creating/accessing routes easier

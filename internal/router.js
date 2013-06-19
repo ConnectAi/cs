@@ -1,6 +1,6 @@
-var defaultHandler = function(route) {
+var defaultHandler = function(path) {
 	return function(req, res) {
-		res.render(route);
+		res.render(path);
 	};
 };
 
@@ -28,7 +28,7 @@ var buildRoutes = function(object) {
 	var routes = getRoutes(object);
 	routes
 		.filter(function(file){
-			return file !== "index" && file[0] !== "_";
+			return file[0] !== "_";
 		})
 		.forEach(function(route) {
 			var handler = object[route];
@@ -38,13 +38,15 @@ var buildRoutes = function(object) {
 				var verb = url[1] || "get";
 				var action = url[2];
 				var path = object.name + "/" + action;
+				var route = "/" + object.name;
+				if (action !== "index") route += "/" + action;
 
 				var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
 				if (isEmpty) {
 					handler = defaultHandler(path);
 				}
 
-				server[verb]("/" + path, handler.bind(object));
+				server[verb](route, handler.bind(object));
 			}
 		});
 };
