@@ -1,7 +1,7 @@
-var path = "../external/config/";
+var external = "../external/config";
 
-var db = require(path + "db"),
-	routes = require(path + "routes");
+var db = require(external + "/db"),
+	routes = require(external + "/routes");
 
 module.exports = {
 	db: db[db.adapter],
