@@ -44,11 +44,12 @@
 ////////////////
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
-	app.Controller = require("./internal/Controller");
-	app.controllers = require("./external/controllers");
 	app.config = require("./internal/config");
+	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
-	app.models = require("./external/models");
+	var loader = require("./internal/loader");
+	app.controllers = loader.controllers;
+	app.models = loader.models;
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
 

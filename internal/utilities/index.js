@@ -1,3 +1,9 @@
 require("./es6-shim");
 
-module.exports = {};
+var capitalize = function(word) {
+	return word[0].toUpperCase() + word.substr(1);
+};
+
+module.exports = {
+	capitalize
+};

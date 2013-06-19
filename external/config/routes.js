@@ -1,6 +1,6 @@
 var routes = {
 	"/": {
-		controller: "home",
+		controller: "Home",
 		action: "index"
 	}
 };
