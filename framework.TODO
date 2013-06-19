@@ -14,3 +14,6 @@
 ☐ make external routes override/create routes
 ✔ move views to /external @done (13-06-18 19:25)
 ☐ move route functions from controller to router
+☐ res.toConsole()
+	☐ res.console.log(), res.console.warn()
+☐ uppercase models/controllers

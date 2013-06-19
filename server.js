@@ -48,6 +48,7 @@
 	app.controllers = require("./external/controllers");
 	app.config = require("./internal/config");
 	app.Model = require("./internal/Model");
+	app.models = require("./external/models");
 
 
 ////////////////

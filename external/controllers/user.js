@@ -1,18 +1,7 @@
 class User extends app.Controller {
-	_asdf() {
-		return 4;
-	}
-
 	get(req, res) {
-		res.json(this._asdf());
-
-		// var User = app.models.User;
-		// User.queryMulti("select * from ed", function(rows) {
-		// 	res.json(rows);
-		// });
-
-		// User.getSomethingFromSeansHouse()
-
+		var Cycle = app.models.cycle;
+		res.json([2, 4, 6]);
 	}
 
 	"post list"(req, res) {
