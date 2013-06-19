@@ -2,8 +2,9 @@
 ✔ inheritance of controllers @done (13-06-17 22:03)
 	so that we can have constructors
 ✔ read FS for controllers @done (13-06-17 22:20)
-☐ create DB class and methods
-☐ create logging functions
+✔ create DB class and methods @done (13-06-19 01:41)
+☐ app.log
+	appends to .log file
 ☐ get layouts working
 	☐ multiple layouts
 	☐ overrides

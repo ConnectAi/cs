@@ -2,7 +2,7 @@ class User extends app.Controller {
 	get(req, res) {
 		var Cycle = app.models.cycle;
 
-		res.json(app.db.save({}, "hi"));
+		res.json({});
 	}
 
 	"post list"(req, res) {
