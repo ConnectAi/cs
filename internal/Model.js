@@ -6,7 +6,7 @@ db.connect();
 class Model {
 	constructor() {}
 
-	query(q, fn) {
+	query(q, fn = ()=>{}) {
 		db.query(q, (err, res) => {
 			this.log(q); if(err) this.log(err);
 			if(err) {
@@ -50,8 +50,5 @@ class Model {
 		console.error(...arguments);
 	}
 }
-
-var model = new Model();
-model.log("this", "is", "a", "test");
 
 module.exports = Model;
