@@ -20,7 +20,7 @@
 	server
 		.set("port", process.env.PORT || 3000)
 		.set("name", "[framework]")
-		.set("views", __dirname + "/views")
+		.set("views", __dirname + "/external/views")
 		.set("view engine", "ejs")
 		.use(express.favicon())
 		// .use(express.logger('dev'))
