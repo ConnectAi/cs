@@ -26,23 +26,27 @@ var getRoutes = function(object) {
 
 var buildRoutes = function(object) {
 	var routes = getRoutes(object);
-	routes.forEach(function(route) {
-		var handler = object[route];
-		var url = (""+route).match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
+	routes
+		.filter(function(file){
+			return file !== "index" && file[0] !== "_";
+		})
+		.forEach(function(route) {
+			var handler = object[route];
+			var url = (""+route).match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
 
-		if (url) {
-			var verb = url[1] || "get";
-			var action = url[2];
-			var path = object.name + "/" + action;
+			if (url) {
+				var verb = url[1] || "get";
+				var action = url[2];
+				var path = object.name + "/" + action;
 
-			var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
-			if (isEmpty) {
-				handler = defaultHandler(path);
+				var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
+				if (isEmpty) {
+					handler = defaultHandler(path);
+				}
+
+				server[verb]("/" + path, handler.bind(object));
 			}
-
-			server[verb]("/" + path, handler);
-		}
-	});
+		});
 };
 
 server.get("/:controller/:action/:id?", function(req, res, next) {

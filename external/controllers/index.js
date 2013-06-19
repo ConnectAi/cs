@@ -7,7 +7,7 @@ var files = fs
 		return file.replace(/\.\w+/, "");
 	})
 	.filter(function(file){
-		return file !== "index";
+		return file !== "index" && file[0] !== "_";
 	});
 
 // Build controllers object from files in the controllers folder.
