@@ -29,8 +29,8 @@
 		.use(express.cookieParser("Shh! It's a secret."))
 		.use(express.session())
 		.use(server.router)
-		.use(require("stylus").middleware(__dirname + "/public"))
-		.use(express.static(path.join(__dirname, "public")));
+		.use(require("stylus").middleware(__dirname + "/external/public"))
+		.use(express.static(__dirname + "/external/public"));
 
 	//	Run in passed-in environment.
 	//	Defaults to "development".
