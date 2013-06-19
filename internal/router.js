@@ -24,45 +24,40 @@ var defaultHandler = function(path) {
 	};
 };
 
-var getRoutes = function(object) {
+var getRoutes = function(controller) {
 	var routes = [];
-	for (var route in object) {
-		var handler = object[route];
+	for (var route in controller) {
+		var handler = controller[route];
 		if (typeof handler === "function") {
 			routes.push(route);
 		} else if (typeof handler === "object") {
-			var {controller, action} = handler;
-
-			if (!("action" in handler)) {
-				handler.action = "index";
-			}
-
-			routes.push(app.controllers[controller][action]);
+			handler.action = handler.action || "index";
+			routes.push(app.controllers[handler.controller][handler.action]);
 		}
 
 	}
 	return routes;
 };
 
-var buildRoutes = function(object) {
-	var routes = getRoutes(object);
+var buildRoutes = function(controller) {
+	var routes = getRoutes(controller);
 	routes
 		.filter(function(file){
 			return file[0] !== "_";
 		})
 		.forEach(function(route) {
-			var handler = object[route];
+			var handler = controller[route];
 			var url = (""+route).match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
 
 			if (url) {
-				var route = new Route(object.name, url[2], url[1]);
+				var route = new Route(controller.name, url[2], url[1]);
 
 				var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
 				if (isEmpty) {
 					handler = defaultHandler(route.view);
 				}
 
-				server[route.verb](route.path, handler.bind(object));
+				server[route.verb](route.path, handler.bind(controller));
 			}
 		});
 };
