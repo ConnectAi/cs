@@ -6,6 +6,7 @@ db.connect();
 class Model {
 	constructor() {
 		this.primaryKey = "id";
+		this.table = "";
 	}
 
 	query(q, fn = ()=>{}) {
@@ -22,6 +23,17 @@ class Model {
 
 	save(data, table = this.table, primaryKey = this.primaryKey) {
 		return {data, table, primaryKey};
+	}
+
+	find(where, fn, table = this.table) {
+		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
+		this.querySingle(q, function(row) {
+			fn(row);
+		});
+	}
+
+	findById(id, fn, table = this.table) {
+		this.find("id = " + id, fn, table);
 	}
 
 	// db query to get a single value
