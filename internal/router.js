@@ -62,17 +62,18 @@ var buildRoutes = function(controller) {
 		});
 };
 
-server.get("/:controller/:action/:id?", function(req, res, next) {
+server.get("/:controller/:action?/:id?", function(req, res, next) {
 	// Cache params (this is necessary).
 	var {controller, action, id} = req.params;
+	var route = new Route(controller, action, id);
 
 	// Extending req.
 
 	// Extending res.
-	res.view = function(path = (controller + "/" + action), data = {}) {
+	res.view = function(path = route.view, data = {}) {
 		if (typeof path === "object") {
 			data = path;
-			path = (controller + "/" + action);
+			path = route.view;
 		}
 		res.render(path, data);
 	};
