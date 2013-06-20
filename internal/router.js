@@ -13,6 +13,7 @@ class Route {
 		if(this.action !== "index") {
 			path += "/" + this.action;
 		}
+		path += "/:id?";
 		return path;
 	}
 
