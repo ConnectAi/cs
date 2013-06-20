@@ -22,7 +22,6 @@
 		.set("name", "[framework]")
 		.set("views", __dirname + "/external/views")
 		.set("view engine", "html")
-		// .set("view options", { layout: false })
 		.engine("html", require("hbs").__express)
 		.use(express.favicon())
 		// .use(express.logger('dev'))

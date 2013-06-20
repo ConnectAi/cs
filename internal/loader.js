@@ -25,8 +25,28 @@ var loadDir = function(dir) {
 	return resources;
 };
 
-var hbs = require("hbs");
-hbs.registerPartials("external/views/partials");
+var setupHandlebars = function() {
+	var hbs = require("hbs");
+	var blocks = {};
+
+	hbs.registerPartials("external/views/partials");
+
+	hbs.registerHelper("extend", function(name, context) {
+	    var block = blocks[name];
+	    if (!block) {
+	        block = blocks[name] = [];
+	    }
+	    block.push(context.fn(this));
+	});
+
+	hbs.registerHelper("block", function(name) {
+	    var val = (blocks[name] || []).join("\n");
+	    blocks[name] = [];
+	    return val;
+	});
+};
+
+setupHandlebars();
 
 module.exports = {
 	controllers: loadDir("controllers"),
