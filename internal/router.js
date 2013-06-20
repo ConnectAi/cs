@@ -81,6 +81,13 @@ server.get("/:controller/:action?/:id?", function(req, res, next) {
 		res.render(path, data);
 	};
 
+	res.console = function(...args) {
+		var html = "<script>console.log(";
+			html += args.map((arg) => JSON.stringify(arg));
+			html += ");</script>";
+		res.send(html);
+	};
+
 	// Set variables for views.
 	res.locals({
 		req,
