@@ -29,7 +29,8 @@ var setupHandlebars = function() {
 	var hbs = require("hbs");
 	var blocks = {};
 
-	hbs.registerPartials("external/views/partials");
+	hbs.registerPartial("header", fs.readFileSync("external/views/header.html", "utf8"));
+	hbs.registerPartial("footer", fs.readFileSync("external/views/footer.html", "utf8"));
 
 	hbs.registerHelper("extend", function(name, context) {
 	    var block = blocks[name];
