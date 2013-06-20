@@ -13,16 +13,13 @@ var loadDir = function(dir) {
 			return file.replace(/\.\w+/, "");
 		});
 
-	// Build models object from files in the models folder.
-	var resources = files
-		.reduce(function(resources, name) {
-			var Resource = require("../" + path + "/" + name);
-			name = app.utilities.capitalize(name);
-			resources[name] = new Resource(name);
-			return resources;
-		}, {});
-
-	return resources;
+	// Return list of files.
+	return files.map((name) => {
+		return {
+			name,
+			file: require("../" + path + "/" + name)
+		}
+	});
 };
 
 var setupHandlebars = function() {
@@ -132,9 +129,21 @@ var setupHandlebars = function() {
 	});
 };
 
+var reduceWithConstructors = function(resources, resource) {
+	resources[resource.name] = new resource.file(resource.name);
+	return resources;
+};
+
+var reduceToArray = function(resources, name) {
+	var resource = require("../" + path + "/" + name);
+	resources.push(resource);
+	return resources;
+};
+
 setupHandlebars();
 
 module.exports = {
-	controllers: loadDir("controllers"),
-	models: loadDir("models")
+	policies: loadDir("policies").map((resource) => resource.file),
+	controllers: loadDir("controllers").reduce(reduceWithConstructors, {}),
+	models: loadDir("models").reduce(reduceWithConstructors, {})
 };
