@@ -1,5 +1,8 @@
 class Route {
 	constructor(controller, action = "index", verb = "get") {
+		if (/^[A-Z][a-z]/.test(controller)) {
+			controller = controller[0].toLowerCase() + controller.slice(1);
+		}
 		this.controller = controller;
 		this.action = action;
 		this.verb = verb;
@@ -43,7 +46,7 @@ var buildRoutes = function(controller) {
 	var routes = getRoutes(controller);
 	routes
 		.filter(function(file){
-			return file[0] !== "_";
+			return file && file[0] !== "_";
 		})
 		.forEach(function(route) {
 			var handler = controller[route];
