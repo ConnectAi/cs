@@ -69,8 +69,7 @@ server.get("/:controller/:action/:id?", function(req, res, next) {
 	// Extending req.
 
 	// Extending res.
-	res.view = function(path, data = {}) {
-		var path = controller + "/" + action;
+	res.view = function(path = (controller + "/" + action), data = {}) {
 		res.render(path, data);
 	};
 

@@ -25,6 +25,9 @@ var loadDir = function(dir) {
 	return resources;
 };
 
+var hbs = require("hbs");
+hbs.registerPartials("external/views/partials");
+
 module.exports = {
 	controllers: loadDir("controllers"),
 	models: loadDir("models")
