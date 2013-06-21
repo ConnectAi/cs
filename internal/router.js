@@ -51,10 +51,11 @@ var buildRoutes = function(controller) {
 		})
 		.forEach(function(route) {
 			var handler = controller[route];
-			var url = (""+route).match(/^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/);
+			var pattern = /^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/;
 
-			if (url) {
-				var route = new Route(controller.name, url[2], url[1]);
+			if (pattern.test(route)) {
+				var [, verb, action] = (""+route).match(pattern);
+				var route = new Route(controller.name, action, verb);
 
 				var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
 				if (isEmpty) {
