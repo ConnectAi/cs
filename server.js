@@ -65,7 +65,6 @@
 //	BOOTSTRAP
 ////////////////
 	(function(){
-		log(app.policies);
 	})();
 
 

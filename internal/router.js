@@ -83,9 +83,10 @@ server.get("/:controller/:action?/:id?", function(req, res, next) {
 	};
 
 	res.console = function(...args) {
-		var html = "<script>console.log(";
-			html += args.map((arg) => JSON.stringify(arg));
-			html += ");</script>";
+		var html =
+			`<script>console.log(
+				${args.map((arg) => JSON.stringify(arg))}
+			);</script>`;
 		res.send(html);
 	};
 
