@@ -67,50 +67,59 @@ var buildRoutes = function(controller) {
 		});
 };
 
-server.get("/:controller/:action?/:id?", function(req, res, next) {
-	// Cache params (this is necessary).
-	var {controller, action, id} = req.params;
-	var route = new Route(controller, action, id);
-
-	// Extending req.
-
-	// Extending res.
-	res.view = function(path = route.view, data = {}) {
-		if (typeof path === "object") {
-			data = path;
-			path = route.view;
-		}
-		res.render(path, data);
-	};
-
-	res.console = function(...args) {
-		var html =
-			`<script>console.log(
-				${args.map((arg) => JSON.stringify(arg))}
-			);</script>`;
-		res.send(html);
-	};
-
-	// Set variables for views.
-	res.locals({
-		req,
-		res,
-
-		session: req.session,
-		params: req.params,
-
-		controller,
-		action,
-		id,
-
-		title: server.get("name") + " | " + action + " " + controller
+var start = function() {
+	// TODO: This is temporarily lame.
+	app.policies.forEach((policy) => {
+		server.use(policy);
 	});
 
-	next();
-});
+	server.get("/:controller/:action?/:id?", function(req, res, next) {
+		// Cache params (this is necessary).
+		var {controller, action, id} = req.params;
+		var route = new Route(controller, action, id);
 
-var start = function() {
+		// Extending req.
+
+		// Extending res.
+		res.view = function(path = route.view, data = {}) {
+			if (typeof path === "object") {
+				data = path;
+				path = route.view;
+			}
+			res.render(path, data);
+		};
+
+		res.console = function(...args) {
+			var html =
+				`<script>console.log(
+					${args.map((arg) => JSON.stringify(arg))}
+				);</script>`;
+			res.send(html);
+		};
+
+		// Set variables for views.
+		res.locals({
+			req,
+			res,
+
+			session: req.session,
+			params: req.params,
+
+			controller,
+			action,
+			id,
+
+			title: server.get("name") + " | " + action + " " + controller
+		});
+
+		next();
+	});
+
 	buildRoutes(app.config.routes);
+
+	for (var controller in app.controllers) {
+		buildRoutes(app.controllers[controller]);
+	}
 };
 
 module.exports = {

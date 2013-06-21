@@ -1,8 +1,6 @@
 class Controller {
 	constructor(name) {
 		this.name = name;
-
-		app.router.buildRoutes(this);
 	}
 }
 
