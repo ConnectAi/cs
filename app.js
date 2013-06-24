@@ -35,7 +35,7 @@ var defaults = {
 };
 
 var options = {
-	"experimental": true,
+	"experimental": false,
 	"arrayComprehension": true,
 	"arrowFunctions": true,
 	"classes": true,

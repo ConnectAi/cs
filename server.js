@@ -54,7 +54,7 @@
 	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
 	var loader = require("./internal/loader");
-	app.policies = loader.policies;
+	app.services = loader.services;
 	app.controllers = loader.controllers;
 	app.models = loader.models;
 	// Lets us access an instance of a model, for convenience.

@@ -17,7 +17,7 @@ var loadDir = function(dir) {
 	return files.map((name) => {
 		return {
 			name,
-			file: require("../" + path + "/" + name)
+			exports: require("../" + path + "/" + name)
 		}
 	});
 };
@@ -130,20 +130,18 @@ var setupHandlebars = function() {
 };
 
 var reduceWithConstructors = function(resources, resource) {
-	resources[resource.name] = new resource.file(resource.name);
-	return resources;
-};
-
-var reduceToArray = function(resources, name) {
-	var resource = require("../" + path + "/" + name);
-	resources.push(resource);
+	resources[resource.name] = new resource.exports(resource.name);
 	return resources;
 };
 
 setupHandlebars();
 
 module.exports = {
-	policies: loadDir("policies").map((resource) => resource.file),
 	controllers: loadDir("controllers").reduce(reduceWithConstructors, {}),
-	models: loadDir("models").reduce(reduceWithConstructors, {})
+	models: loadDir("models").reduce(reduceWithConstructors, {}),
+
+	services: loadDir("services").reduce((services, service) => {
+		services[service.name] = service.exports;
+		return services;
+	}, {})
 };

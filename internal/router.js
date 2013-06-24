@@ -69,9 +69,9 @@ var buildRoutes = function(controller) {
 
 var start = function() {
 	// TODO: This is temporarily lame.
-	app.policies.forEach((policy) => {
-		server.use(policy);
-	});
+	// app.policies.forEach((policy) => {
+	// 	server.all("*", policy);
+	// });
 
 	server.get("/:controller/:action?/:id?", function(req, res, next) {
 		// Cache params (this is necessary).
@@ -115,7 +115,7 @@ var start = function() {
 		next();
 	});
 
-	buildRoutes(app.config.routes);
+	// buildRoutes(app.config.routes);
 
 	for (var controller in app.controllers) {
 		buildRoutes(app.controllers[controller]);
