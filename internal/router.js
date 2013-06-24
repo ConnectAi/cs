@@ -68,10 +68,10 @@ var buildRoutes = function(controller) {
 };
 
 app.loader.done(function() {
-	// TODO: This is temporarily lame.
-	// app.policies.forEach((policy) => {
-	// 	server.all("*", policy);
-	// });
+	// Make routes for each policy defined in the config.
+	for (var route in app.config.policies) {
+		server.all(route, ...app.config.policies[route]);
+	}
 
 	server.get("/:controller/:action?/:id?", function(req, res, next) {
 		// Cache params (this is necessary).
