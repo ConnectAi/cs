@@ -67,7 +67,7 @@ var buildRoutes = function(controller) {
 		});
 };
 
-var start = function() {
+app.loader.done(function() {
 	// TODO: This is temporarily lame.
 	// app.policies.forEach((policy) => {
 	// 	server.all("*", policy);
@@ -120,10 +120,9 @@ var start = function() {
 	for (var controller in app.controllers) {
 		buildRoutes(app.controllers[controller]);
 	}
-};
+});
 
 module.exports = {
 	getRoutes,
-	buildRoutes,
-	start
+	buildRoutes
 };

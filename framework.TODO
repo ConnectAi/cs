@@ -6,7 +6,7 @@
 ☐ app.log
 	appends to .log file
 ✔ get layouts working @done (13-06-19 23:35)
-  ✔ overrides @done (13-06-19 23:35)
+	✔ overrides @done (13-06-19 23:35)
 ☐ adapters
 ✔ abstract router @done (13-06-17 20:38)
 ✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)
@@ -16,14 +16,14 @@
 ✔ move views to /external @done (13-06-18 19:25)
 ✔ move route functions from controller to router @done (13-06-19 09:09)
 ✔ res.toConsole() @done (13-06-20 00:07)
-  ✔ res.console.log(), res.console.warn() @done (13-06-20 00:07)
+	✔ res.console.log(), res.console.warn() @done (13-06-20 00:07)
 ✔ uppercase models/controllers @done (13-06-19 09:52)
 ☐ post issue on google github
 ✔ get index routes working @done (13-06-19 08:54)
 ✔ make creating/accessing routes easier @done (13-06-19 09:08)
 ☐ authentication process
 ☐ permissions
-☐ better server starting process
+✔ better server starting process @done (13-06-24 19:34)
 ☐ make routes as keys work in controllers
 ☐ policies
 ☐ services

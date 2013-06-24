@@ -136,12 +136,21 @@ var reduceWithConstructors = function(resources, resource) {
 
 setupHandlebars();
 
-module.exports = {
-	controllers: loadDir("controllers").reduce(reduceWithConstructors, {}),
-	models: loadDir("models").reduce(reduceWithConstructors, {}),
+var loaders = {
+	controllers: () => loadDir("controllers").reduce(reduceWithConstructors, {}),
+	models: () => loadDir("models").reduce(reduceWithConstructors, {}),
 
-	services: loadDir("services").reduce((services, service) => {
-		services[service.name] = service.exports;
-		return services;
-	}, {})
+	services: function() {
+		return loadDir("services")
+			.reduce((services, service) => {
+				services[service.name] = service.exports;
+				return services;
+			}, {})
+	}
+};
+
+module.exports = {
+	load: function(what) {
+		return loaders[what]();
+	}
 };

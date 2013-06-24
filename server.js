@@ -3,7 +3,8 @@
 ////////////////
 	var express = require("express"),
 		http = require("http"),
-		path = require("path");
+		path = require("path"),
+		Q = require("q");
 
 
 ////////////////
@@ -48,15 +49,21 @@
 ////////////////
 //	MODULES
 ////////////////
+	var appLoader = Q.defer();
+	var resource = require("./internal/resource");
+
+	app.loader = appLoader.promise;
+	app.services = resource.load("services");
+	app.config = require("./internal/config");
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
-	app.config = require("./internal/config");
+
 	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
-	var loader = require("./internal/loader");
-	app.services = loader.services;
-	app.controllers = loader.controllers;
-	app.models = loader.models;
+
+	app.controllers = resource.load("controllers");
+	app.models = resource.load("models");
+
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
 
@@ -76,7 +83,9 @@
 			log("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 
-		app.router.start();
+		// Now that all the resources have been loaded,
+		// run all code that depends on them.
+		appLoader.resolve();
 	};
 
 exports.start = start;

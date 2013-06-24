@@ -1,7 +1,5 @@
 var mysql = require('mysql');
-	db = mysql.createConnection(app.config.db);
-
-db.connect();
+var db;
 
 class Model {
 	constructor() {
@@ -68,5 +66,10 @@ class Model {
 		console.error(...arguments);
 	}
 }
+
+app.loader.done(function() {
+	db = mysql.createConnection(app.config.db)
+	db.connect();
+});
 
 module.exports = Model;
