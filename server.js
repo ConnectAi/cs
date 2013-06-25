@@ -4,6 +4,7 @@
 	var express = require("express"),
 		http = require("http"),
 		path = require("path"),
+		RedisStore = require("connect-redis")(express),
 		Q = require("q");
 
 
@@ -19,7 +20,6 @@
 //	SETUP
 ////////////////
 	server
-		.set("port", process.env.PORT || 3000)
 		.set("name", "[framework]")
 		.set("views", __dirname + "/external/views")
 		.set("view engine", "html")
@@ -28,8 +28,11 @@
 		// .use(express.logger('dev'))
 		.use(express.bodyParser())
 		.use(express.methodOverride())
-		.use(express.cookieParser("Shh! It's a secret."))
-		.use(express.session())
+		.use(express.cookieParser())
+		.use(express.session({
+			secret: "Shh! It's a secret.",
+			store: new RedisStore()
+		}))
 		.use(require("stylus").middleware({
 			src: __dirname + "/external/assets",
 			dest: __dirname + "/external/public",
@@ -54,7 +57,10 @@
 
 	app.loader = appLoader.promise;
 	app.services = resource.load("services");
+
 	app.config = require("./internal/config");
+	server.set("port", app.config.port || process.env.PORT || 3000);
+
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
 
