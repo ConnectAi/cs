@@ -1,6 +1,5 @@
 var mysql = require('mysql');
 var db;
-var moment = require('moment');
 
 class Model {
 	constructor() {
@@ -52,7 +51,7 @@ class Model {
 		// find any NOW()'s and convert them
 		for(var key in data) {
 			if(data[key] === "NOW()") {
-				data[key] = moment().format("YYYY-MM-DD HH:MM:SS");
+				data[key] = new Date().toISOString();
 			}
 		};
 
@@ -81,7 +80,7 @@ class Model {
 
 		return def.promise;
 	}
-	
+
 	findAll(where, table = this.table) {
 		var def = Q.defer();
 
