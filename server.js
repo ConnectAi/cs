@@ -41,52 +41,14 @@
 		}))
 		.use(express.static(__dirname + "/external/public"))
 		.use(server.router)
-		.use(function(req, res, next) {
-			// Extending req.
-			req.checkFields = function(fields) {
-				if(fields.some(function(field) {
-					if(!(field in req.body)) {
-						res.error(field + " is required");
-						return true;
-					}
-				})) return false;
-				return req.body;
-			};
-
-			// Extending res.
-			res.view = function(path = route.view, data = {}) {
-				if (typeof path === "object") {
-					data = path;
-					path = route.view;
-				}
-				res.render(path, data);
-			};
-
-			res.console = function(...args) {
-				var html =
-					`<script>console.log(
-						${args.map((arg) => JSON.stringify(arg))}
-					);</script>`;
-				res.send(html);
-			};
-
-			res.error = function(msg, code = 400) {
-				res.send(code,msg);
-				res.end();
-			};
-
+		.use(function(req, res) {
 			// Set variables for views.
 			res.locals({
 				req,
 				res,
-
 				session: req.session,
 				params: req.params
 			});
-
-			next();
-		})
-		.use(function(req, res) {
 			res.render("error");
 		});
 
