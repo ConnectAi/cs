@@ -34,7 +34,7 @@
 			store: new RedisStore()
 		}))
 		.use(require("stylus").middleware({
-			src: __dirname + "/external/assets",
+			src: __dirname + "/external/private",
 			dest: __dirname + "/external/public",
 			compress: true,
 			debug: true
@@ -47,7 +47,7 @@
 	if (process.argv.length === 3) {
 		server.set("env", process.argv[2]);
 	}
-	
+
 	// add Q.when
 	Q.when = function(...args) {
 		return Q.all(args);
