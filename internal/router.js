@@ -80,12 +80,12 @@ app.loader.done(function() {
 
 		// Extending req.
 		req.checkFields = function(fields) {
-			fields.some(function(field) {
+			if(fields.some(function(field) {
 				if(!(field in req.body)) {
 					res.error(field + " is required");
 					return true;
 				}
-			});
+			})) return false;
 			return req.body;
 		};
 
