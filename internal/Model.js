@@ -81,6 +81,17 @@ class Model {
 
 		return def.promise;
 	}
+	
+	findAll(where, table = this.table) {
+		var def = Q.defer();
+
+		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
+		this.queryMulti(q, function(row) {
+			def.resolve(row);
+		});
+
+		return def.promise;
+	}
 
 	findById(id, fn = ()=>{}, table = this.table) {
 		return this.find("id = " + id, fn, table);
