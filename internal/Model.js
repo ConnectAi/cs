@@ -71,7 +71,7 @@ class Model {
 		return def.promise;
 	}
 
-	find(where, fn, table = this.table) {
+	find(where, fn = ()=>{}, table = this.table) {
 		var def = Q.defer();
 
 		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
@@ -83,12 +83,12 @@ class Model {
 		return def.promise;
 	}
 
-	findById(id, fn, table = this.table) {
+	findById(id, fn = ()=>{}, table = this.table) {
 		return this.find("id = " + id, fn, table);
 	}
 
 	// db query to get a single value
-	queryValue(q, fn) {
+	queryValue(q, fn = ()=>{}) {
 		var def = Q.defer();
 
 		this.querySingle(q, function(row) {
@@ -103,7 +103,7 @@ class Model {
 	}
 
 	// db query to get a single array
-	querySingle(q, fn) {
+	querySingle(q, fn = ()=>{}) {
 		var def = Q.defer();
 
 		this.query(q, function(rows) {
@@ -115,7 +115,7 @@ class Model {
 	}
 
 	// db query to get many arrays of arrays of arrays of...
-	queryMulti(q, fn) {
+	queryMulti(q, fn = ()=>{}) {
 		var def = Q.defer();
 
 		this.query(q, function(res) {
