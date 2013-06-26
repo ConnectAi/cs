@@ -4,8 +4,7 @@ var defaults = {};
 var config = {
 	port: external.port,
 	db: external.database[external.database.adapter],
-	routes: external.routes,
-	policies: external.policies
+	routes: external.routes
 };
 
 module.exports = config;

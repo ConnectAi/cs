@@ -69,8 +69,8 @@ var buildRoutes = function(controller) {
 
 app.loader.done(function() {
 	// Make routes for each policy defined in the config.
-	for (var route in app.config.policies) {
-		server.all(route, ...app.config.policies[route]);
+	for (var route in app.config.routes) {
+		server.all(route, ...app.config.routes[route]);
 	}
 
 	server.all("/:controller/:action?/:id?", function(req, res, next) {
@@ -105,7 +105,7 @@ app.loader.done(function() {
 				);</script>`;
 			res.send(html);
 		};
-		
+
 		res.error = function(msg, code = 400) {
 			res.send(code,msg);
 			res.end();

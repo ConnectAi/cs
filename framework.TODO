@@ -1,7 +1,7 @@
 ☐ app.log
 	appends to .log file
 ☐ adapters
-☐ make external routes override/create routes
+✔ make external routes override/create routes @done (13-06-26 18:50)
 ☐ post issue on google github
 ☐ permissions
 ☐ make routes as keys work in controllers
