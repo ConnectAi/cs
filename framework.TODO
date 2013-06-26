@@ -39,6 +39,11 @@
 ☐ es6 require methods need to compile everything in es6
 ☐ route re-writing
 ☐ double repo - distribution
+☐ user error page (going to an ID and not found)
+☐ permissions
+☐ 500, 404 errors
+	- error page
+	- error redirect
 ☐ Documentation
 	- hbs partials
 	- hbs block parts
