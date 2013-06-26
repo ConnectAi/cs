@@ -40,7 +40,13 @@
 			debug: true
 		}))
 		.use(express.static(__dirname + "/external/public"))
-		.use(server.router);
+		.use(server.router)
+		.use(function(req, res) {
+			res.render("error", {
+				status: 404,
+				url: req.url
+			});
+		});
 
 	//	Run in passed-in environment.
 	//	Defaults to "development".
