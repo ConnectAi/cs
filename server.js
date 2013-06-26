@@ -47,6 +47,11 @@
 	if (process.argv.length === 3) {
 		server.set("env", process.argv[2]);
 	}
+	
+	// add Q.when
+	Q.when = function(...args) {
+		return Q.all(args);
+	}
 
 
 ////////////////

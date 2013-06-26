@@ -71,12 +71,11 @@ class Model {
 		return def.promise;
 	}
 
-	find(where, fn = ()=>{}, table = this.table) {
+	find(where, table = this.table) {
 		var def = Q.defer();
 
 		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
 		this.querySingle(q, function(row) {
-			fn(row);
 			def.resolve(row);
 		});
 
