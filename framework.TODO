@@ -27,3 +27,39 @@
 ☐ make routes as keys work in controllers
 ✔ policies @done (13-06-24 23:29)
 ✔ services @done (13-06-24 23:29)
+
+☐ handlebars partials abstraction
+☐ Q.when and then
+☐ enviroments && config talking
+☐ ES6 properties
+☐ escape backticks in quasi literals
+☐ clean up resource and router
+☐ policies in congif, allow non array
+☐ node_modules regex error
+☐ es6 require methods need to compile everything in es6
+☐ route re-writing
+☐ double repo - distribution
+☐ Documentation
+	- hbs partials
+	- hbs block parts
+	- custom hbs helpers
+	- classes
+	- models
+	- views
+	- router keys in controllers
+	- controller restful keys
+	- services
+	- policies
+	- db model (including one off methods)
+	- running production vs dev
+	- the app global
+	- custom req and res methods (res.console, res.error)
+	- Q
+	- Redis
+	- ES6
+		- () => {} scope
+		- default params
+		- spread into variables
+		- super
+		- quasi literals
+	
