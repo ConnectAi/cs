@@ -73,12 +73,21 @@ app.loader.done(function() {
 		server.all(route, ...app.config.policies[route]);
 	}
 
-	server.get("/:controller/:action?/:id?", function(req, res, next) {
+	server.all("/:controller/:action?/:id?", function(req, res, next) {
 		// Cache params (this is necessary).
 		var {controller, action, id} = req.params;
 		var route = new Route(controller, action, id);
 
 		// Extending req.
+		req.checkFields = function(fields) {
+			fields.some(function(field) {
+				if(!(field in req.body)) {
+					res.error(field + " is required");
+					return true;
+				}
+			});
+			return req.body;
+		};
 
 		// Extending res.
 		res.view = function(path = route.view, data = {}) {
@@ -95,6 +104,11 @@ app.loader.done(function() {
 					${args.map((arg) => JSON.stringify(arg))}
 				);</script>`;
 			res.send(html);
+		};
+		
+		res.error = function(msg, code = 400) {
+			res.send(code,msg);
+			res.end();
 		};
 
 		// Set variables for views.

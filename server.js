@@ -31,7 +31,7 @@
 		.use(express.cookieParser())
 		.use(express.session({
 			secret: "Shh! It's a secret.",
-			// store: new RedisStore()
+			store: new RedisStore()
 		}))
 		.use(require("stylus").middleware({
 			src: __dirname + "/external/assets",
