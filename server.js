@@ -5,7 +5,6 @@
 		http = require("http"),
 		path = require("path"),
 		RedisStore = require("connect-redis")(express),
-		Q = require("q");
 
 
 ////////////////
@@ -14,6 +13,7 @@
 	global.app = {};
 	global.server = express();
 	global.log = console.log;
+	global.Q = require("q");
 
 
 ////////////////
