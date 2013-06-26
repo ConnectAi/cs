@@ -1,33 +1,10 @@
-✔ create the req/res extended functionality @done (13-06-17 20:34)
-✔ inheritance of controllers @done (13-06-17 22:03)
-	so that we can have constructors
-✔ read FS for controllers @done (13-06-17 22:20)
-✔ create DB class and methods @done (13-06-19 01:41)
 ☐ app.log
 	appends to .log file
-✔ get layouts working @done (13-06-19 23:35)
-	✔ overrides @done (13-06-19 23:35)
 ☐ adapters
-✔ abstract router @done (13-06-17 20:38)
-✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)
-✔ move controllers/index to /internal @done (13-06-19 09:51)
-✔ move models/index to /internal @done (13-06-19 09:52)
 ☐ make external routes override/create routes
-✔ move views to /external @done (13-06-18 19:25)
-✔ move route functions from controller to router @done (13-06-19 09:09)
-✔ res.toConsole() @done (13-06-20 00:07)
-	✔ res.console.log(), res.console.warn() @done (13-06-20 00:07)
-✔ uppercase models/controllers @done (13-06-19 09:52)
 ☐ post issue on google github
-✔ get index routes working @done (13-06-19 08:54)
-✔ make creating/accessing routes easier @done (13-06-19 09:08)
-✔ authentication process @done (13-06-24 23:29)
 ☐ permissions
-✔ better server starting process @done (13-06-24 19:34)
 ☐ make routes as keys work in controllers
-✔ policies @done (13-06-24 23:29)
-✔ services @done (13-06-24 23:29)
-
 ☐ handlebars partials abstraction
 ☐ Q.when and then
 ☐ enviroments && config talking
@@ -42,29 +19,54 @@
 ☐ user error page (going to an ID and not found)
 ☐ permissions
 ☐ 500, 404 errors
-	- error page
-	- error redirect
+	☐ error page
+	☐ error redirect
+	✔ ajax errors @done (13-06-26 18:34)
 ☐ Documentation
-	- hbs partials
-	- hbs block parts
-	- custom hbs helpers
-	- classes
-	- models
-	- views
-	- router keys in controllers
-	- controller restful keys
-	- services
-	- policies
-	- db model (including one off methods)
-	- running production vs dev
-	- the app global
-	- custom req and res methods (res.console, res.error)
-	- Q
-	- Redis
-	- ES6
-		- () => {} scope
-		- default params
-		- spread into variables
-		- super
-		- quasi literals
-	
+	☐ hbs partials
+	☐ hbs block parts
+	☐ custom hbs helpers
+	☐ classes
+	☐ models
+	☐ views
+	☐ router keys in controllers
+	☐ controller restful keys
+	☐ services
+	☐ policies
+	☐ db model (including one off methods)
+	☐ running production vs dev
+	☐ the app global
+	☐ custom req and res methods (res.console, res.error)
+	☐ Q
+	☐ Redis
+	☐ ES6
+		☐ () => {} scope
+		☐ default params
+		☐ spread into variables
+		☐ super
+		☐ quasi literals
+
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ create the req/res extended functionality @done (13-06-17 20:34)
+ ✔ inheritance of controllers @done (13-06-17 22:03)
+ ✔ read FS for controllers @done (13-06-17 22:20)
+ ✔ create DB class and methods @done (13-06-19 01:41)
+ ✔ get layouts working @done (13-06-19 23:35)
+ ✔ overrides @done (13-06-19 23:35)
+ ✔ abstract router @done (13-06-17 20:38)
+ ✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)
+ ✔ move controllers/index to /internal @done (13-06-19 09:51)
+ ✔ move models/index to /internal @done (13-06-19 09:52)
+ ✔ move views to /external @done (13-06-18 19:25)
+ ✔ move route functions from controller to router @done (13-06-19 09:09)
+ ✔ res.toConsole() @done (13-06-20 00:07)
+ ✔ res.console.log(), res.console.warn() @done (13-06-20 00:07)
+ ✔ uppercase models/controllers @done (13-06-19 09:52)
+ ✔ get index routes working @done (13-06-19 08:54)
+ ✔ make creating/accessing routes easier @done (13-06-19 09:08)
+ ✔ authentication process @done (13-06-24 23:29)
+ ✔ better server starting process @done (13-06-24 19:34)
+ ✔ policies @done (13-06-24 23:29)
+ ✔ services @done (13-06-24 23:29)
