@@ -4,7 +4,7 @@
 	var express = require("express"),
 		http = require("http"),
 		path = require("path"),
-		RedisStore = require("connect-redis")(express),
+		RedisStore = require("connect-redis")(express);
 
 
 ////////////////
