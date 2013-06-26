@@ -13,7 +13,6 @@
     "traceur": "0.0.3",
     "hbs": "~2.3.0",
     "q": "~0.9.6",
-    "connect-redis": "~1.4.5",
-    "moment": "~2.0.0"
+    "connect-redis": "~1.4.5"
   }
 }
