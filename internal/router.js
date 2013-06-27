@@ -1,5 +1,5 @@
 class Route {
-	constructor(controller, action = "index", verb = "get") {
+	constructor(controller, action = "index", verb = "all") {
 		if (/^[A-Z][a-z]/.test(controller)) {
 			controller = controller[0].toLowerCase() + controller.slice(1);
 		}
