@@ -26,13 +26,14 @@ class Model {
 	}
 
 	save(data, table = this.table, primaryKey = this.primaryKey) {
+		var def = Q.defer();
 		var q = "";
 		var id = 0;
 
 		// if we have an id, update
 		if("id" in data) {
 
-			q = "UPDATE `"+table+"` SET ? WHERE id = '"+data.id+"'";
+			q = "UPDATE `"+table+"` SET ? WHERE `"+primaryKey+"` = '"+data.id+"'";
 
 			// save this id so we can return it in the deferred
 			id = data.id;
@@ -70,7 +71,7 @@ class Model {
 		return def.promise;
 	}
 
-	find(where, table = this.table) {
+	find(where="", table = this.table) {
 		var def = Q.defer();
 
 		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
@@ -81,7 +82,7 @@ class Model {
 		return def.promise;
 	}
 
-	findAll(where, table = this.table) {
+	findAll(where="", table = this.table) {
 		var def = Q.defer();
 
 		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
@@ -121,6 +122,26 @@ class Model {
 		});
 
 		return def.promise;
+	}
+	
+	bulkInsert(keys=[],values=[],table = this.table) {
+		var def = Q.defer();
+		// handle keys
+		keys = keys.join(",");
+		
+		var sql = "INSERT INTO `"+table+"` ("+keys+") VALUES ?";
+		
+		this.log(sql);
+		
+		db.query(sql,[values], (err,result) => {
+			if (err) {
+				this.log(err);
+				def.reject(err);
+			} else {
+				// otherwise resolve the defered with our stuff
+				def.resolve(result);
+			}
+		}); 
 	}
 
 	// db query to get many arrays of arrays of arrays of...
