@@ -11,15 +11,16 @@
 ☐ ES6 properties
 ☐ escape backticks in quasi literals
 ☐ clean up resource and router
-☐ policies in congif, allow non array
+☐ policies in config, allow non array
 ☐ node_modules regex error
 ☐ es6 require methods need to compile everything in es6
 ☐ route re-writing
 ☐ double repo - distribution
-☐ user error page (going to an ID and not found)
+☐ handle `date` and similar MySQL types with node
 ☐ permissions
 ☐ 500, 404 errors
-	☐ error page
+	✔ error page @done (13-06-26 21:59)
+	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
 	☐ error redirect
 	✔ ajax errors @done (13-06-26 18:34)
 ☐ Documentation
