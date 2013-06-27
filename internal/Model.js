@@ -70,10 +70,10 @@ class Model {
 		return def.promise;
 	}
 
-	find(where, table = this.table) {
+	find(where = "1 = 1", table = this.table) {
 		var def = Q.defer();
 
-		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
+		var q = "SELECT * FROM " + table + " WHERE " + where;
 		this.querySingle(q, function(row) {
 			def.resolve(row);
 		});
@@ -81,10 +81,10 @@ class Model {
 		return def.promise;
 	}
 
-	findAll(where, table = this.table) {
+	findAll(where = "1 = 1", table = this.table) {
 		var def = Q.defer();
 
-		var q = "SELECT * FROM " + table + " WHERE 1 = 1 && " + where;
+		var q = "SELECT * FROM " + table + " WHERE " + where;
 		this.queryMulti(q, function(row) {
 			def.resolve(row);
 		});
