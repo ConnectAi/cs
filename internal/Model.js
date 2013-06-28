@@ -11,7 +11,11 @@ class Model {
 		var def = Q.defer();
 
 		db.query(q, (err, res) => {
-			this.log(q); if(err) this.log(err);
+			this.log(q); 
+			this.log(`
+			`);
+			
+			if(err) this.log(err);
 			if(err) {
 				this.log(err);
 				this.error(err, q);
@@ -31,9 +35,9 @@ class Model {
 		var id = 0;
 
 		// if we have an id, update
-		if("id" in data) {
+		if(primaryKey in data) {
 
-			q = "UPDATE `"+table+"` SET ? WHERE `"+primaryKey+"` = '"+data.id+"'";
+			q = "UPDATE `"+table+"` SET ? WHERE `"+primaryKey+"` = '"+data[primaryKey]+"'";
 
 			// save this id so we can return it in the deferred
 			id = data.id;
@@ -47,7 +51,7 @@ class Model {
 		}
 
 		// log the query
-		this.log(q);
+		//this.log(q);
 
 		// find any NOW()'s and convert them
 		for(var key in data) {
@@ -57,7 +61,7 @@ class Model {
 		};
 
 		// run the query
-		db.query(q, data, (err, result) => {
+		var rt = db.query(q, data, (err, result) => {
 			// if error
 			if (err) {
 				this.log(err);
@@ -67,6 +71,10 @@ class Model {
 				def.resolve(result.insertId || id);
 			}
 		});
+		
+		this.log(rt.sql);
+		this.log(`
+		`);
 
 		return def.promise;
 	}
@@ -101,12 +109,16 @@ class Model {
 	// db query to get a single value
 	queryValue(q, fn = ()=>{}) {
 		var def = Q.defer();
-
 		this.querySingle(q, function(row) {
-			for(var i in row) {
-				fn(row[i]);
-				def.resolve(row[i]);
-				break;
+			if(row) {
+				for(var i in row) {
+					fn(row[i]);
+					def.resolve(row[i]);
+					break;
+				}
+			} else {
+				fn(false);
+				def.resolve(false);
 			}
 		});
 
