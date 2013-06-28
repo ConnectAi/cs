@@ -1,20 +1,19 @@
 class Route {
 	constructor(controller, action = "index", verb = "all") {
+		if (/^[A-Z][a-z]/.test(controller)) {
+			controller = controller[0].toLowerCase() + controller.slice(1);
+		}
 		this.controller = controller;
 		this.action = action;
 		this.verb = verb;
 	}
 
 	get path() {
-		var controller = this.controller;
-		if (/^[A-Z][a-z]/.test(controller)) {
-			controller = controller[0].toLowerCase() + controller.slice(1);
-		}
-		var path = "/" + controller;
+		var path = "/" + this.controller;
 		if(this.action !== "index") {
 			path += "/" + this.action;
+			path += "/:id?";
 		}
-		path += "/:id?";
 		return path;
 	}
 
