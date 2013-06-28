@@ -15,17 +15,27 @@
 	global.log = console.log;
 	global.Q = require("q");
 
+	// add Q.when
+	Q.when = function(...args) {
+		return Q.all(args);
+	};
+
 
 ////////////////
 //	SETUP
 ////////////////
+	//	Run in passed-in environment.
+	//	Defaults to "development".
+	if (process.argv.length === 3) {
+		server.set("env", process.argv[2]);
+	}
+
 	server
 		.set("name", "[framework]")
 		.set("views", __dirname + "/external/views")
 		.set("view engine", "html")
 		.engine("html", require("hbs").__express)
 		.use(express.favicon())
-		// .use(express.logger('dev'))
 		.use(express.bodyParser())
 		.use(express.methodOverride())
 		.use(express.cookieParser())
@@ -52,16 +62,30 @@
 			res.render("error");
 		});
 
-	//	Run in passed-in environment.
-	//	Defaults to "development".
-	if (process.argv.length === 3) {
-		server.set("env", process.argv[2]);
-	}
+	// Environment-specific config.
+	server
+		// All environments.
+		.configure(function() {
+		})
+		// Dev environment.
+		.configure("development", function() {
+			server.use(express.logger("dev"));
 
-	// add Q.when
-	Q.when = function(...args) {
-		return Q.all(args);
-	}
+			// Exit with an error code on any uncaught exception.
+			process.on("uncaughtException", function(err) {
+				console.error("Caught exception:", err.message);
+				console.error(err.stack);
+				process.exit(1);
+			});
+		})
+		// Production environment.
+		.configure("production", function() {
+			// Bury any uncaught exceptions. For the children. (Think of the children...)
+			process.on("uncaughtException", function(err) {
+				console.error("Caught exception:", err.message);
+				console.error(err.stack);
+			});
+		});
 
 
 ////////////////
