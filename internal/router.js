@@ -12,8 +12,8 @@ class Route {
 		var path = "/" + this.controller;
 		if(this.action !== "index") {
 			path += "/" + this.action;
+			path += "/:id?";
 		}
-		path += "/:id?";
 		return path;
 	}
 
