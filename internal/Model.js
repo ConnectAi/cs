@@ -178,9 +178,32 @@ class Model {
 	}
 }
 
+function handleDisconnect(db) {
+  db.on('error', function(err) {
+    if (!err.fatal) {
+      return;
+    }
+
+    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+      //throw err;
+    }
+
+    console.log('Re-connecting lost connection: ' + err.stack);
+
+    db = mysql.createConnection(app.config.db)
+    handleDisconnect(db);
+    db.connect();
+  });
+}
+
 app.loader.done(function() {
 	db = mysql.createConnection(app.config.db)
 	db.connect();
+
+	handleDisconnect(db);
+	
 });
+
+
 
 module.exports = Model;
