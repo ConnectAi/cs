@@ -69,7 +69,9 @@ var options = {
 };
 
 
-traceur.require.makeDefault();
+traceur.require.makeDefault(function(path) {
+	return !/node_modules/.test(path);
+});
 traceur.options = options;
 
 require("./server").start();

@@ -10,10 +10,10 @@
     "express": "3.2.6",
     "stylus": "*",
     "mysql": "~2.0.0-alpha8",
-    "traceur": "0.0.3",
     "hbs": "~2.3.0",
     "q": "~0.9.6",
     "connect-redis": "~1.4.5",
-    "gm": "~1.10.0"
+    "gm": "~1.10.0",
+    "traceur": "git://github.com/google/traceur-compiler.git"
   }
 }
