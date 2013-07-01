@@ -75,5 +75,3 @@ traceur.require.makeDefault(function(path) {
 traceur.options = options;
 
 require("./server").start();
-
-// I had to change node_modules/express/node_modules/connect/lib/utils.js@exports.sign:160
