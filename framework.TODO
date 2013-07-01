@@ -19,6 +19,7 @@
 ☐ handle `date` and similar MySQL types with node
 ☐ permissions
 ☐ handle controller/method without a controller existing
+☐ install app-level npm modules (moment, gm, etc)
 ☐ 500, 404 errors
 	✔ error page @done (13-06-26 21:59)
 	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
