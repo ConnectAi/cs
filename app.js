@@ -35,7 +35,7 @@ var defaults = {
 };
 
 var options = {
-	"experimental": false,
+	"experimental": true,
 	"arrayComprehension": true,
 	"arrowFunctions": true,
 	"classes": true,
@@ -50,7 +50,7 @@ var options = {
 	"generatorComprehension": true,
 	"generators": true,
 	"modules": true,
-	"blockBinding": false,
+	"blockBinding": true,
 	"privateNameSyntax": true,
 	"privateNames": true,
 	"cascadeExpression": false,
@@ -59,7 +59,7 @@ var options = {
 	"propertyOptionalComma": false,
 	"types": false,
 	"debug": false,
-	"sourceMaps": false,
+	"sourceMaps": true,
 	"freeVariableChecker": false,
 	"validate": false,
 	"strictSemicolons": false,
