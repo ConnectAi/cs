@@ -8,7 +8,7 @@
 	☐ properties in classes
 	☐ parse external js files
 		could be from private -> public, just like stylus
-	☐ escape backticks in quasi literals
+	✔ escape backticks in quasi literals @done (13-07-01 18:54)
 ☐ express
 	☐ enviroments && config talking
 	☐ route re-writing
