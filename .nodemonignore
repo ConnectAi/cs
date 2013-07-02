@@ -2,3 +2,4 @@
 external/.git/*
 external/public/*
 external/private/*
+external/views/*
