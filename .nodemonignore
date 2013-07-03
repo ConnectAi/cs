@@ -3,4 +3,5 @@ external/.git/*
 external/public/*
 external/private/*
 external/views/*
+external/uploads/*
 *.log
