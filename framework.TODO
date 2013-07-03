@@ -1,4 +1,4 @@
-☐ app.log
+✔ app.utilities.log @done (13-07-02 23:27)
 	appends to .log file
 ✔ make external routes override/create routes @done (13-06-26 18:50)
 ☐ permissions

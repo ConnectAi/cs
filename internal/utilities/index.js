@@ -1,4 +1,4 @@
-require("./es6-shim");
+var fs = require("fs");
 
 var capitalize = function(word) {
 	return word[0].toUpperCase() + word.substr(1);
@@ -17,8 +17,14 @@ var randomString = function(length = 8) {
     return text;
 };
 
+var log = function(line) {
+	var date = new Date().toISOString().replace("T", " | ").replace(/\.\d*Z$/, "");
+	fs.appendFile("app.log", `${date}:\t${line}\n`);
+};
+
 module.exports = {
 	capitalize,
 	validateEmail,
-	randomString
+	randomString,
+	log
 };
