@@ -11,10 +11,8 @@ class Model {
 		var def = Q.defer();
 
 		db.query(q, (err, res) => {
-			this.log(q); 
-			this.log(`
-			`);
-			
+			this.log(`${q}\n`);
+
 			if(err) this.log(err);
 			if(err) {
 				this.log(err);
@@ -71,10 +69,8 @@ class Model {
 				def.resolve(result.insertId || id);
 			}
 		});
-		
-		this.log(rt.sql);
-		this.log(`
-		`);
+
+		this.log(`${rt.sql}\n`);
 
 		return def.promise;
 	}
@@ -136,16 +132,16 @@ class Model {
 
 		return def.promise;
 	}
-	
+
 	bulkInsert(keys=[],values=[],table = this.table) {
 		var def = Q.defer();
 		// handle keys
 		keys = keys.join(",");
-		
+
 		var sql = "INSERT INTO `"+table+"` ("+keys+") VALUES ?";
-		
+
 		this.log(sql);
-		
+
 		db.query(sql,[values], (err,result) => {
 			if (err) {
 				this.log(err);
@@ -154,7 +150,7 @@ class Model {
 				// otherwise resolve the defered with our stuff
 				def.resolve(result);
 			}
-		}); 
+		});
 	}
 
 	// db query to get many arrays of arrays of arrays of...
@@ -169,8 +165,9 @@ class Model {
 		return def.promise;
 	}
 
-	log() {
-		console.log(...arguments);
+	log(line) {
+		// Apend to the log file.
+		app.utilities.log(line);
 	}
 
 	error() {
@@ -188,7 +185,7 @@ function handleDisconnect(db) {
       //throw err;
     }
 
-    console.log('Re-connecting lost connection: ' + err.stack);
+    log('Re-connecting lost connection: ' + err.stack);
 
     db = mysql.createConnection(app.config.db)
     handleDisconnect(db);
@@ -201,7 +198,7 @@ app.loader.done(function() {
 	db.connect();
 
 	handleDisconnect(db);
-	
+
 });
 
 
