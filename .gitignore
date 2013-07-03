@@ -4,3 +4,4 @@ external/
 *.fuse_hidden*
 
 /dump.rdb
+app.log
