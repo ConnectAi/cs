@@ -17,7 +17,7 @@
 ☐ handlebars partials abstraction
 ☐ Q.when and then
 ☐ clean up resource and router
-☐ policies in config, allow non array
+✔ policies in config, allow non array @done (13-07-04 18:13)
 ☐ double repo
 	☐ distribution
 	☐ install app-level npm modules (moment, gm, etc)
