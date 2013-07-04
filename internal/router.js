@@ -69,8 +69,12 @@ var buildRoutes = function(controller) {
 
 app.loader.done(function() {
 	// Make routes for each policy defined in the config.
+	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
+	var verb, path;
 	for (var route in app.config.routes) {
-		server.all(route, ...app.config.routes[route]);
+		[, verb, path] = (""+route).match(pattern);
+		verb = verb || "all";
+		server[verb](path, ...app.config.routes[route]);
 	}
 
 	server.all("/:controller/:action?/:id?", function(req, res, next) {
