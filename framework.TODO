@@ -16,7 +16,8 @@
 	"{{name}} | {{action}} {{controller}} {{id}}"
 ☐ make routes as keys work in controllers
 	this is primarily to allow for infinitely deep routes
-☐ handlebars partials abstraction
+✔ handlebars partials abstraction @done (13-07-05 17:43)
+	{{include "path/to/partial"}}, where "." would be the current dir of the view and "/" would be /external/views
 ☐ Q.when and then
 ☐ clean up resource and router
 ✔ policies in config, allow non array @done (13-07-04 18:13)
