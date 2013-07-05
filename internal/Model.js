@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var db;
+var pool;
 
 class Model {
 	constructor() {
@@ -7,21 +7,41 @@ class Model {
 		this.table = "";
 	}
 
-	query(q, fn = ()=>{}) {
+	query(q, ...args) {
 		var def = Q.defer();
 
-		db.query(q, (err, res) => {
-			this.log(`${q}\n`);
+		var query = [q];
 
-			if(err) this.log(err);
-			if(err) {
-				this.log(err);
-				this.error(err, q);
-				def.reject(err);
-			} else {
-				fn(res);
-				def.resolve(res);
-			}
+		var fn;
+		if (args.length === 1) {
+			fn = ()=>{};
+		}
+		if (args.length === 2) {
+			fn = args[0];
+		}
+		if (args.length === 3) {
+			query.push(args[0]);
+			fn = args[1];
+		}
+
+		pool.getConnection((err, connection) => {
+			query.push((err, res) => {
+				this.log(`${q}\n`);
+
+				if (err) this.log(err);
+				if (err) {
+					this.log(err);
+					this.error(err, q);
+					def.reject(err);
+				} else {
+					fn(res);
+					def.resolve(res);
+				}
+
+				connection.end();
+			});
+
+			connection.query(...query);
 		});
 
 		return def.promise;
@@ -59,7 +79,7 @@ class Model {
 		};
 
 		// run the query
-		var rt = db.query(q, data, (err, result) => {
+		var rt = this.query(q, data, (err, result) => {
 			// if error
 			if (err) {
 				this.log(err);
@@ -133,7 +153,7 @@ class Model {
 		return def.promise;
 	}
 
-	bulkInsert(keys=[],values=[],table = this.table) {
+	bulkInsert(keys = [], values = [], table = this.table) {
 		var def = Q.defer();
 		// handle keys
 		keys = keys.join(",");
@@ -142,7 +162,7 @@ class Model {
 
 		this.log(sql);
 
-		db.query(sql,[values], (err,result) => {
+		this.query(sql, [values], (err, result) => {
 			if (err) {
 				this.log(err);
 				def.reject(err);
@@ -176,13 +196,13 @@ class Model {
 }
 
 function connect() {
-	db = mysql.createConnection(app.config.db)
-	db.connect();
+	pool = mysql.createPool(app.config.db);
+
 	// connect on error
-	db.on('error', function(err) {
-	    if (!err.fatal) return;
-	    log('Re-connecting lost connection: ' + err.stack);
-	    connect();
+	pool.on('error', function(err) {
+		if (!err.fatal) return;
+		log('Re-connecting lost connection: ' + err.stack);
+		connect();
 	});
 }
 
