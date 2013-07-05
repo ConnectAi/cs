@@ -31,7 +31,6 @@
 	}
 
 	server
-		.set("name", "[framework]")
 		.set("views", __dirname + "/external/views")
 		.set("view engine", "html")
 		.engine("html", require("hbs").__express)
@@ -98,7 +97,6 @@
 	app.services = resource.load("services");
 
 	app.config = require("./internal/config");
-	server.set("port", app.config.port || process.env.PORT || 3000);
 
 	app.utilities = require("./internal/utilities");
 	app.router = require("./internal/router");
