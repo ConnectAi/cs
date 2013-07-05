@@ -4,7 +4,7 @@ var defaults = {};
 var config = {
 	port: external.port,
 	db: external.database[external.database.adapter],
-	routes: external.routes
+	routes: require("../external/routes")
 };
 
 module.exports = config;
