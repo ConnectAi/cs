@@ -12,7 +12,7 @@
 	☐ enviroments && config talking
 	☐ route re-writing
 		as opposed to res.redirect()
-☐ make a config setting for title, which lets them use markdown syntax to set page titles or something
+✔ make a config setting for title, which lets them use markdown syntax to set page titles or something @done (13-07-04 20:37)
 	"{{name}} | {{action}} {{controller}} {{id}}"
 ☐ make routes as keys work in controllers
 	this is primarily to allow for infinitely deep routes

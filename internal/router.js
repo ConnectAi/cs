@@ -128,7 +128,12 @@ app.loader.done(function() {
 			action,
 			id,
 
-			title: server.get("name") + " | " + action + " " + controller
+			title: app.config.title({
+				name: server.get("name"),
+				controller,
+				action,
+				id
+			})
 		});
 
 		next();
