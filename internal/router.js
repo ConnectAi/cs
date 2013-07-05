@@ -112,8 +112,8 @@ app.loader.done(function() {
 			res.send(html);
 		};
 
-		res.error = function(msg, code = 400) {
-			res.send(code,msg);
+		res.error = function(msg = "", code = 400) {
+			res.send(code, msg);
 			res.end();
 		};
 
