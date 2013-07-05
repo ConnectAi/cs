@@ -1,11 +1,16 @@
 var external = require("../external/config");
-var defaults = {};
+external.routes = require("../external/routes");
+
+var defaults = {
+	name: "[name]",
+	port: process.env.PORT || 3000
+};
 
 var config = {
-	name: external.name,
-	port: external.port || process.env.PORT || 3000,
+	name: external.name || defaults.name,
+	port: external.port || defaults.port,
 	db: external.database[external.database.adapter],
-	routes: require("../external/routes")
+	routes: external.routes
 };
 
 server.set("name", config.name);

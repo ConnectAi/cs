@@ -12,6 +12,8 @@
 	☐ enviroments && config talking
 	☐ route re-writing
 		as opposed to res.redirect()
+☐ make a config setting for title, which lets them use markdown syntax to set page titles or something
+	"{{name}} | {{action}} {{controller}} {{id}}"
 ☐ make routes as keys work in controllers
 	this is primarily to allow for infinitely deep routes
 ☐ handlebars partials abstraction
