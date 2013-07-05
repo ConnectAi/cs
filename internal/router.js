@@ -124,6 +124,7 @@ app.loader.done(function() {
 			session: req.session,
 			params: req.params,
 
+			name: server.get("name"),
 			controller,
 			action,
 			id,
