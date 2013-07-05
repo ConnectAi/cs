@@ -119,22 +119,19 @@ app.loader.done(function() {
 
 		// Set variables for views.
 		res.locals({
+			server: {
+				name: server.get("name"),
+				port: server.get("port")
+			},
+
 			req,
 			res,
 			session: req.session,
 			params: req.params,
 
-			name: server.get("name"),
 			controller,
 			action,
-			id,
-
-			title: app.config.title({
-				name: server.get("name"),
-				controller,
-				action,
-				id
-			})
+			id
 		});
 
 		next();
