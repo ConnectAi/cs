@@ -27,7 +27,7 @@ var setupHandlebars = function() {
 		return hbs.compile(contents)(context);
 	});
 
-	hbs.registerHelper("log", function(){
+	hbs.registerHelper("log", function() {
 		var args = Array.prototype.slice.call(arguments);
 		return console.log('LOG:', args.slice(0, -1)) || '';
 	});
@@ -36,7 +36,7 @@ var setupHandlebars = function() {
 	//	{{#iff one}}:  !!one
 	//	{{#iff one two}}:  one === two
 	//	{{#iff one "[operator]" two}}:  one [operator] two
-	hbs.registerHelper('iff', function(){
+	hbs.registerHelper('iff', function() {
 		var args = Array.prototype.slice.call(arguments);
 
 		var	left = args[0],
@@ -111,6 +111,10 @@ var setupHandlebars = function() {
 		if(!operators[operator]){
 			throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
 		}
+	});
+
+	hbs.registerHelper("json", function(what) {
+		return JSON.stringify(what);
 	});
 };
 
