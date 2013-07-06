@@ -1,38 +1,38 @@
 ✔ app.utilities.log @done (13-07-02 23:27)
 	appends to .log file
 ✔ make external routes override/create routes @done (13-06-26 18:50)
+✔ make a config setting for title, which lets them use markdown syntax to set page titles or something @done (13-07-04 20:37)
+	"{{name}} | {{action}} {{controller}} {{id}}"
+✔ handlebars partials abstraction @done (13-07-05 17:43)
+	{{include "path/to/partial"}}, where "." would be the current dir of the view and "/" would be /external/views
+✔ policies in config, allow non array @done (13-07-04 18:13)
+✔ handle `date` and similar MySQL types with node @done (13-07-01 18:48)
 ☐ ES6
 	✔ node_modules regex error @done (13-07-01 18:39)
 	✔ require methods need to compile everything in es6 @done (13-07-01 18:39)
+	✔ escape backticks in quasi literals @done (13-07-01 18:54)
 	☐ properties in classes
 	☐ parse external js files
 		could be from private -> public, just like stylus
-	✔ escape backticks in quasi literals @done (13-07-01 18:54)
 ☐ express
-	☐ enviroments && config talking
+	✔ enviroments && config talking @done (13-07-06 18:40)
 	☐ route re-writing
 		as opposed to res.redirect()
-✔ make a config setting for title, which lets them use markdown syntax to set page titles or something @done (13-07-04 20:37)
-	"{{name}} | {{action}} {{controller}} {{id}}"
 ☐ make routes as keys work in controllers
 	this is primarily to allow for infinitely deep routes
-✔ handlebars partials abstraction @done (13-07-05 17:43)
-	{{include "path/to/partial"}}, where "." would be the current dir of the view and "/" would be /external/views
 ☐ Q.when and then
 ☐ clean up resource and router
-✔ policies in config, allow non array @done (13-07-04 18:13)
 ☐ double repo
 	☐ distribution
 	☐ install app-level npm modules (moment, gm, etc)
-✔ handle `date` and similar MySQL types with node @done (13-07-01 18:48)
 ☐ permissions
 	this probably belongs in Surrogate, not the framework
 ☐ handle controller/method without a controller existing
 ☐ 500, 404 errors
 	✔ error page @done (13-06-26 21:59)
 	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
-	☐ error redirect
 	✔ ajax errors @done (13-06-26 18:34)
+	☐ error redirect
 ☐ future
 	☐ database adapters
 ☐ Documentation
