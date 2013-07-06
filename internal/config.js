@@ -15,9 +15,9 @@ var config = {
 	routes: external.routes
 };
 
-for (var env in external.env) {
+for (let env in external.env) {
 	if (env === config.env) {
-		for (var override in external.env[env]) {
+		for (let override in external.env[env]) {
 			config[override] = external.env[env][override];
 		}
 	}
