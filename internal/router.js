@@ -134,6 +134,14 @@ app.loader.done(function() {
 			id
 		});
 
+		res.locals.exports = {
+			server: res.locals.server,
+			params: req.params,
+			controller,
+			action,
+			id
+		};
+
 		next();
 	});
 
