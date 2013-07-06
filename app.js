@@ -1,39 +1,5 @@
 var traceur = require("traceur/src/node/traceur");
 
-var defaults = {
-	"experimental": false,
-	"arrayComprehension": true,
-	"arrowFunctions": true,
-	"classes": true,
-	"defaultParameters": true,
-	"destructuring": true,
-	"forOf": true,
-	"propertyMethods": true,
-	"propertyNameShorthand": true,
-	"templateLiterals": true,
-	"restParameters": true,
-	"spread": true,
-	"generatorComprehension": true,
-	"generators": true,
-	"modules": true,
-	"blockBinding": false,
-	"privateNameSyntax": false,
-	"privateNames": false,
-	"cascadeExpression": false,
-	"trapMemberLookup": false,
-	"deferredFunctions": false,
-	"propertyOptionalComma": false,
-	"types": false,
-	"debug": false,
-	"sourceMaps": false,
-	"freeVariableChecker": false,
-	"validate": false,
-	"strictSemicolons": false,
-	"unstarredGenerators": false,
-	"ignoreNolint": false,
-	"blockBindings": false
-};
-
 traceur.options.experimental = true;
 traceur.options.arrayComprehension = true;
 traceur.options.arrowFunctions = true;
