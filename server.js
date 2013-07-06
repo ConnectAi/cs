@@ -58,7 +58,12 @@
 				session: req.session,
 				params: req.params
 			});
-			res.render("error");
+
+			if (req.xhr) {
+				res.json("error");
+			} else {
+				res.render("error");
+			}
 		});
 
 	// Environment-specific config.
