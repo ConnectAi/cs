@@ -145,8 +145,6 @@ app.loader.done(function() {
 		next();
 	});
 
-	// buildRoutes(app.config.routes);
-
 	for (var controller in app.controllers) {
 		buildRoutes(app.controllers[controller]);
 	}
