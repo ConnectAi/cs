@@ -24,12 +24,6 @@
 ////////////////
 //	SETUP
 ////////////////
-	//	Run in passed-in environment.
-	//	Defaults to "development".
-	if (process.argv.length === 3) {
-		server.set("env", process.argv[2]);
-	}
-
 	server
 		.set("views", __dirname + "/external/views")
 		.set("view engine", "html")
