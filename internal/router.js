@@ -121,7 +121,8 @@ app.loader.done(function() {
 		res.locals({
 			server: {
 				name: server.get("name"),
-				port: server.get("port")
+				port: server.get("port"),
+				env: server.get("env")
 			},
 
 			req,
