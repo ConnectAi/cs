@@ -48,7 +48,6 @@
 			// Set variables for views.
 			res.locals({
 				req,
-				res,
 				session: req.session,
 				params: req.params
 			});

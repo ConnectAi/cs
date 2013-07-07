@@ -125,9 +125,10 @@ app.loader.done(function() {
 			},
 
 			req,
-			res,
 			session: req.session,
 			params: req.params,
+			query: req.query,
+			body: req.body,
 
 			controller,
 			action,
