@@ -30,7 +30,7 @@ var defaultHandler = function(path) {
 
 var getRoutes = function(controller) {
 	var routes = [];
-	for (var route in controller) {
+	for (let route in controller) {
 		var handler = controller[route];
 		if (typeof handler === "function") {
 			routes.push(route);
@@ -71,7 +71,7 @@ app.loader.done(function() {
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
 	var verb, path, handlers;
-	for (var route in app.config.routes) {
+	for (let route in app.config.routes) {
 		[, verb, path] = (""+route).match(pattern);
 		verb = verb || "all";
 		handlers = app.config.routes[route];
@@ -147,7 +147,7 @@ app.loader.done(function() {
 		next();
 	});
 
-	for (var controller in app.controllers) {
+	for (let controller in app.controllers) {
 		buildRoutes(app.controllers[controller]);
 	}
 });
