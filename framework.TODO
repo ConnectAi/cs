@@ -7,6 +7,12 @@
 	{{include "path/to/partial"}}, where "." would be the current dir of the view and "/" would be /external/views
 ✔ policies in config, allow non array @done (13-07-04 18:13)
 ✔ handle `date` and similar MySQL types with node @done (13-07-01 18:48)
+✔ handle controller/method without a controller existing @done (13-07-07 23:27)
+✔ errors @done (13-07-07 23:27)
+	✔ error page @done (13-06-26 21:59)
+	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
+	✔ ajax errors @done (13-06-26 18:34)
+	✔ error redirect @done (13-07-07 23:27)
 ☐ ES6
 	✔ node_modules regex error @done (13-07-01 18:39)
 	✔ require methods need to compile everything in es6 @done (13-07-01 18:39)
@@ -18,23 +24,18 @@
 	✔ enviroments && config talking @done (13-07-06 18:40)
 	☐ route re-writing
 		as opposed to res.redirect()
-☐ make routes as keys work in controllers
-	this is primarily to allow for infinitely deep routes
+		this exists (res.render()), but should possibly be streamlined
+	☐ make routes as keys work in controllers
+		this is primarily to allow for infinitely deep routes
+	☐ make controller instances before routes.js is parsed, so controller actions can be used within
+	☐ @? reassign controller actions when parsing
+		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 ☐ Q.when and then
-☐ clean up resource and router
 ☐ double repo
-	☐ distribution
 	☐ install app-level npm modules (moment, gm, etc)
-☐ permissions
-	this probably belongs in Surrogate, not the framework
-☐ handle controller/method without a controller existing
-☐ 500, 404 errors
-	✔ error page @done (13-06-26 21:59)
-	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
-	✔ ajax errors @done (13-06-26 18:34)
-	☐ error redirect
+	☐ distribution
 ☐ future
-	☐ database adapters
+	☐ @? database adapters
 ☐ Documentation
 	☐ hbs partials
 	☐ hbs block parts
