@@ -11,7 +11,7 @@
 	✔ node_modules regex error @done (13-07-01 18:39)
 	✔ require methods need to compile everything in es6 @done (13-07-01 18:39)
 	✔ escape backticks in quasi literals @done (13-07-01 18:54)
-	☐ properties in classes
+	✔ properties in classes @done (13-07-07 23:19)
 	☐ parse external js files
 		could be from private -> public, just like stylus
 ☐ express
