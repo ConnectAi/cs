@@ -30,7 +30,7 @@ var defaultHandler = function(path) {
 
 var getRoutes = function(controller) {
 	var routes = [];
-	for (var route in controller) {
+	for (let route in controller) {
 		var handler = controller[route];
 		if (typeof handler === "function") {
 			routes.push(route);
@@ -71,7 +71,7 @@ app.loader.done(function() {
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
 	var verb, path, handlers;
-	for (var route in app.config.routes) {
+	for (let route in app.config.routes) {
 		[, verb, path] = (""+route).match(pattern);
 		verb = verb || "all";
 		handlers = app.config.routes[route];
@@ -112,36 +112,42 @@ app.loader.done(function() {
 			res.send(html);
 		};
 
-		res.error = function(msg, code = 400) {
-			res.send(code,msg);
+		res.error = function(msg = "", code = 400) {
+			res.send(code, msg);
 			res.end();
 		};
 
 		// Set variables for views.
 		res.locals({
+			server: {
+				name: server.get("name"),
+				port: server.get("port"),
+				env: server.get("env")
+			},
+
 			req,
-			res,
 			session: req.session,
 			params: req.params,
+			query: req.query,
+			body: req.body,
 
 			controller,
 			action,
-			id,
-
-			title: app.config.title({
-				name: server.get("name"),
-				controller,
-				action,
-				id
-			})
+			id
 		});
+
+		res.locals.exports = {
+			server: res.locals.server,
+			params: req.params,
+			controller,
+			action,
+			id
+		};
 
 		next();
 	});
 
-	// buildRoutes(app.config.routes);
-
-	for (var controller in app.controllers) {
+	for (let controller in app.controllers) {
 		buildRoutes(app.controllers[controller]);
 	}
 });

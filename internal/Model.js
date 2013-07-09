@@ -2,9 +2,12 @@ var mysql = require('mysql');
 var pool;
 
 class Model {
-	constructor() {
-		this.primaryKey = "id";
-		this.table = "";
+	get table() {
+		return "";
+	}
+
+	get primaryKey() {
+		return "id";
 	}
 
 	query(q, ...args) {

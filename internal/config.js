@@ -1,23 +1,30 @@
-var hbs = require("hbs");
-
 var external = require("../external/config");
 external.routes = require("../external/routes");
 
 var defaults = {
 	name: "[name]",
 	port: process.env.PORT || 3000,
-	title: "{{name}} | {{action}} {{controller}} {{id}}"
+	env: process.env.NODE_ENV || "development"
 };
 
 var config = {
 	name: external.name || defaults.name,
 	port: external.port || defaults.port,
-	title: hbs.compile(external.title || defaults.title),
+	env: (process.argv.length === 3) ? process.argv[2] : defaults.env,
 	db: external.database[external.database.adapter],
 	routes: external.routes
 };
 
+for (let env in external.env) {
+	if (env === config.env) {
+		for (let override in external.env[env]) {
+			config[override] = external.env[env][override];
+		}
+	}
+}
+
 server.set("name", config.name);
 server.set("port", config.port);
+server.set("env", config.env);
 
 module.exports = config;
