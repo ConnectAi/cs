@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+var mysql = require("mysql");
 var pool;
 
 class Model {
@@ -56,7 +56,6 @@ class Model {
 
 		// if we have an id, update
 		if (primaryKey in data) {
-
 			q = "UPDATE `"+table+"` SET ? WHERE `"+primaryKey+"` = '"+data[primaryKey]+"'";
 
 			// save this id so we can return it in the deferred
@@ -64,7 +63,6 @@ class Model {
 
 			// delete the id because we don't need to update our row with it
 			delete data.id;
-
 		// if we dont have an id, insert
 		} else {
 			q = "INSERT INTO `"+table+"` SET ?";
@@ -81,9 +79,10 @@ class Model {
 		};
 
 		// run the query
-		var rt = this.query(q, data, (result) => {
-			def.resolve(result.insertId || id);
-		});
+		var rt = this.query(q, data)
+			.then((result) => {
+				def.resolve(result.insertId || id);
+			});
 
 		this.log(`${rt.sql}\n`);
 
@@ -94,7 +93,8 @@ class Model {
 		var def = Q.defer();
 
 		var q = "SELECT * FROM " + table + " WHERE " + where;
-		this.querySingle(q, function(row) {
+		this.querySingle(q)
+			.then(function(row) {
 			def.resolve(row);
 		});
 
@@ -106,9 +106,10 @@ class Model {
 		var def = Q.defer();
 
 		var q = "SELECT * FROM " + table + " WHERE " + where;
-		this.queryMulti(q, function(row) {
-			def.resolve(row);
-		});
+		this.queryMulti(q)
+			.then(function(row) {
+				def.resolve(row);
+			});
 
 		return def.promise;
 	}
@@ -120,18 +121,20 @@ class Model {
 	// db query to get a single value
 	queryValue(q, fn = ()=>{}) {
 		var def = Q.defer();
-		this.querySingle(q, function(row) {
-			if (row) {
-				for (let i in row) {
-					fn(row[i]);
-					def.resolve(row[i]);
-					break;
+
+		this.querySingle(q)
+			.then(function(row) {
+				if (row) {
+					for (let i in row) {
+						fn(row[i]);
+						def.resolve(row[i]);
+						break;
+					}
+				} else {
+					fn(false);
+					def.resolve(false);
 				}
-			} else {
-				fn(false);
-				def.resolve(false);
-			}
-		});
+			});
 
 		return def.promise;
 	}
@@ -140,16 +143,16 @@ class Model {
 	querySingle(q, fn = ()=>{}) {
 		var def = Q.defer();
 
-		this.query(q, function(rows) {
-			fn(rows[0]);
-			def.resolve(rows[0]);
-		});
+		this.query(q)
+			.then(function(rows) {
+				fn(rows[0]);
+				def.resolve(rows[0]);
+			});
 
 		return def.promise;
 	}
 
 	bulkInsert(keys = [], values = [], table = this.table) {
-		var def = Q.defer();
 		// handle keys
 		keys = keys.join(",");
 
@@ -157,19 +160,18 @@ class Model {
 
 		this.log(sql);
 
-		this.query(sql, [values], (result) => {
-			def.resolve(result);
-		});
+		return this.query(sql, [values]);
 	}
 
 	// db query to get many arrays of arrays of arrays of...
 	queryMulti(q, fn = ()=>{}) {
 		var def = Q.defer();
 
-		this.query(q, function(res) {
-			fn(res);
-			def.resolve(res);
-		});
+		this.query(q)
+			.then(function(res) {
+				fn(res);
+				def.resolve(res);
+			});
 
 		return def.promise;
 	}
