@@ -15,16 +15,10 @@ class Model {
 
 		var query = [q];
 
-		var fn;
 		if (args.length === 0) {
-			fn = ()=>{};
 		}
 		if (args.length === 1) {
-			fn = args[0];
-		}
-		if (args.length === 2) {
 			query.push(args[0]);
-			fn = args[1];
 		}
 
 		pool.getConnection((err, connection) => {
@@ -36,7 +30,6 @@ class Model {
 					this.error(err, q);
 					def.reject(err);
 				} else {
-					fn(res);
 					def.resolve(res);
 				}
 
