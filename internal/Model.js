@@ -189,6 +189,6 @@ function connect() {
 }
 
 // connect when done
-app.loader.done(connect);
+app.loader.then(connect);
 
 module.exports = Model;
