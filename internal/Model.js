@@ -16,13 +16,13 @@ class Model {
 		var query = [q];
 
 		var fn;
-		if (args.length === 1) {
+		if (args.length === 0) {
 			fn = ()=>{};
 		}
-		if (args.length === 2) {
+		if (args.length === 1) {
 			fn = args[0];
 		}
-		if (args.length === 3) {
+		if (args.length === 2) {
 			query.push(args[0]);
 			fn = args[1];
 		}
@@ -56,7 +56,7 @@ class Model {
 		var id = 0;
 
 		// if we have an id, update
-		if(primaryKey in data) {
+		if (primaryKey in data) {
 
 			q = "UPDATE `"+table+"` SET ? WHERE `"+primaryKey+"` = '"+data[primaryKey]+"'";
 
@@ -75,8 +75,8 @@ class Model {
 		//this.log(q);
 
 		// find any NOW()'s and convert them
-		for(var key in data) {
-			if(data[key] === "NOW()") {
+		for (let key in data) {
+			if (data[key] === "NOW()") {
 				data[key] = new Date().toISOString();
 			}
 		};
@@ -129,8 +129,8 @@ class Model {
 	queryValue(q, fn = ()=>{}) {
 		var def = Q.defer();
 		this.querySingle(q, function(row) {
-			if(row) {
-				for(var i in row) {
+			if (row) {
+				for (let i in row) {
 					fn(row[i]);
 					def.resolve(row[i]);
 					break;
