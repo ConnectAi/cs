@@ -83,64 +83,49 @@ class Model {
 	}
 
 	find(where = "1 = 1", table = this.table) {
+		var q = "SELECT * FROM " + table + " WHERE " + where;
+		return this.querySingle(q);
+	}
+
+
+	findAll(where = "1 = 1", table = this.table) {
+		var q = "SELECT * FROM " + table + " WHERE " + where;
+		return this.queryMulti(q);
+	}
+
+	findById(id, table = this.table) {
+		return this.find("id = " + id, table);
+	}
+
+	// db query to get a single value
+	queryValue(q) {
 		var def = Q.defer();
 
-		var q = "SELECT * FROM " + table + " WHERE " + where;
-		this.querySingle(q)
-			.then(function(row) {
-			def.resolve(row);
+		this
+		.querySingle(q)
+		.then(function(row) {
+			if (row) {
+				for (let i in row) {
+					def.resolve(row[i]);
+					break;
+				}
+			} else {
+				def.resolve(false);
+			}
 		});
 
 		return def.promise;
 	}
 
-
-	findAll(where = "1 = 1", table = this.table) {
-		var def = Q.defer();
-
-		var q = "SELECT * FROM " + table + " WHERE " + where;
-		this.queryMulti(q)
-			.then(function(row) {
-				def.resolve(row);
-			});
-
-		return def.promise;
-	}
-
-	findById(id, fn = ()=>{}, table = this.table) {
-		return this.find("id = " + id, fn, table);
-	}
-
-	// db query to get a single value
-	queryValue(q, fn = ()=>{}) {
-		var def = Q.defer();
-
-		this.querySingle(q)
-			.then(function(row) {
-				if (row) {
-					for (let i in row) {
-						fn(row[i]);
-						def.resolve(row[i]);
-						break;
-					}
-				} else {
-					fn(false);
-					def.resolve(false);
-				}
-			});
-
-		return def.promise;
-	}
-
 	// db query to get a single array
-	querySingle(q, fn = ()=>{}) {
+	querySingle(q) {
 		var def = Q.defer();
 
-		this.query(q)
-			.then(function(rows) {
-				fn(rows[0]);
-				def.resolve(rows[0]);
-			});
+		this
+		.query(q)
+		.then(function(rows) {
+			def.resolve(rows[0]);
+		});
 
 		return def.promise;
 	}
@@ -157,16 +142,8 @@ class Model {
 	}
 
 	// db query to get many arrays of arrays of arrays of...
-	queryMulti(q, fn = ()=>{}) {
-		var def = Q.defer();
-
-		this.query(q)
-			.then(function(res) {
-				fn(res);
-				def.resolve(res);
-			});
-
-		return def.promise;
+	queryMulti(q) {
+		return this.query(q);
 	}
 
 	log(line) {
