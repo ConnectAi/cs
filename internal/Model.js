@@ -200,13 +200,6 @@ class Model {
 
 function connect() {
 	pool = mysql.createPool(app.config.db);
-
-	// connect on error
-	pool.on('error', function(err) {
-		if (!err.fatal) return;
-		log('Re-connecting lost connection: ' + err.stack);
-		connect();
-	});
 }
 
 // connect when done
