@@ -31,7 +31,6 @@ class Model {
 			query.push((err, res) => {
 				this.log(`${q}\n`);
 
-				if (err) this.log(err);
 				if (err) {
 					this.log(err);
 					this.error(err, q);
@@ -82,15 +81,8 @@ class Model {
 		};
 
 		// run the query
-		var rt = this.query(q, data, (err, result) => {
-			// if error
-			if (err) {
-				this.log(err);
-				def.reject(err);
-			} else {
-				// otherwise resolve the defered with our stuff
-				def.resolve(result.insertId || id);
-			}
+		var rt = this.query(q, data, (result) => {
+			def.resolve(result.insertId || id);
 		});
 
 		this.log(`${rt.sql}\n`);
@@ -165,14 +157,8 @@ class Model {
 
 		this.log(sql);
 
-		this.query(sql, [values], (err, result) => {
-			if (err) {
-				this.log(err);
-				def.reject(err);
-			} else {
-				// otherwise resolve the defered with our stuff
-				def.resolve(result);
-			}
+		this.query(sql, [values], (result) => {
+			def.resolve(result);
 		});
 	}
 
