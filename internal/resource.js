@@ -1,7 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 
-require("./utilities/helpers")();
+require("./util/helpers")();
 
 var loadDir = function(dir) {
 	var path = "external/" + dir;

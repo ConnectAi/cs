@@ -148,7 +148,7 @@ class Model {
 
 	log(line) {
 		// Apend to the log file.
-		app.utilities.log(line);
+		app.util.log(line);
 	}
 
 	error() {
