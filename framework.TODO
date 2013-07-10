@@ -33,8 +33,7 @@ changes
 	☐ @? make models objects instead of classes
 	☐ @? make controllers objects instead of classes
 enhancements
-	☐ @? swap out Q for when (https://github.com/cujojs/when)
-	☐ @? Q.when and then
+	✔ @? swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 features
 	☐ make a Time class
 		with getters, and a custom toString

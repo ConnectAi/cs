@@ -11,7 +11,7 @@ class Model {
 	}
 
 	query(q, ...args) {
-		var def = Q.defer();
+		var def = when.defer();
 
 		var query = [q];
 
@@ -43,7 +43,7 @@ class Model {
 	}
 
 	save(data, table = this.table, primaryKey = this.primaryKey) {
-		var def = Q.defer();
+		var def = when.defer();
 		var q = "";
 		var id = 0;
 
@@ -99,7 +99,7 @@ class Model {
 
 	// db query to get a single value
 	queryValue(q) {
-		var def = Q.defer();
+		var def = when.defer();
 
 		this
 		.querySingle(q)
@@ -119,7 +119,7 @@ class Model {
 
 	// db query to get a single array
 	querySingle(q) {
-		var def = Q.defer();
+		var def = when.defer();
 
 		this
 		.query(q)

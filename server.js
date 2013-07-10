@@ -13,12 +13,7 @@
 	global.app = {};
 	global.server = express();
 	global.log = console.log;
-	global.Q = require("q");
-
-	// add Q.when
-	Q.when = function(...args) {
-		return Q.all(args);
-	};
+	global.when = require("when");
 
 
 ////////////////
@@ -88,7 +83,7 @@
 ////////////////
 //	MODULES
 ////////////////
-	var appLoader = Q.defer();
+	var appLoader = when.defer();
 	var resource = require("./internal/resource");
 
 	app.loader = appLoader.promise;

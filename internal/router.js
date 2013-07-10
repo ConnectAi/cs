@@ -67,7 +67,7 @@ var buildRoutes = function(controller) {
 		});
 };
 
-app.loader.done(function() {
+app.loader.then(function() {
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
 	var verb, path, handlers;
