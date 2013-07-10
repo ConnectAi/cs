@@ -29,6 +29,12 @@
 	☐ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js
 	☐ @? reassign controller actions when parsing
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
+changes
+	☐ @? make models objects instead of classes
+	☐ @? make controllers objects instead of classes
+enhancements
+	☐ @? swap out Q for when (https://github.com/cujojs/when)
+	☐ @? Q.when and then
 features
 	☐ make a Time class
 		with getters, and a custom toString
@@ -36,7 +42,6 @@ features
 		✔ make the helper, so we don't need partials @done (13-07-05 17:43)
 		☐ make path dynamic, based on leading /
 		☐ assume .html unless specified
-☐ @? Q.when and then
 ☐ double repo
 	☐ @1 install app-level npm modules (moment, gm, etc)
 	☐ @5 distribution
