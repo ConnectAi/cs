@@ -3,8 +3,6 @@
 ✔ make external routes override/create routes @done (13-06-26 18:50)
 ✔ make a config setting for title, which lets them use markdown syntax to set page titles or something @done (13-07-04 20:37)
 	"{{name}} | {{action}} {{controller}} {{id}}"
-✔ handlebars partials abstraction @done (13-07-05 17:43)
-	{{include "path/to/partial"}}, where "." would be the current dir of the view and "/" would be /external/views
 ✔ policies in config, allow non array @done (13-07-04 18:13)
 ✔ handle `date` and similar MySQL types with node @done (13-07-01 18:48)
 ✔ handle controller/method without a controller existing @done (13-07-07 23:27)
@@ -31,6 +29,13 @@
 	☐ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js
 	☐ @? reassign controller actions when parsing
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
+features
+	☐ make a Time class
+		with getters, and a custom toString
+	☐ {{{include}}}
+		✔ make the helper, so we don't need partials @done (13-07-05 17:43)
+		☐ make path dynamic, based on leading /
+		☐ assume .html unless specified
 ☐ @? Q.when and then
 ☐ double repo
 	☐ @1 install app-level npm modules (moment, gm, etc)
