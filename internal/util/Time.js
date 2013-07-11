@@ -8,7 +8,7 @@ class Time {
 		if (input < 10) {
 			return "0" + input;
 		}
-		return "" + input;
+		return ""+input;
 	}
 
 	get year() {
@@ -36,7 +36,7 @@ class Time {
 	}
 
 	get years() {
-		return this.pad(this.year);
+		return ""+this.year;
 	}
 
 	get months() {
@@ -57,6 +57,34 @@ class Time {
 
 	get seconds() {
 		return this.pad(this.second);
+	}
+
+	get time() {
+		return `${this.hours}:${this.hours}:${this.seconds}`;
+	}
+
+	get date() {
+		return `${this.years}-${this.months}-${this.days}`;
+	}
+
+	// Poor man's date/time format.
+	format(format) {
+		var translation = {
+			Y: "years",
+			M: "months",
+			D: "days",
+			h: "hours",
+			m: "minutes",
+			s: "seconds"
+		};
+
+		return ["Y", "M", "D", "h", "m", "s"].reduce((time, unit) => {
+			return time.replace(unit, this[translation[unit]]);
+		}, format);
+	}
+
+	toString() {
+		return `${this.date} ${this.time}`;
 	}
 };
 

@@ -92,6 +92,7 @@
 	app.config = require("./internal/config");
 
 	app.util = require("./internal/util");
+	global.Time = app.util.Time;
 	app.router = require("./internal/router");
 
 	app.Controller = require("./internal/Controller");
