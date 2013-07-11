@@ -106,16 +106,11 @@
 
 
 ////////////////
-//	BOOTSTRAP
-////////////////
-	(function(){
-	})();
-
-
-////////////////
 //	START
 ////////////////
 	var start = function() {
+		require("./external/bootstrap");
+
 		http.createServer(server).listen(server.get("port"), function() {
 			log("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
