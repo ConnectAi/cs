@@ -1,3 +1,4 @@
+require("source-map-support").install();
 var traceur = require("traceur/src/node/traceur");
 
 traceur.options.arrayComprehension = true;
