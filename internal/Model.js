@@ -22,21 +22,27 @@ class Model {
 		}
 
 		pool.getConnection((err, connection) => {
-			query.push((err, res) => {
-				this.log(`${q}\n`);
+			if (err) {
+				this.log(err);
+				this.error(err, q);
+				def.reject(err);
+			} else {
+				query.push((err, res) => {
+					this.log(`${q}\n`);
 
-				if (err) {
-					this.log(err);
-					this.error(err, q);
-					def.reject(err);
-				} else {
-					def.resolve(res);
-				}
+					if (err) {
+						this.log(err);
+						this.error(err, q);
+						def.reject(err);
+					} else {
+						def.resolve(res);
+					}
 
-				connection.end();
-			});
+					connection.end();
+				});
 
-			connection.query(...query);
+				connection.query(...query);
+			}
 		});
 
 		return def.promise;
