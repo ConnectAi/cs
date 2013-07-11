@@ -11,9 +11,10 @@ var config = {
 	name: external.name || defaults.name,
 	port: external.port || defaults.port,
 	env: (process.argv.length === 3) ? process.argv[2] : defaults.env,
-	db: external.database[external.database.adapter],
+	db: external.db[external.db.adapter],
 	routes: external.routes
 };
+
 
 for (let env in external.env) {
 	if (env === config.env) {
