@@ -19,7 +19,7 @@ var randomString = function(length = 8) {
 };
 
 var log = function(line) {
-	var date = new Date().toISOString().replace("T", " | ").replace(/\.\d*Z$/, "");
+	var date = new Time().format("Y-M-D | h:m:s");
 	fs.appendFile("app.log", `${date}:\t${line}\n`);
 };
 
