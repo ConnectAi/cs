@@ -93,7 +93,6 @@ class Model {
 		return this.querySingle(q);
 	}
 
-
 	findAll(where = "1 = 1", table = this.table) {
 		var q = "SELECT * FROM " + table + " WHERE " + where;
 		return this.queryMulti(q);

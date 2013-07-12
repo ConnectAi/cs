@@ -30,12 +30,11 @@
 	☐ @? reassign controller actions when parsing
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 changes
-	☐ @? make models objects instead of classes
 	☐ @? make controllers objects instead of classes
 enhancements
-	✔ @? swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
+	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 features
-	☐ make a Time class
+	✔ make a Time class @done (13-07-11 22:52)
 		with getters, and a custom toString
 	☐ {{{include}}}
 		✔ make the helper, so we don't need partials @done (13-07-05 17:43)
