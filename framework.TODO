@@ -38,8 +38,9 @@ features
 		with getters, and a custom toString
 	☐ {{{include}}}
 		✔ make the helper, so we don't need partials @done (13-07-05 17:43)
-		☐ make path dynamic, based on leading /
-		☐ assume .html unless specified
+		✔ assume .html unless specified @done (13-07-11 23:09)
+		☐ @? make path dynamic, based on leading /
+			after thinking on this for a bit, I don't think it's possible
 ☐ double repo
 	☐ @1 install app-level npm modules (moment, gm, etc)
 	☐ @5 distribution
