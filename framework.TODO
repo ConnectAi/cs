@@ -36,7 +36,7 @@ enhancements
 features
 	✔ make a Time class @done (13-07-11 22:52)
 		with getters, and a custom toString
-	☐ {{{include}}}
+	✔ {{{include}}} @done (13-07-11 23:17)
 		✔ make the helper, so we don't need partials @done (13-07-05 17:43)
 		✔ assume .html unless specified @done (13-07-11 23:09)
 		☐ @? make path dynamic, based on leading /
