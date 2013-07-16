@@ -30,6 +30,7 @@ var setupHandlebars = function() {
 
 	hbs.registerHelper("log", function() {
 		var args = Array.prototype.slice.call(arguments);
+		if (args.length <= 1) args.unshift(this);
 		return console.log('LOG:', args.slice(0, -1)) || '';
 	});
 
