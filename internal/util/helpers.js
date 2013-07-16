@@ -79,6 +79,7 @@ var setupHandlebars = function() {
 			"^<=$": function(l, r){ return l <= r; },
 			"^>=$": function(l, r){ return l >= r; },
 			"^typeof$": function(l, r){ return typeof l == r; },
+			"^isArray$": function(l, r){ return Array.isArray(l); },
 			"^IN$|^E$": function(l, r){
 				var isPresent = false;
 				if(typeof r === 'object'){
