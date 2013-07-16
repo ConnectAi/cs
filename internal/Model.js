@@ -49,7 +49,6 @@ class Model {
 	}
 
 	save(data, table = this.table, primaryKey = this.primaryKey) {
-		var def = when.defer();
 		var q = "";
 		var id = 0;
 
@@ -78,14 +77,10 @@ class Model {
 		};
 
 		// run the query
-		var rt = this.query(q, data)
+		return this.query(q, data)
 			.then((result) => {
-				def.resolve(result.insertId || id);
+				return result.insertId || id;
 			});
-
-		this.log(`${rt.sql}\n`);
-
-		return def.promise;
 	}
 
 	find(where = "1 = 1", table = this.table) {
