@@ -1,4 +1,5 @@
 .git/*
+*/.git
 external/.git/*
 external/public/*
 external/private/*
