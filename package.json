@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app",
-    "debug": "nodemon app.js"
+    "run": "node app",
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "express": "3.2.6",
