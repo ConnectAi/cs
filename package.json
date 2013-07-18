@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js",
-    "debug": "nodemon --exec \"node --harmony\" app.js"
+    "start": "node app",
+    "debug": "nodemon app.js"
   },
   "dependencies": {
     "express": "3.2.6",
@@ -12,7 +12,6 @@
     "mysql": "~2.0.0-alpha8",
     "hbs": "~2.3.0",
     "connect-redis": "~1.4.5",
-    "gm": "~1.10.0",
     "traceur": "git://github.com/google/traceur-compiler.git#1750019",
     "when": "~2.2.1",
     "source-map-support": "~0.1.8"
