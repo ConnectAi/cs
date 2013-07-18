@@ -41,9 +41,9 @@ features
 		✔ assume .html unless specified @done (13-07-11 23:09)
 		☐ @? make path dynamic, based on leading /
 			after thinking on this for a bit, I don't think it's possible
-☐ double repo
-	☐ @1 install app-level npm modules (moment, gm, etc)
-	☐ @5 distribution
+✔ double repo @done (13-07-18 00:23)
+	✔ @1 install app-level npm modules (moment, gm, etc) @done (13-07-18 00:23)
+	✔ @5 distribution @done (13-07-18 00:23)
 ☐ future
 	☐ @? database adapters
 ☐ Documentation
