@@ -33,6 +33,11 @@ changes
 	☐ @? make controllers objects instead of classes
 enhancements
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
+	prod
+		☐ concat/minify scripts and styles
+		☐ gzip resources
+		☐ compress images
+		☐ far-future expires headers
 features
 	✔ make a Time class @done (13-07-11 22:52)
 		with getters, and a custom toString
@@ -43,9 +48,10 @@ features
 			after thinking on this for a bit, I don't think it's possible
 	☐ app.util.loader(dir, [whitelist-regex])
 		we'll make it convention to use this in routes.js to get the services dir
-✔ double repo @done (13-07-18 00:23)
+☐ double repo
 	✔ @1 install app-level npm modules (moment, gm, etc) @done (13-07-18 00:23)
 	✔ @5 distribution @done (13-07-18 00:23)
+	☐ experiment with making cornerstone an npm module
 ☐ future
 	☐ @? database adapters
 ☐ Documentation
