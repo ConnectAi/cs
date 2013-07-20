@@ -101,6 +101,10 @@ app.loader.then(function() {
 				data = path;
 				path = route.view;
 			}
+			
+			// for debugging
+			res.locals.exports.debug = data;
+			
 			res.render(path, data);
 		};
 
