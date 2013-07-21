@@ -17,6 +17,31 @@
 
 
 ////////////////
+//	MODULES
+////////////////
+	var appLoader = when.defer();
+	var resource = require("./internal/resource");
+
+	app.loader = appLoader.promise;
+	app.services = resource.load("services");
+	app.controllers = resource.load("controllers");
+
+	app.config = require("./internal/config");
+
+	app.util = require("./internal/util");
+	global.Time = app.util.Time;
+	app.router = require("./internal/router");
+
+	app.Controller = require("./internal/Controller");
+	app.Model = require("./internal/Model");
+
+	app.models = resource.load("models");
+
+	// Lets us access an instance of a model, for convenience.
+	app.db = new app.Model();
+
+
+////////////////
 //	SETUP
 ////////////////
 	server
@@ -59,6 +84,7 @@
 	server
 		// All environments.
 		.configure(function() {
+			log(server.get("env"))
 		})
 		// Dev environment.
 		.configure("development", function() {
@@ -87,31 +113,6 @@
 				console.error(err.stack);
 			});
 		});
-
-
-////////////////
-//	MODULES
-////////////////
-	var appLoader = when.defer();
-	var resource = require("./internal/resource");
-
-	app.loader = appLoader.promise;
-	app.services = resource.load("services");
-	app.controllers = resource.load("controllers");
-
-	app.config = require("./internal/config");
-
-	app.util = require("./internal/util");
-	global.Time = app.util.Time;
-	app.router = require("./internal/router");
-
-	app.Controller = require("./internal/Controller");
-	app.Model = require("./internal/Model");
-
-	app.models = resource.load("models");
-
-	// Lets us access an instance of a model, for convenience.
-	app.db = new app.Model();
 
 
 ////////////////
