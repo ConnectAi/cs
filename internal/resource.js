@@ -31,7 +31,12 @@ var reduceWithConstructors = function(resources, resource) {
 };
 
 var loaders = {
-	controllers: () => loadDir("controllers").reduce(reduceWithConstructors, {}),
+	controllers: () => loadDir("controllers")
+		.reduce((services, service) => {
+			services[service.name] = service.exports;
+			services[service.name].name = service.name;
+			return services;
+		}, {}),
 	models: () => loadDir("models").reduce(reduceWithConstructors, {}),
 
 	services: function() {

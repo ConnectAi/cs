@@ -1,7 +1,3 @@
-class Controller {
-	constructor(name) {
-		this.name = name;
-	}
-}
+var Controller = {};
 
 module.exports = Controller;

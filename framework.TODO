@@ -30,7 +30,7 @@
 	☐ @? reassign controller actions when parsing
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 changes
-	☐ @? make controllers objects instead of classes
+	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
 enhancements
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 	prod
