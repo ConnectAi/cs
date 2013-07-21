@@ -26,7 +26,7 @@
 		this exists (res.render()), but should possibly be streamlined
 	☐ @? make routes as keys work in controllers
 		this is primarily to allow for infinitely deep routes
-	☐ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js
+	✔ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js @done (13-07-21 13:22)
 	☐ @? reassign controller actions when parsing
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 changes

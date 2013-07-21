@@ -96,6 +96,7 @@
 
 	app.loader = appLoader.promise;
 	app.services = resource.load("services");
+	app.controllers = resource.load("controllers");
 
 	app.config = require("./internal/config");
 
@@ -106,7 +107,6 @@
 	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
 
-	app.controllers = resource.load("controllers");
 	app.models = resource.load("models");
 
 	// Lets us access an instance of a model, for convenience.
