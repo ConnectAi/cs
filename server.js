@@ -23,6 +23,7 @@
 		.set("views", __dirname + "/external/views")
 		.set("view engine", "html")
 		.engine("html", require("hbs").__express)
+		.use(express.compress())
 		.use(express.favicon())
 		.use(express.bodyParser())
 		.use(express.methodOverride())

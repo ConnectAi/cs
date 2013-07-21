@@ -35,7 +35,7 @@ enhancements
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 	prod
 		☐ concat/minify scripts and styles
-		☐ gzip resources
+		✔ gzip resources @done (13-07-21 13:42)
 		☐ compress images
 		☐ far-future expires headers
 features
