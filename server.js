@@ -63,7 +63,23 @@
 			compress: true,
 			debug: true
 		}))
-		.use(express.static(__dirname + "/external/public"))
+		// Setup static resources, and optional caching.
+		.configure(function() {
+			// If in production, cache the static resources.
+			if (server.get("env") === "production") {
+				server.use(express.static(__dirname + "/external/public", {
+					maxAge: 100 * 60 * 60 * 24    // one day
+				}));
+			// If in development, disable cache.
+			} else if (server.get("env") === "development") {
+				server.use(express.static(__dirname + "/external/public", {
+					maxAge: 0
+				}))
+			// Otherwise use the default cache settings.
+			} else {
+				server.use(express.static(__dirname + "/external/public"))
+			}
+		})
 		.use(server.router)
 		.use(function(req, res) {
 			// Set variables for views.
@@ -84,7 +100,6 @@
 	server
 		// All environments.
 		.configure(function() {
-			log(server.get("env"))
 		})
 		// Dev environment.
 		.configure("development", function() {
