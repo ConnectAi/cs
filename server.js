@@ -66,7 +66,7 @@
 
 			// Log all the things.
 			server.use(express.logger("dev"));
-			console.setLevel("DEBUG");
+			console.setLevel(console.LEVELS.DEBUG);
 
 			// Exit with an error code on any uncaught exception.
 			process.on("uncaughtException", function(err) {
@@ -78,7 +78,7 @@
 		// Production environment.
 		.configure("production", function() {
 			// Log some of the things.
-			console.setLevel("WARN");
+			console.setLevel(console.LEVELS.WARN);
 
 			// Bury any uncaught exceptions. For the children. (Think of the children...)
 			process.on("uncaughtException", function(err) {
