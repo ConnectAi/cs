@@ -14,6 +14,7 @@
     "connect-redis": "~1.4.5",
     "traceur": "git://github.com/google/traceur-compiler.git#1750019",
     "when": "~2.2.1",
-    "source-map-support": "~0.1.8"
+    "source-map-support": "~0.1.8",
+    "consoleplusplus": "~1.1.0"
   }
 }

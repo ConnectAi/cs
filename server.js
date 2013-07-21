@@ -61,6 +61,10 @@
 		})
 		// Dev environment.
 		.configure("development", function() {
+			// Make the console pretty.
+			require("consoleplusplus");
+
+			// Log all the things.
 			server.use(express.logger("dev"));
 
 			// Exit with an error code on any uncaught exception.
@@ -112,7 +116,7 @@
 		require("./external/bootstrap");
 
 		http.createServer(server).listen(server.get("port"), function() {
-			log("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
+			console.info("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 
 		// Now that all the resources have been loaded,
