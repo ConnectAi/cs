@@ -23,6 +23,8 @@ var log = function(line) {
 	fs.appendFile("app.log", `${date}:\t${line}\n`);
 };
 
+require("./helpers")();
+
 module.exports = {
 	capitalize,
 	validateEmail,
