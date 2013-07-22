@@ -5,6 +5,8 @@
 		http = require("http"),
 		path = require("path"),
 		RedisStore = require("connect-redis")(express);
+	// Make the console pretty.
+	require("consoleplusplus");
 
 
 ////////////////
@@ -111,9 +113,6 @@
 		})
 		// Dev environment.
 		.configure("development", function() {
-			// Make the console pretty.
-			require("consoleplusplus");
-
 			// Log all the things.
 			server.use(express.logger("dev"));
 			console.setLevel(console.LEVELS.DEBUG);
