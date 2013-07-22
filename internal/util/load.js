@@ -1,6 +1,6 @@
 var path = require("path");
 
-var load = function(dir, whitelist = /^([\w][\w\-_. ]*)\.js$/) {
+var dirSync = function(dir, whitelist = /^([\w][\w\-_. ]*)\.js$/) {
 	var path = path.resolve("external/" + dir);
 
 	var filter;
@@ -32,4 +32,6 @@ var load = function(dir, whitelist = /^([\w][\w\-_. ]*)\.js$/) {
 		}, {});
 };
 
-module.exports = load;
+module.exports = {
+	dirSync
+};
