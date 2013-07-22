@@ -28,5 +28,6 @@ module.exports = {
 	validateEmail,
 	randomString,
 	log,
-	Time
+	Time,
+	load: require("./load")
 };
