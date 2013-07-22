@@ -37,15 +37,7 @@ var loaders = {
 			services[service.name].name = service.name;
 			return services;
 		}, {}),
-	models: () => loadDir("models").reduce(reduceWithConstructors, {}),
-
-	services: function() {
-		return loadDir("services")
-			.reduce((services, service) => {
-				services[service.name] = service.exports;
-				return services;
-			}, {})
-	}
+	models: () => loadDir("models").reduce(reduceWithConstructors, {})
 };
 
 module.exports = {

@@ -1,7 +1,8 @@
+var fs = require("fs");
 var path = require("path");
 
 var dirSync = function(dir, whitelist = /^([\w][\w\-_. ]*)\.js$/) {
-	var path = path.resolve("external/" + dir);
+	var filepath = path.resolve("external/" + dir);
 
 	var filter;
 	// Filter can either be a function, regex, or an array of filenames.
@@ -21,13 +22,13 @@ var dirSync = function(dir, whitelist = /^([\w][\w\-_. ]*)\.js$/) {
 
 	// Build list of files in this directory.
 	return fs
-		.readdirSync(path)
+		.readdirSync(filepath)
 		.filter(filter)
 		.map(function(file){
 			return file.replace(/\.\w+/, "");
 		})
 		.reduce((files, file) => {
-			files[file] = require("../" + path + "/" + file)
+			files[file] = require(filepath + "/" + file)
 			return files;
 		}, {});
 };

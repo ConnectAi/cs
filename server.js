@@ -21,14 +21,14 @@
 ////////////////
 	var appLoader = when.defer();
 	var resource = require("./internal/resource");
+	app.util = require("./internal/util");
 
 	app.loader = appLoader.promise;
-	app.services = resource.load("services");
+	app.services = app.util.load.dirSync("services");
 	app.controllers = resource.load("controllers");
 
 	app.config = require("./internal/config");
 
-	app.util = require("./internal/util");
 	global.Time = app.util.Time;
 	app.router = require("./internal/router");
 
