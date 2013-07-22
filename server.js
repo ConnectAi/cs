@@ -20,7 +20,7 @@
 //	MODULES
 ////////////////
 	var appLoader = when.defer();
-	var resource = require("./internal/resource");
+
 	app.util = require("./internal/util");
 
 	app.loader = appLoader.promise;
@@ -40,7 +40,11 @@
 	app.Controller = require("./internal/Controller");
 	app.Model = require("./internal/Model");
 
-	app.models = resource.load("models");
+	app.models = app.util.loader.dirSync("models", {reduce: false})
+		.reduce(function(files, file) {
+			files[file.name] = new file.exports(file.name);
+			return files;
+		}, {});
 
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
