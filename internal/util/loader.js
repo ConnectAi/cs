@@ -19,6 +19,8 @@ var dirSync = function(dir, options = {}) {
 		filter = (file) => {
 			return !!~options.whitelist.indexOf(file);
 		};
+	} else if (typeof options.whitelist === "boolean") {
+		filter = () => options.whitelist;
 	} else {
 		filter = () => true;
 	}
