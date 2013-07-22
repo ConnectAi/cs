@@ -25,7 +25,12 @@
 
 	app.loader = appLoader.promise;
 	app.services = app.util.loader.dirSync("services");
-	app.controllers = resource.load("controllers");
+	app.controllers = app.util.loader.dirSync("controllers", {reduce: false})
+		.reduce((files, file) => {
+			files[file.name] = file.exports;
+			files[file.name].name = file.name;
+			return files;
+		}, {});
 
 	app.config = require("./internal/config");
 
