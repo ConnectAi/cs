@@ -24,7 +24,7 @@
 	app.util = require("./internal/util");
 
 	app.loader = appLoader.promise;
-	app.services = app.util.load.dirSync("services");
+	app.services = app.util.loader.dirSync("services");
 	app.controllers = resource.load("controllers");
 
 	app.config = require("./internal/config");

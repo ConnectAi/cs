@@ -29,5 +29,5 @@ module.exports = {
 	randomString,
 	log,
 	Time,
-	load: require("./load")
+	loader: require("./loader")
 };
