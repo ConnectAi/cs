@@ -24,7 +24,6 @@
 	app.util = require("./internal/util");
 
 	app.loader = appLoader.promise;
-	app.services = app.util.loader.dirSync("services");
 	app.controllers = app.util.loader.dirSync("controllers", {reduce: false})
 		.reduce((files, file) => {
 			files[file.name] = file.exports;

@@ -46,7 +46,7 @@ features
 		✔ assume .html unless specified @done (13-07-11 23:09)
 		☐ @? make path dynamic, based on leading /
 			after thinking on this for a bit, I don't think it's possible
-	☐ app.util.loader(dir, [whitelist-regex])
+	✔ app.util.loader(dir, [whitelist-regex]) @done (13-07-21 22:48)
 		we'll make it convention to use this in routes.js to get the services dir
 ☐ double repo
 	✔ @1 install app-level npm modules (moment, gm, etc) @done (13-07-18 00:23)
