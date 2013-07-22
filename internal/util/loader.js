@@ -31,12 +31,18 @@ var dirSync = function(dir, options = {}) {
 		.filter(filter)
 		.map(function(file){
 			return file.replace(/\.\w+$/, "");
+		})
+		.map((name) => {
+			return {
+				name,
+				exports: require(filepath + "/" + name)
+			}
 		});
 
 	if (options.reduce) {
 		files = files
 			.reduce((files, file) => {
-				files[file] = require(filepath + "/" + file)
+				files[file.name] = file.exports
 				return files;
 			}, {});
 	}
