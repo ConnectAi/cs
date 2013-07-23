@@ -38,6 +38,7 @@ enhancements
 		✔ gzip resources @done (13-07-21 13:42)
 		☐ compress images
 		✔ far-future expires headers @done (13-07-21 15:23)
+		☐ cache busters
 features
 	✔ make a Time class @done (13-07-11 22:52)
 		with getters, and a custom toString
