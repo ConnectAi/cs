@@ -28,7 +28,7 @@ class Model {
 				def.reject(err);
 			} else {
 				query.push((err, res) => {
-					this.log(`${q}\n`);
+					this.log(`${"sql" in q ? q.sql : q}\n`);
 
 					if (err) {
 						this.log(err);
