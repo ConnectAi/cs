@@ -96,10 +96,18 @@ app.loader.then(function() {
 		};
 
 		// Extending res.
-		res.view = function(path = route.view, data = {}) {
+		res.view = function(path = route.view, data = {}, expose = {}) {
+			// If a path is not passed,
+			// use the default path for the controller action.
 			if (typeof path === "object") {
+				expose = data;
 				data = path;
 				path = route.view;
+			}
+
+			// Expose data to browser.
+			for (let item in expose) {
+				res.locals.public[item] = expose[item];
 			}
 
 			// for debugging
