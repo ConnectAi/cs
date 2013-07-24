@@ -103,7 +103,7 @@ app.loader.then(function() {
 			}
 
 			// for debugging
-			res.locals.exports.debug = data;
+			res.locals.public.debug = data;
 
 			res.render(path, data);
 		};
@@ -140,7 +140,7 @@ app.loader.then(function() {
 			id
 		});
 
-		res.locals.exports = {
+		res.locals.public = {
 			server: res.locals.server,
 			params: req.params,
 			controller,
