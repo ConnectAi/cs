@@ -29,6 +29,8 @@
 	✔ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js @done (13-07-21 13:22)
 	☐ @? reassign controller actions when parsing
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
+	☐ make routes case-insensitive
+		I want to say "POST /action"
 changes
 	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
 enhancements
