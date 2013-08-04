@@ -75,15 +75,15 @@ class Time {
 
 	// Standards.
 		get iso() {
-			return this.@date.toISOString().reaplace(/Z.*$/, "");
+			return this.@date.toISOString().replace(/Z.*$/, "");
 		}
 
 		get isoDate() {
-			return `${this.years}-${this.months}-${this.days}`;
+			return this.iso.replace(/T.*$/, "");
 		}
 
 		get isoTime() {
-			return `${this.hours}:${this.hours}:${this.seconds}`;
+			return this.iso.replace(/^.*T/, "");
 		}
 };
 
