@@ -1,3 +1,5 @@
+var dateformat = require("dateformat");
+
 private @date;
 class Time {
 	constructor(date = new Date()) {
@@ -67,20 +69,8 @@ class Time {
 		return `${this.years}-${this.months}-${this.days}`;
 	}
 
-	// Poor man's date/time format.
-	format(format) {
-		var translation = {
-			Y: "years",
-			M: "months",
-			D: "days",
-			h: "hours",
-			m: "minutes",
-			s: "seconds"
-		};
-
-		return ["Y", "M", "D", "h", "m", "s"].reduce((time, unit) => {
-			return time.replace(unit, this[translation[unit]]);
-		}, format);
+	format(...args) {
+		return dateformat(this.@date, ...args);
 	}
 
 	toString() {
