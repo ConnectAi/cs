@@ -78,4 +78,6 @@ class Time {
 	}
 };
 
+Time.format = dateformat;
+
 module.exports = Time;
