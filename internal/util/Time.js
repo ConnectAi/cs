@@ -3,7 +3,7 @@ var dateformat = require("dateformat");
 private @date;
 class Time {
 	constructor(date = new Date()) {
-		this.@date = date;
+		this.@date = new Date(date);
 	}
 
 	toString() {
