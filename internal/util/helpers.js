@@ -33,7 +33,32 @@ var setupHandlebars = function() {
 		if (args.length <= 1) args.unshift(this);
 		return console.log('LOG:', args.slice(0, -1)) || '';
 	});
-
+	
+	hbs.registerHelper('inArray', function() {
+		var args = Array.prototype.slice.call(arguments);
+		var needle = args[0];
+		var haystack = args[1];
+		var key = args[2];
+		var options = args[3];
+		
+		// make an array out of an object if key was passed
+		var _haystack = [];
+		if(key) {
+			for(var i in haystack) {
+				_haystack.push( haystack[i][key] );
+			}
+			haystack = _haystack;
+		} else {
+			options = args[2];
+		}
+		
+		if(!!~haystack.indexOf(needle)) {
+			return options.fn(this);
+		} else {
+			return options.inverse(this);
+		}
+	});
+	
 	//	Handlebars Equality helper.
 	//	{{#iff one}}:  !!one
 	//	{{#iff one two}}:  one === two
