@@ -35,6 +35,9 @@ changes
 	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
 enhancements
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
+	☐ make models defined in such a way that they can benefit from inheritance
+		for example {ED, GC, IP} should be able to inherit from User
+	☐? possibly controllers as well ^^^^^
 	prod
 		☐ concat/minify scripts and styles
 		✔ gzip resources @done (13-07-21 13:42)
