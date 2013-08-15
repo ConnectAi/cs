@@ -47,7 +47,12 @@ class Model {
 
 		return def.promise;
 	}
-
+	
+	"delete"(where = "", table = this.table) {
+		var q = `DELETE FROM \`${table}\` WHERE ${where}`;
+		return this.query(q);
+	}
+	
 	save(data, table = this.table, primaryKey = this.primaryKey) {
 		var q = "";
 		var id = 0;
