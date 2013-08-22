@@ -28,8 +28,6 @@ class Model {
 				def.reject(err);
 			} else {
 				query.push((err, res) => {
-					this.log(`${"sql" in q ? q.sql : q}\n`);
-
 					if (err) {
 						this.log(err);
 						this.error(err, q);
@@ -41,18 +39,19 @@ class Model {
 					connection.end();
 				});
 
-				connection.query(...query);
+				var result = connection.query(...query);
+				this.log(result.sql + "\n");
 			}
 		});
 
 		return def.promise;
 	}
-	
+
 	"delete"(where = "", table = this.table) {
 		var q = `DELETE FROM \`${table}\` WHERE ${where}`;
 		return this.query(q);
 	}
-	
+
 	save(data, table = this.table, primaryKey = this.primaryKey) {
 		var q = "";
 		var id = 0;
