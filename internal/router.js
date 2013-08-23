@@ -105,13 +105,15 @@ app.loader.then(function() {
 				path = route.view;
 			}
 
-			// Expose data to browser.
+			// Expose public data to browser.
 			for (let item in expose) {
 				res.locals.exposed.public[item] = expose[item];
 			}
 
-			// for debugging
-			res.locals.exposed.private = data;
+			if (app.config.env === "development") {
+				// For debugging.
+				res.locals.exposed.private = data;
+			}
 
 			res.render(path, data);
 		};
