@@ -106,9 +106,7 @@ app.loader.then(function() {
 			}
 
 			// Expose public data to browser.
-			for (let item in expose) {
-				res.locals.exposed.public[item] = expose[item];
-			}
+			res.locals.exposed.public = expose;
 
 			if (app.config.env === "development") {
 				// For debugging.
