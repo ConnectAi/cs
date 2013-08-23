@@ -107,11 +107,11 @@ app.loader.then(function() {
 
 			// Expose data to browser.
 			for (let item in expose) {
-				res.locals.public[item] = expose[item];
+				res.locals.exposed.public[item] = expose[item];
 			}
 
 			// for debugging
-			res.locals.public.debug = data;
+			res.locals.exposed.private = data;
 
 			res.render(path, data);
 		};
@@ -148,12 +148,13 @@ app.loader.then(function() {
 			id
 		});
 
-		res.locals.public = {
+		res.locals.exposed = {
 			server: res.locals.server,
 			params: req.params,
 			controller,
 			action,
-			id
+			id,
+			public: {}
 		};
 
 		next();
