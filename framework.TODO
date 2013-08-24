@@ -6,12 +6,12 @@
 ✔ policies in config, allow non array @done (13-07-04 18:13)
 ✔ handle `date` and similar MySQL types with node @done (13-07-01 18:48)
 ✔ handle controller/method without a controller existing @done (13-07-07 23:27)
-✔ errors @done (13-07-07 23:27)
+errors:
 	✔ error page @done (13-06-26 21:59)
 	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
 	✔ ajax errors @done (13-06-26 18:34)
 	✔ error redirect @done (13-07-07 23:27)
-☐ ES6
+ES6:
 	✔ node_modules regex error @done (13-07-01 18:39)
 	✔ require methods need to compile everything in es6 @done (13-07-01 18:39)
 	✔ escape backticks in quasi literals @done (13-07-01 18:54)
@@ -19,7 +19,7 @@
 	☐ @∞ parse external js files
 		could be from private -> public, just like stylus
 		this is actually pending https://github.com/google/traceur-compiler/issues/314
-☐ express
+express:
 	✔ enviroments && config talking @done (13-07-06 18:40)
 	☐ @5 route re-writing
 		as opposed to res.redirect()
@@ -31,20 +31,20 @@
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 	☐ make routes case-insensitive
 		I want to say "POST /action"
-changes
+changes:
 	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
-enhancements
+enhancements:
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 	☐ make models defined in such a way that they can benefit from inheritance
 		for example {ED, GC, IP} should be able to inherit from User
 	☐? possibly controllers as well ^^^^^
-	prod
+	prod:
 		☐ concat/minify scripts and styles
 		✔ gzip resources @done (13-07-21 13:42)
 		☐ compress images
 		✔ far-future expires headers @done (13-07-21 15:23)
 		☐ cache busters
-features
+features:
 	✔ make a Time class @done (13-07-11 22:52)
 		with getters, and a custom toString
 	✔ {{{include}}} @done (13-07-11 23:17)
@@ -54,6 +54,17 @@ features
 			after thinking on this for a bit, I don't think it's possible
 	✔ app.util.loader(dir, [whitelist-regex]) @done (13-07-21 22:48)
 		we'll make it convention to use this in routes.js to get the services dir
+	database:
+		☐ make an app.db function that lets you select specified columns
+			db.find(["id", "first_name"], "id = 2", "user");
+			User.find(["id", "first_name"], "id = 2");
+		☐ chainable query-builder
+			(I know Sean doesn't like this but I do, even if it's more verbose)
+			db.select("id").from("user");
+			db
+				.select("user.first_name", "cart.id")
+				.from("user", "cart")
+				.where("user.id < cart.id");
 ☐ double repo
 	✔ @1 install app-level npm modules (moment, gm, etc) @done (13-07-18 00:23)
 	✔ @5 distribution @done (13-07-18 00:23)
