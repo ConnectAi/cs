@@ -48,7 +48,7 @@ var setupHandlebars = function() {
 
 		// make an array out of an object if key was passed
 		var _haystack = [];
-		if(key) {
+		if(~["string", "number"].indexOf(typeof key)) {
 			for(var i in haystack) {
 				_haystack.push( haystack[i][key] );
 			}
