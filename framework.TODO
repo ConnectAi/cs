@@ -44,6 +44,7 @@ enhancements:
 		☐ compress images
 		✔ far-future expires headers @done (13-07-21 15:23)
 		☐ cache busters
+			likely option-based:  git sha1s, timestamps, none
 features:
 	✔ make a Time class @done (13-07-11 22:52)
 		with getters, and a custom toString
@@ -54,6 +55,8 @@ features:
 			after thinking on this for a bit, I don't think it's possible
 	✔ app.util.loader(dir, [whitelist-regex]) @done (13-07-21 22:48)
 		we'll make it convention to use this in routes.js to get the services dir
+	☐ streamed log (websockets)
+	☐ dynamic layout (or lack thereof) based on !!req.xhr
 	database:
 		☐ make an app.db function that lets you select specified columns
 			db.find(["id", "first_name"], "id = 2", "user");
