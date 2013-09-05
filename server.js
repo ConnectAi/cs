@@ -90,7 +90,14 @@
 				server.use(express.static(__dirname + "/external/public"))
 			}
 		})
+		//.use(function(req,res,next) {
+			//res.locals({
+			//	today: new Date()
+			//});
+			//next();
+		//})
 		.use(server.router)
+		
 		.use(function(req, res) {
 			// Set variables for views.
 			res.locals({
@@ -104,7 +111,8 @@
 			} else {
 				res.render("error");
 			}
-		});
+		})
+		
 
 	// Environment-specific config.
 	server
