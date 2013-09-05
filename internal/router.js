@@ -158,6 +158,10 @@ app.loader.then(function() {
 		
 		next();
 	});
+	
+	for (let controller in app.controllers) {
+		buildRoutes(app.controllers[controller]);
+	}
 
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
@@ -170,9 +174,7 @@ app.loader.then(function() {
 		server[verb](path, handlers);
 	}
 	
-	for (let controller in app.controllers) {
-		buildRoutes(app.controllers[controller]);
-	}
+	
 	
 });
 
