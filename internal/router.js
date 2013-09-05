@@ -68,7 +68,16 @@ var buildRoutes = function(controller) {
 };
 
 app.loader.then(function() {
-	
+	// Make routes for each policy defined in the config.
+	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
+	var verb, path, handlers;
+	for (let route in app.config.routes) {
+		[, verb, path] = (""+route).match(pattern);
+		verb = verb || "all";
+		handlers = app.config.routes[route];
+		if (typeof handlers === "function") handlers = [handlers];
+		server[verb](path, handlers);
+	}
 
 	server.all("/:controller/:action?/:id?", function(req, res, next) {
 		// Cache params (this is necessary).
@@ -88,7 +97,6 @@ app.loader.then(function() {
 
 		// Extending res.
 		res.view = function(path = route.view, data = {}, expose = {}) {
-
 			// If a path is not passed,
 			// use the default path for the controller action.
 			if (typeof path === "object") {
@@ -96,19 +104,12 @@ app.loader.then(function() {
 				data = path;
 				path = route.view;
 			}
-			
-			
+
 			// Expose public data to browser.
 			res.locals.exposed.public = expose;
 
 			if (app.config.env === "development") {
 				// For debugging.
-				
-				for(i in server.locals) data[i] = server.locals[i];
-				data.session = req.session;
-				data.query = req.query;
-				data.body = req.body;
-				
 				res.locals.exposed.private = data;
 			}
 
@@ -127,7 +128,7 @@ app.loader.then(function() {
 			res.send(code, msg);
 			res.end();
 		};
-		
+
 		// Set variables for views.
 		res.locals({
 			server: {
@@ -155,27 +156,13 @@ app.loader.then(function() {
 			id,
 			public: {}
 		};
-		
+
 		next();
 	});
-	
+
 	for (let controller in app.controllers) {
 		buildRoutes(app.controllers[controller]);
 	}
-
-	// Make routes for each policy defined in the config.
-	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
-	var verb, path, handlers;
-	for (let route in app.config.routes) {
-		[, verb, path] = (""+route).match(pattern);
-		verb = verb || "all";
-		handlers = app.config.routes[route];
-		if (typeof handlers === "function") handlers = [handlers];
-		server[verb](path, handlers);
-	}
-	
-	
-	
 });
 
 module.exports = {
