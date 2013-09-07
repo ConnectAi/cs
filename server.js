@@ -90,21 +90,21 @@
 				server.use(express.static(__dirname + "/external/public"))
 			}
 		})
+		// Send all view-or-API requests through a pipe,
+		// extending req/res as needed.
+		.use(app.router.pipe)
+		// Bind all express routes.
 		.use(server.router)
+		// We are now at the end of the pipeline.
+		// A route has not been found, so throw an error.
 		.use(function(req, res) {
-			// Set variables for views.
-			res.locals({
-				req,
-				session: req.session,
-				params: req.params
-			});
-
 			if (req.xhr) {
 				res.json("error");
 			} else {
 				res.render("error");
 			}
-		});
+		})
+	;
 
 	// Environment-specific config.
 	server

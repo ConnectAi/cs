@@ -67,6 +67,43 @@ var buildRoutes = function(controller) {
 		});
 };
 
+// Add convenience methods to req/res.
+var pipe = function(req, res, next) {
+	res.console = function(...args) {
+		var html =
+			`<script>console.log(
+				${args.map((arg) => JSON.stringify(arg))}
+			);</script>`;
+		res.send(html);
+	};
+
+	res.error = function(msg = "", code = 400) {
+		res.send(code, msg);
+		res.end();
+	};
+
+	// Set variables for views.
+	res.locals({
+		server: {
+			name: server.get("name"),
+			port: server.get("port"),
+			env: server.get("env")
+		},
+
+		req,
+		session: req.session,
+		query: req.query,
+		body: req.body
+	});
+
+	res.locals.exposed = {
+		server: res.locals.server,
+		public: {}
+	};
+
+	next();
+};
+
 app.loader.then(function() {
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
@@ -116,45 +153,19 @@ app.loader.then(function() {
 			res.render(path, data);
 		};
 
-		res.console = function(...args) {
-			var html =
-				`<script>console.log(
-					${args.map((arg) => JSON.stringify(arg))}
-				);</script>`;
-			res.send(html);
-		};
-
-		res.error = function(msg = "", code = 400) {
-			res.send(code, msg);
-			res.end();
-		};
-
 		// Set variables for views.
 		res.locals({
-			server: {
-				name: server.get("name"),
-				port: server.get("port"),
-				env: server.get("env")
-			},
-
-			req,
-			session: req.session,
 			params: req.params,
-			query: req.query,
-			body: req.body,
-
 			controller,
 			action,
 			id
 		});
 
-		res.locals.exposed = {
-			server: res.locals.server,
-			params: req.params,
-			controller,
-			action,
-			id,
-			public: {}
+		res.locals.exposed.{
+			params = req.params;
+			controller = controller;
+			action = action;
+			id = id;
 		};
 
 		next();
@@ -167,5 +178,6 @@ app.loader.then(function() {
 
 module.exports = {
 	getRoutes,
-	buildRoutes
+	buildRoutes,
+	pipe
 };
