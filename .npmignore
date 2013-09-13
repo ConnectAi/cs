@@ -1,0 +1,7 @@
+._*
+node_modules
+external/
+*.fuse_hidden*
+
+/dump.rdb
+app.log

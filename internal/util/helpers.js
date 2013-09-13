@@ -23,7 +23,7 @@ var setupHandlebars = function() {
 		var context = args[0];
 		if (args.length === 1) context = this;
 		if (!/\.[\w-]+$/.test(file)) file += ".html";
-		var filepath = path.resolve(`external/views/${file}`);
+		var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
 		var contents = fs.readFileSync(filepath, "utf8") || "";
 		return hbs.compile(contents)(context);
 	});

@@ -35,7 +35,7 @@ traceur.options.validate = false;
 
 
 traceur.require.makeDefault(function(path) {
-	return !/node_modules/.test(path);
+	return !/cornerstone\/node_modules/.test(path);
 });
 
 require("./server").start();

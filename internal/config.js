@@ -1,5 +1,5 @@
-var external = require("../external/config");
-external.routes = require("../external/routes");
+var external = require(`${app.dirs.external}/config`);
+external.routes = require(`${app.dirs.external}/routes`);
 
 var defaults = {
 	name: "[name]",

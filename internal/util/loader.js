@@ -2,7 +2,7 @@ var fs = require("fs");
 var path = require("path");
 
 var dirSync = function(dir, options = {}) {
-	var filepath = path.resolve("external/" + dir);
+	var filepath = path.resolve(`${app.dirs.external}/${dir}`);
 
 	if (!("whitelist" in options)) options.whitelist = /^([\w][\w\-_. ]*)\.js$/;
 	if (!("reduce" in options)) options.reduce = true;

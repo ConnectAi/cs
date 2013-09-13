@@ -23,7 +23,11 @@
 ////////////////
 	var appLoader = when.defer();
 
-	app.util = require("./internal/util");
+	app.dirs = {
+		external: path.resolve(),
+		internal: path.join(__dirname, "/internal")
+	};
+	app.util = require(`${app.dirs.internal}/util`);
 
 	app.loader = appLoader.promise;
 	app.controllers = app.util.loader.dirSync("controllers", {reduce: false})
@@ -33,13 +37,13 @@
 			return files;
 		}, {});
 
-	app.config = require("./internal/config");
+	app.config = require(`${app.dirs.internal}/config`);
 
 	global.Time = app.util.Time;
-	app.router = require("./internal/router");
+	app.router = require(`${app.dirs.internal}/router`);
 
-	app.Controller = require("./internal/Controller");
-	app.Model = require("./internal/Model");
+	app.Controller = require(`${app.dirs.internal}/Controller`);
+	app.Model = require(`${app.dirs.internal}/Model`);
 
 	app.models = app.util.loader.dirSync("models", {reduce: false})
 		.reduce(function(files, file) {
@@ -55,7 +59,7 @@
 //	SETUP
 ////////////////
 	server
-		.set("views", __dirname + "/external/views")
+		.set("views", `${app.dirs.external}/views`)
 		.set("view engine", "html")
 		.engine("html", require("hbs").__express)
 		.use(express.compress())
@@ -68,8 +72,8 @@
 			store: new RedisStore()
 		}))
 		.use(require("stylus").middleware({
-			src: __dirname + "/external/private",
-			dest: __dirname + "/external/public",
+			src: `${app.dirs.external}/private`,
+			dest: `${app.dirs.external}/public`,
 			compress: true,
 			debug: true
 		}))
@@ -77,17 +81,17 @@
 		.configure(function() {
 			// If in production, cache the static resources.
 			if (server.get("env") === "production") {
-				server.use(express.static(__dirname + "/external/public", {
+				server.use(express.static(`${app.dirs.external}/public`, {
 					maxAge: 100 * 60 * 60 * 24    // one day
 				}));
 			// If in development, disable cache.
 			} else if (server.get("env") === "development") {
-				server.use(express.static(__dirname + "/external/public", {
+				server.use(express.static(`${app.dirs.external}/public`, {
 					maxAge: 0
 				}))
 			// Otherwise use the default cache settings.
 			} else {
-				server.use(express.static(__dirname + "/external/public"))
+				server.use(express.static(`${app.dirs.external}/public`))
 			}
 		})
 		// Send all view-or-API requests through a pipe,
@@ -141,7 +145,7 @@
 //	START
 ////////////////
 	var start = function() {
-		require("./external/bootstrap");
+		require(`${app.dirs.external}/bootstrap`);
 
 		http.createServer(server).listen(server.get("port"), function() {
 			console.info("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
