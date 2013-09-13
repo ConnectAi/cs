@@ -2,10 +2,6 @@
   "name": "cornerstone",
   "version": "0.0.2",
   "description": "ES6-based framework for node.js",
-  "scripts": {
-    "run": "node app",
-    "start": "nodemon app.js"
-  },
   "engines": {
     "node": ">=0.8"
   },
