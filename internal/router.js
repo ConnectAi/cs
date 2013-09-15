@@ -83,14 +83,6 @@ var pipe = function(req, res, next) {
 	};
 
 	res.view = function(path, data = {}, expose = {}) {
-		// If a path is not passed,
-		// use the default path for the controller action.
-		if (typeof path === "object") {
-			expose = data;
-			data = path;
-			path = route.view;
-		}
-
 		// Expose public data to browser.
 		res.locals.exposed.public = expose;
 
@@ -155,6 +147,13 @@ app.loader.then(function() {
 		// Extending res.
 		let generalView = res.view;
 		res.view = function(path = route.view, data = {}, expose = {}) {
+			// If a path is not passed,
+			// use the default path for the controller action.
+			if (typeof path === "object") {
+				expose = data;
+				data = path;
+				path = route.view;
+			}
 			generalView(path, data, expose);
 		};
 
