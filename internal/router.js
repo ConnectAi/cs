@@ -82,6 +82,26 @@ var pipe = function(req, res, next) {
 		res.end();
 	};
 
+	res.view = function(path, data = {}, expose = {}) {
+		// If a path is not passed,
+		// use the default path for the controller action.
+		if (typeof path === "object") {
+			expose = data;
+			data = path;
+			path = route.view;
+		}
+
+		// Expose public data to browser.
+		res.locals.exposed.public = expose;
+
+		if (app.config.env === "development") {
+			// For debugging.
+			res.locals.exposed.private = data;
+		}
+
+		res.render(path, data);
+	};
+
 	// Set variables for views.
 	res.locals({
 		server: {
@@ -133,24 +153,9 @@ app.loader.then(function() {
 		};
 
 		// Extending res.
+		let generalView = res.view;
 		res.view = function(path = route.view, data = {}, expose = {}) {
-			// If a path is not passed,
-			// use the default path for the controller action.
-			if (typeof path === "object") {
-				expose = data;
-				data = path;
-				path = route.view;
-			}
-
-			// Expose public data to browser.
-			res.locals.exposed.public = expose;
-
-			if (app.config.env === "development") {
-				// For debugging.
-				res.locals.exposed.private = data;
-			}
-
-			res.render(path, data);
+			generalView(path, data, expose);
 		};
 
 		// Set variables for views.
