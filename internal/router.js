@@ -86,7 +86,7 @@ var pipe = function(req, res, next) {
 		// Expose public data to browser.
 		res.locals.exposed.public = expose;
 
-		if (app.config.env === "development") {
+		if (app.config.debug) {
 			// For debugging.
 			res.locals.exposed.private = data;
 		}
