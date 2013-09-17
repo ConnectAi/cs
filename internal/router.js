@@ -103,6 +103,7 @@ var pipe = function(req, res, next) {
 		},
 
 		req,
+		status: res.statusCode,
 		session: req.session,
 		query: req.query,
 		body: req.body
