@@ -158,6 +158,17 @@ class Model {
 	error() {
 		console.error(...arguments);
 	}
+
+	change(options) {
+		var def = when.defer();
+		pool.getConnection((err, connection) => {
+			connection.changeUser(options, (err) => {
+				connection.release();
+				def.resolve(err);
+			});
+		});
+		return def.promise;
+	}
 }
 
 function connect() {
