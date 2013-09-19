@@ -31,6 +31,8 @@ express:
 		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 	☐ make routes case-insensitive
 		I want to say "POST /action"
+	☐ server.use doesn't really work, because of when we run it
+		I couldn't find an easy solution for this, as even running them right before routes is in app.loader.then, which makes it after the error-handling middleware...
 changes:
 	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
 enhancements:
