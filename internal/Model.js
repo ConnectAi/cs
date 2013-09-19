@@ -163,6 +163,9 @@ class Model {
 		var def = when.defer();
 		pool.getConnection((err, connection) => {
 			connection.changeUser(options, (err) => {
+				for (let option in options) {
+					app.config.db[option] = options[option];
+				}
 				connection.release();
 				def.resolve(err);
 			});
