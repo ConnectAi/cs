@@ -102,10 +102,13 @@
 		// We are now at the end of the pipeline.
 		// A route has not been found, so throw an error.
 		.use(function(req, res) {
+			res.status(404);
 			if (req.xhr) {
 				res.json("error");
 			} else {
-				res.render("error");
+				res.render("error", {
+					status: 404
+				});
 			}
 		})
 	;
