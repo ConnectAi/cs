@@ -36,7 +36,7 @@ class Model {
 						def.resolve(res);
 					}
 
-					connection.end();
+					connection.release();
 				});
 
 				var result = connection.query(...query);
