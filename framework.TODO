@@ -21,7 +21,7 @@ ES6:
 		this is actually pending https://github.com/google/traceur-compiler/issues/314
 express:
 	✔ enviroments && config talking @done (13-07-06 18:40)
-	☐ @5 route re-writing
+	✔ @5 route re-writing @done (13-09-25 09:47)
 		as opposed to res.redirect()
 		this exists (res.render()), but should possibly be streamlined
 	☐ @? make routes as keys work in controllers
@@ -35,6 +35,9 @@ express:
 		I couldn't find an easy solution for this, as even running them right before routes is in app.loader.then, which makes it after the error-handling middleware...
 changes:
 	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
+	☐ move /routes.js => /controllers/index.js
+	☐ new controller syntax (https://github.com/ConnectAi/node-framework/issues/1)
+	☐ @? get rid of empty actions calling res.view() I think
 enhancements:
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 	☐ make models defined in such a way that they can benefit from inheritance
