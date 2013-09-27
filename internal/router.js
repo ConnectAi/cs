@@ -89,6 +89,7 @@ var pipe = function(req, res, next) {
 		if (app.config.debug) {
 			// For debugging.
 			res.locals.exposed.private = data;
+			res.locals.exposed.session = req.session;
 		}
 
 		res.render(path, data);
