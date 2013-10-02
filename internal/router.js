@@ -52,8 +52,9 @@ var buildRoutes = function(controller) {
 		.forEach(function(route) {
 			var handler = controller[route];
 			var pattern = /^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/;
-
+			
 			if (pattern.test(route)) {
+			
 				var [, verb, action] = (""+route).match(pattern);
 				var route = new Route(controller.name, action, verb);
 
@@ -61,7 +62,7 @@ var buildRoutes = function(controller) {
 				if (isEmpty) {
 					handler = defaultHandler(route.view);
 				}
-
+				
 				server[route.verb](route.path, handler.bind(controller));
 			}
 		});
@@ -119,6 +120,7 @@ var pipe = function(req, res, next) {
 };
 
 app.loader.then(function() {
+	
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
 	var verb, path, handlers;
@@ -127,10 +129,13 @@ app.loader.then(function() {
 		verb = verb || "all";
 		handlers = app.config.routes[route];
 		if (typeof handlers === "function") handlers = [handlers];
-		server[verb](path, handlers);
-	}
 
-	server.all("/:controller/:action?/:id?", function(req, res, next) {
+		server[verb](app.config.path, handlers);
+	}
+	
+	
+	
+	server.all(app.config.path + "/:controller/:action?/:id?", function(req, res, next) {
 		// Cache params (this is necessary).
 		var {controller, action, id} = req.params;
 		var route = new Route(controller, action, id);
@@ -148,6 +153,7 @@ app.loader.then(function() {
 
 		// Extending res.
 		let generalView = res.view;
+		
 		res.view = function(path = route.view, data = {}, expose = {}) {
 			// If a path is not passed,
 			// use the default path for the controller action.

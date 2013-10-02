@@ -79,20 +79,25 @@
 		}))
 		// Setup static resources, and optional caching.
 		.configure(function() {
+			var props = {};
+			
 			// If in production, cache the static resources.
 			if (server.get("env") === "production") {
-				server.use(express.static(`${app.dirs.external}/public`, {
-					maxAge: 100 * 60 * 60 * 24    // one day
-				}));
+				// one day
+				props = {maxAge: 100 * 60 * 60 * 24};
+			
 			// If in development, disable cache.
 			} else if (server.get("env") === "development") {
-				server.use(express.static(`${app.dirs.external}/public`, {
-					maxAge: 0
-				}))
+				props =  {maxAge: 0}
+				
 			// Otherwise use the default cache settings.
 			} else {
-				server.use(express.static(`${app.dirs.external}/public`))
+				props = {}
 			}
+			// static location
+			var statics = express.static(`${app.dirs.external}/public`,props);
+			// use static location
+			server.use(statics);
 		})
 		// Send all view-or-API requests through a pipe,
 		// extending req/res as needed.
