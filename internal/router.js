@@ -51,12 +51,20 @@ var pipe = function(req, res, next) {
 	next();
 };
 
-var makeRoute = function(verb, route, handlers) {
+var makeRoute = function(verb, route, handlers, controller = "") {
+	if (route.indexOf("/") !== 0) {
+		if (controller) {
+			route = `${controller}/${route}`;
+		} else {
+			route = `/${route}`;
+		}
+	}
 	route = (app.config.path + route).replace(/^\/\//, "/");
+
 	server[verb](route, handlers);
 }
 
-var handleRoute = function(route, handlers) {
+var handleRoute = function(route, handlers, controller) {
 	if (!Array.isArray(handlers)) handlers = [handlers];
 
 	var groups = [];
@@ -81,17 +89,21 @@ var handleRoute = function(route, handlers) {
 	}, {});
 
 	groups.forEach((group) => {
-		makeRoute(group.verb, route, group.handler);
+		makeRoute(group.verb, route, group.handler, controller);
 	});
 };
 
 app.loader.then(function() {
 	// Make routes for each policy defined in the config.
-	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
-	var verb, path, handlers;
 	for (let route in app.config.routes) {
-		handlers = app.config.routes[route];
+		let handlers = app.config.routes[route];
 		handleRoute(route, handlers);
+	}
+
+	for (let controller in app.controllers) {
+		for (let route in app.controllers[controller]) {
+			handleRoute(route, app.controllers[controller][route], controller);
+		}
 	}
 });
 
