@@ -141,6 +141,9 @@ app.loader.then(function() {
 		var route = new Route(controller, action, id);
 
 		// Extending req.
+
+		// This... is an app-specific thing.
+		// AKA: We need to let apps extend req.
 		req.checkFields = function(fields) {
 			if(fields.some(function(field) {
 				if(!(field in req.body)) {
