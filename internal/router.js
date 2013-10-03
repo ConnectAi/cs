@@ -1,73 +1,3 @@
-class Route {
-	constructor(controller, action = "index", verb = "all") {
-		if (/^[A-Z][a-z]/.test(controller)) {
-			controller = controller[0].toLowerCase() + controller.slice(1);
-		}
-		this.controller = controller;
-		this.action = action;
-		this.verb = verb;
-	}
-
-	get path() {
-		var path = "/" + this.controller;
-		if(this.action !== "index") {
-			path += "/" + this.action;
-			path += "/:id?";
-		}
-		return path;
-	}
-
-	get view() {
-		return this.controller + "/" + this.action;
-	}
-}
-
-var defaultHandler = function(path) {
-	return function(req, res) {
-		res.render(path);
-	};
-};
-
-var getRoutes = function(controller) {
-	var routes = [];
-	for (let route in controller) {
-		var handler = controller[route];
-		if (typeof handler === "function") {
-			routes.push(route);
-		} else if (typeof handler === "object") {
-			handler.action = handler.action || "index";
-			routes.push(app.controllers[handler.controller][handler.action]);
-		}
-
-	}
-	return routes;
-};
-
-var buildRoutes = function(controller) {
-	var routes = getRoutes(controller);
-	routes
-		.filter(function(file){
-			return file && file[0] !== "_";
-		})
-		.forEach(function(route) {
-			var handler = controller[route];
-			var pattern = /^(?:(get|post|put|delete|all)\s+)?\/?([\w\-]+)$/;
-
-			if (pattern.test(route)) {
-
-				var [, verb, action] = (""+route).match(pattern);
-				var route = new Route(controller.name, action, verb);
-
-				var isEmpty = /^[^{]+\{\s*\}$/.test(""+handler);
-				if (isEmpty) {
-					handler = defaultHandler(route.view);
-				}
-
-				server[route.verb](route.path, handler.bind(controller));
-			}
-		});
-};
-
 // Add convenience methods to req/res.
 var pipe = function(req, res, next) {
 	res.console = function(...args) {
@@ -121,78 +51,50 @@ var pipe = function(req, res, next) {
 	next();
 };
 
+var makeRoute = function(verb, route, handlers) {
+	route = (app.config.path + route).replace(/^\/\//, "/");
+	server[verb](route, handlers);
+}
+
+var handleRoute = function(route, handlers) {
+	if (!Array.isArray(handlers)) handlers = [handlers];
+
+	var groups = [];
+
+	handlers.forEach((handler) => {
+		let verb = "all";
+
+		// Normalize all handlers to the same format.
+		if (typeof handler === "object" && !Array.isArray(handler)) {
+			for (let verb in handler) {
+				groups.push({
+					verb,
+					handler: handler[verb]
+				});
+			}
+			return;
+		}
+
+		groups.push({
+			verb, handler
+		});
+	}, {});
+
+	groups.forEach((group) => {
+		makeRoute(group.verb, route, group.handler);
+	});
+};
+
 app.loader.then(function() {
 	// Make routes for each policy defined in the config.
 	var pattern = /^(?:(get|post|put|delete|all)\s+)?(\/[\w\-:?\/]*)$/;
 	var verb, path, handlers;
 	for (let route in app.config.routes) {
-		[, verb, path] = (""+route).match(pattern);
-		verb = verb || "all";
 		handlers = app.config.routes[route];
-		if (typeof handlers === "function") handlers = [handlers];
-
-		path = (app.config.path + path).replace(/^\/\//, "/");
-		server[verb](path, handlers);
-	}
-
-	server.all(app.config.path + ":controller/:action?/:id?", function(req, res, next) {
-		// Cache params (this is necessary).
-		var {controller, action, id} = req.params;
-		var route = new Route(controller, action, id);
-
-		// Extending req.
-
-		// This... is an app-specific thing.
-		// AKA: We need to let apps extend req.
-		req.checkFields = function(fields) {
-			if(fields.some(function(field) {
-				if(!(field in req.body)) {
-					res.error(field + " is required");
-					return true;
-				}
-			})) return false;
-			return req.body;
-		};
-
-		// Extending res.
-		let generalView = res.view;
-		res.view = function(path = route.view, data = {}, expose = {}) {
-			// If a path is not passed,
-			// use the default path for the controller action.
-			if (typeof path === "object") {
-				expose = data;
-				data = path;
-				path = route.view;
-			}
-			generalView(path, data, expose);
-		};
-
-		// Set variables for views.
-		res.locals({
-			params: req.params,
-			controller,
-			action,
-			id,
-			title: `${server.get("name")} | ${action} ${controller} ${id}`
-		});
-
-		res.locals.exposed.{
-			params = req.params;
-			controller = controller;
-			action = action;
-			id = id;
-		};
-
-		next();
-	});
-
-	for (let controller in app.controllers) {
-		buildRoutes(app.controllers[controller]);
+		handleRoute(route, handlers);
 	}
 });
 
 module.exports = {
-	getRoutes,
-	buildRoutes,
 	pipe
 };
