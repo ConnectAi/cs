@@ -13,7 +13,22 @@ var pipe = function(req, res, next) {
 		res.end();
 	};
 
-	res.view = function(path, data = {}, expose = {}) {
+	res.view = function(path = "", data = {}, expose = {}) {
+		// If a path is not passed,
+		// determine it ourselves.
+		if (typeof path === "object") {
+			expose = data;
+			data = path;
+			path = "";
+		}
+
+		// If path is not passed, make it the route, stripped of all tokens.
+		if (path === "") {
+			path = req.route.path
+				.replace(/^\//, "")
+				.replace(/\/:.*/, "");
+		}
+
 		// Expose public data to browser.
 		res.locals.exposed.public = expose;
 
@@ -23,6 +38,7 @@ var pipe = function(req, res, next) {
 			res.locals.exposed.session = req.session;
 		}
 
+		res.locals({ params: req.params })
 		res.render(path, data);
 	};
 
