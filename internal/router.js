@@ -131,7 +131,8 @@ app.loader.then(function() {
 		handlers = app.config.routes[route];
 		if (typeof handlers === "function") handlers = [handlers];
 
-		server[verb](app.config.path, handlers);
+		path = (app.config.path + path).replace(/^\/\//, "/");
+		server[verb](path, handlers);
 	}
 
 	server.all(app.config.path + ":controller/:action?/:id?", function(req, res, next) {
