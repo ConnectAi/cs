@@ -67,10 +67,12 @@ var pipe = function(req, res, next) {
 	next();
 };
 
-var makeRoute = function(verb, route, handlers, controller = "") {
+var makeRoute = function(verb, route = controller, handlers, controller = "") {
 	if (route.indexOf("/") !== 0) {
-		if (controller) {
+		if (controller && route !== "index") {
 			route = `${controller}/${route}`;
+		} else if (controller && route === "index") {
+			route = controller;
 		} else {
 			route = `/${route}`;
 		}
