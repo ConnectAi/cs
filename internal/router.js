@@ -134,7 +134,7 @@ app.loader.then(function() {
 		server[verb](app.config.path, handlers);
 	}
 
-	server.all(app.config.path + "/:controller/:action?/:id?", function(req, res, next) {
+	server.all(app.config.path + ":controller/:action?/:id?", function(req, res, next) {
 		// Cache params (this is necessary).
 		var {controller, action, id} = req.params;
 		var route = new Route(controller, action, id);
@@ -152,7 +152,6 @@ app.loader.then(function() {
 
 		// Extending res.
 		let generalView = res.view;
-
 		res.view = function(path = route.view, data = {}, expose = {}) {
 			// If a path is not passed,
 			// use the default path for the controller action.
