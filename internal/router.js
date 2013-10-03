@@ -26,7 +26,7 @@ var pipe = function(req, res, next) {
 		if (path === "") {
 			path = req.route.path
 				.replace(/^\//, "")
-				.replace(/\/:.*/, "");
+				.replace(/\/(:|index).*/, "");
 		}
 
 		// Expose public data to browser.
@@ -68,6 +68,8 @@ var pipe = function(req, res, next) {
 };
 
 var makeRoute = function(verb, route = controller, handlers, controller = "") {
+	let originalRoute = route;
+
 	if (route.indexOf("/") !== 0) {
 		if (controller && route !== "index") {
 			route = `${controller}/${route}`;
@@ -77,7 +79,12 @@ var makeRoute = function(verb, route = controller, handlers, controller = "") {
 			route = `/${route}`;
 		}
 	}
-	route = (app.config.path + route).replace(/^\/\//, "/");
+
+	if (originalRoute === "*") {
+		route = new RegExp(`^\\/${controller}(\\/.*)?`);
+	} else {
+		route = (app.config.path + route).replace(/^\/\//, "/");
+	}
 
 	server[verb](route, handlers);
 }
