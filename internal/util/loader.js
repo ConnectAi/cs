@@ -8,7 +8,7 @@ var dirSync = function(dir, options = {}) {
 	if (!("reduce" in options)) options.reduce = true;
 
 	var filter;
-	// Filter can either be a function, regex, or an array of filenames.
+	// Whitelist can either be a function, regex, or an array of filenames.
 	if (typeof options.whitelist === "function") {
 		filter = options.whitelist;
 	} else if (options.whitelist instanceof RegExp) {

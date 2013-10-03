@@ -30,7 +30,10 @@
 	app.util = require(`${app.dirs.internal}/util`);
 
 	app.loader = appLoader.promise;
-	app.controllers = app.util.loader.dirSync("controllers", {reduce: false})
+	app.controllers = app.util.loader.dirSync("controllers", {
+		reduce: false,
+		whitelist: (file) => (file !== "index.js")
+	})
 		.reduce((files, file) => {
 			files[file.name] = file.exports;
 			files[file.name].name = file.name;
@@ -80,16 +83,16 @@
 		// Setup static resources, and optional caching.
 		.configure(function() {
 			var props = {};
-			
+
 			// If in production, cache the static resources.
 			if (server.get("env") === "production") {
 				// one day
 				props = {maxAge: 100 * 60 * 60 * 24};
-			
+
 			// If in development, disable cache.
 			} else if (server.get("env") === "development") {
 				props =  {maxAge: 0}
-				
+
 			// Otherwise use the default cache settings.
 			} else {
 				props = {}
