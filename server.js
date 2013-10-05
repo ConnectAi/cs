@@ -4,7 +4,8 @@
 	var express = require("express"),
 		http = require("http"),
 		path = require("path"),
-		RedisStore = require("connect-redis")(express);
+		RedisStore = require("connect-redis")(express),
+		stylus = require("stylus");
 	// Make the console pretty.
 	require("consoleplusplus");
 
@@ -57,7 +58,9 @@
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
 
-
+	
+	
+	
 ////////////////
 //	SETUP
 ////////////////
@@ -74,11 +77,23 @@
 			secret: "Shh! It's a secret.",
 			store: new RedisStore()
 		}))
-		.use(require("stylus").middleware({
+		.use(stylus.middleware({
 			src: `${app.dirs.external}/private`,
 			dest: `${app.dirs.external}/public`,
 			compress: true,
-			debug: true
+			debug: true,
+			compile: function(str,path) {
+				var styl = stylus(str);
+				// custom stylus variables
+				for(fnName in server.stylus) {
+					styl.use(function(style) {
+						style.define(fnName, function() {
+							return server.stylus[fnName](stylus);
+						});
+					});
+				}
+				return styl;
+			}
 		}))
 		// Setup static resources, and optional caching.
 		.configure(function() {
@@ -94,8 +109,6 @@
 				props =  {maxAge: 0}
 
 			// Otherwise use the default cache settings.
-			} else {
-				props = {}
 			}
 			// static location
 			var statics = express.static(`${app.dirs.external}/public`,props);
@@ -120,6 +133,9 @@
 			}
 		})
 	;
+	
+	// server stylus var
+	server.stylus = {};
 
 	// Environment-specific config.
 	server
