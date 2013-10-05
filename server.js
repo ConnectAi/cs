@@ -22,38 +22,48 @@
 ////////////////
 //	MODULES
 ////////////////
+	
+	// control when the app is done loading
 	var appLoader = when.defer();
-
-	app.dirs = {
+	app.loader = appLoader.promise;
+	
+	// app directories
+	var {external, internal} = app.dirs = {
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
-	app.util = require(`${app.dirs.internal}/util`);
-
-	app.loader = appLoader.promise;
+	
+	
+	// config
+	app.config = require(`${internal}/config`);
+	
+	// get util, define time
+	app.util = require(`${internal}/util`);
+	global.Time = app.util.Time;
+	
+	// get all our controllers
 	app.controllers = app.util.loader.dirSync("controllers", {
 		reduce: false,
 		whitelist: (file) => (file !== "index.js")
-	})
-		.reduce((files, file) => {
-			files[file.name] = file.exports;
-			files[file.name].name = file.name;
-			return files;
-		}, {});
-
-	app.config = require(`${app.dirs.internal}/config`);
-
-	global.Time = app.util.Time;
-	app.router = require(`${app.dirs.internal}/router`);
-
-	app.Controller = require(`${app.dirs.internal}/Controller`);
-	app.Model = require(`${app.dirs.internal}/Model`);
-
+	}).reduce((files, file) => {
+		files[file.name] = file.exports;
+		files[file.name].name = file.name;
+		return files;
+	}, {});
+	
+	// get the router
+	app.router = require(`${internal}/router`);
+	// get the controller
+	app.Controller = require(`${internal}/Controller`);
+	// the model
+	app.Model = require(`${internal}/Model`);
+	// all the models
 	app.models = app.util.loader.dirSync("models", {reduce: false})
 		.reduce(function(files, file) {
 			files[file.name] = new file.exports(file.name);
 			return files;
-		}, {});
+		}, {})
+	;
 
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
@@ -65,7 +75,7 @@
 //	SETUP
 ////////////////
 	server
-		.set("views", `${app.dirs.external}/views`)
+		.set("views", `${external}/views`)
 		.set("view engine", "html")
 		.engine("html", require("hbs").__express)
 		.use(express.compress())
@@ -78,8 +88,8 @@
 			store: new RedisStore()
 		}))
 		.use(stylus.middleware({
-			src: `${app.dirs.external}/private`,
-			dest: `${app.dirs.external}/public`,
+			src: `${external}/private`,
+			dest: `${external}/public`,
 			compress: true,
 			debug: true,
 			compile: function(str,path) {
@@ -95,21 +105,44 @@
 				return styl;
 			}
 		}))
-		// Setup static resources, and optional caching.
+		
+		// server settings depending on enviroment
 		.configure(function() {
 			var props = {};
 
-			// If in production, cache the static resources.
+			// ---- PRODUCTION
 			if (server.get("env") === "production") {
-				// one day
+				
+				// cache to one day
 				props = {maxAge: 100 * 60 * 60 * 24};
+				
+				// set production console level
+				console.setLevel(console.LEVELS.WARN);
 
-			// If in development, disable cache.
+				// Bury any uncaught exceptions. For the children. (Think of the children...)
+				process.on("uncaughtException", function(err) {
+					console.error("Caught exception:", err.message);
+					console.error(err.stack);
+				});
+
+			// ---- DEVELOPMENT
 			} else if (server.get("env") === "development") {
-				props =  {maxAge: 0}
+				// no cache for dev
+				props =  {maxAge: 0};
+				
+				// Log all the things.
+				//server.use(express.logger("dev"));
+				console.setLevel(console.LEVELS.DEBUG);
+	
+				// Exit with an error code on any uncaught exception.
+				process.on("uncaughtException", function(err) {
+					console.error("Caught exception:", err.message);
+					console.error(err.stack);
+					process.exit(1);
+				});
 
-			// Otherwise use the default cache settings.
 			}
+			
 			// static location
 			var statics = express.static(`${app.dirs.external}/public`,props);
 			// use static location
@@ -118,10 +151,11 @@
 		// Send all view-or-API requests through a pipe,
 		// extending req/res as needed.
 		.use(app.router.pipe)
-		// Bind all express routes.
+		// Bind all express routes. (index and controllers)
 		.use(server.router)
 		// We are now at the end of the pipeline.
 		// A route has not been found, so throw an error.
+		// we need to make this extensible
 		.use(function(req, res) {
 			res.status(404);
 			if (req.xhr) {
@@ -134,39 +168,8 @@
 		})
 	;
 	
-	// server stylus var
+	// server stylus var for custom stylus things
 	server.stylus = {};
-
-	// Environment-specific config.
-	server
-		// All environments.
-		.configure(function() {
-		})
-		// Dev environment.
-		.configure("development", function() {
-			// Log all the things.
-			server.use(express.logger("dev"));
-			console.setLevel(console.LEVELS.DEBUG);
-
-			// Exit with an error code on any uncaught exception.
-			process.on("uncaughtException", function(err) {
-				console.error("Caught exception:", err.message);
-				console.error(err.stack);
-				process.exit(1);
-			});
-		})
-		// Production environment.
-		.configure("production", function() {
-			// Log some of the things.
-			console.setLevel(console.LEVELS.WARN);
-
-			// Bury any uncaught exceptions. For the children. (Think of the children...)
-			process.on("uncaughtException", function(err) {
-				console.error("Caught exception:", err.message);
-				console.error(err.stack);
-			});
-		});
-
 
 ////////////////
 //	START
