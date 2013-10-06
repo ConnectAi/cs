@@ -277,9 +277,63 @@ Hey we have ES6, `let`'s use it
     }
 
 # Run in Production
-	// install init script
-	// nginx setup
-	// how to run
+We're gonna run our app behind Nginx on port 8000. This assumes your app is living in /var/www. The following steps ensure that 1 instance of your node app will continue running. Even if there are errors or failures. It will log out to /var/log/node.  For a more scalable launch, place behind load balancers.
+
+### Configure config.js
+	// change config production port to 8000 from 80
+
+###install init script
+	vi /etc/init/node-app.conf
+---
+
+	description "node.js server"
+
+	start on started mountall
+	stop on shutdown
+	
+	respawn
+	respawn limit 99 5
+	
+	script
+		export HOME="/var/www"
+		cd $HOME
+		exec /usr/bin/node /var/www/index.js production >> /var/log/node.log 2>&1
+	end script
+	
+	post-start script
+	end script
+	
+	
+###nginx setup
+	
+	upstream <<WEBSITE>> {
+    	server 127.0.0.1:8000;
+	}
+	
+	server {
+		server_name <<WWW.WEBSITE.COM>> WEBSITE.COM;
+		listen 80;
+		access_log  /var/log/nginx/app.wb.log;
+		
+		location / {
+	      proxy_set_header X-Real-IP $remote_addr;
+	      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	      proxy_set_header Host $http_host;
+	      proxy_set_header X-NginX-Proxy true;
+	
+	      proxy_pass http://<<WEBSITE>>/;
+	      proxy_redirect off;
+	      
+	      proxy_http_version 1.1;
+		  proxy_set_header Upgrade $http_upgrade;
+		  proxy_set_header Connection "upgrade";
+	      
+	    }
+	}
+	
+	
+###how to run
+	$ start node-app
 
 # Dictionary
 
