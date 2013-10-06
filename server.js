@@ -33,7 +33,6 @@
 		internal: path.join(__dirname, "/internal")
 	};
 	
-	
 	// config
 	app.config = require(`${internal}/config`);
 	
@@ -69,7 +68,47 @@
 	app.db = new app.Model();
 
 	
-	
+/////////////////////////////
+//	ENVIROMENT SPECIFIC STUFF
+////////////////////////////
+	var props = {};
+	server
+		.configure("production", function() {
+			
+			// cache to one day
+			props = {maxAge: 100 * 60 * 60 * 24};
+			
+			// set production console level
+			console.setLevel(console.LEVELS.WARN);
+
+			// Bury any uncaught exceptions. For the children. (Think of the children...)
+			process.on("uncaughtException", function(err) {
+				console.error("Caught exception:", err.message);
+				console.error(err.stack);
+			});
+		})
+		.configure("development", function() {
+			// no cache for dev
+			props =  {maxAge: 0};
+			
+			// Log all the things.
+			//server.use(express.logger("dev"));
+			console.setLevel(console.LEVELS.DEBUG);
+
+			// Exit with an error code on any uncaught exception.
+			process.on("uncaughtException", function(err) {
+				console.error("Caught exception:", err.message);
+				console.error(err.stack);
+				process.exit(1);
+			});
+
+		})
+	;
+		
+	// static location
+	var statics = express.static(`${app.dirs.external}/public`,props);
+	// use static location
+	server.use(statics);	
 	
 ////////////////
 //	SETUP
@@ -87,6 +126,8 @@
 			secret: "Shh! It's a secret.",
 			store: new RedisStore()
 		}))
+		
+		// we shouldn't run this every time :(
 		.use(stylus.middleware({
 			src: `${external}/private`,
 			dest: `${external}/public`,
@@ -94,6 +135,7 @@
 			debug: true,
 			compile: function(str,path) {
 				var styl = stylus(str);
+				
 				// custom stylus variables
 				for(fnName in server.stylus) {
 					styl.use(function(style) {
@@ -105,49 +147,6 @@
 				return styl;
 			}
 		}))
-		
-		// server settings depending on enviroment
-		.configure(function() {
-			var props = {};
-
-			// ---- PRODUCTION
-			if (server.get("env") === "production") {
-				
-				// cache to one day
-				props = {maxAge: 100 * 60 * 60 * 24};
-				
-				// set production console level
-				console.setLevel(console.LEVELS.WARN);
-
-				// Bury any uncaught exceptions. For the children. (Think of the children...)
-				process.on("uncaughtException", function(err) {
-					console.error("Caught exception:", err.message);
-					console.error(err.stack);
-				});
-
-			// ---- DEVELOPMENT
-			} else if (server.get("env") === "development") {
-				// no cache for dev
-				props =  {maxAge: 0};
-				
-				// Log all the things.
-				//server.use(express.logger("dev"));
-				console.setLevel(console.LEVELS.DEBUG);
-	
-				// Exit with an error code on any uncaught exception.
-				process.on("uncaughtException", function(err) {
-					console.error("Caught exception:", err.message);
-					console.error(err.stack);
-					process.exit(1);
-				});
-
-			}
-			
-			// static location
-			var statics = express.static(`${app.dirs.external}/public`,props);
-			// use static location
-			server.use(statics);
-		})
 		// Send all view-or-API requests through a pipe,
 		// extending req/res as needed.
 		.use(app.router.pipe)
