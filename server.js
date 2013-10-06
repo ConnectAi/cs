@@ -137,7 +137,7 @@
 				var styl = stylus(str);
 				
 				// custom stylus variables
-				for(fnName in server.stylus) {
+				for(let fnName in server.stylus) {
 					styl.use(function(style) {
 						style.define(fnName, function() {
 							return server.stylus[fnName](stylus);
