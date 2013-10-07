@@ -4,6 +4,7 @@
 	var express = require("express"),
 		http = require("http"),
 		path = require("path"),
+		hbs = require("hbs"),
 		RedisStore = require("connect-redis")(express);
 	// Make the console pretty.
 	require("consoleplusplus");
@@ -16,7 +17,7 @@
 	global.server = express();
 	global.log = console.log;
 	global.when = require("when");
-
+	global.hbs = hbs;
 
 ////////////////
 //	MODULES
@@ -115,7 +116,7 @@
 	server
 		.set("views", `${external}/views`)
 		.set("view engine", "html")
-		.engine("html", require("hbs").__express)
+		.engine("html", hbs.__express)
 		.use(express.compress())
 		.use(express.favicon())
 		.use(express.bodyParser())
