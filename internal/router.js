@@ -127,7 +127,9 @@ app.loader.then(function() {
 
 	for (let controller in app.controllers) {
 		for (let route in app.controllers[controller]) {
-			handleRoute(route, app.controllers[controller][route], controller);
+			if(typeof app.controllers[controller][route] !== "string") {
+				handleRoute(route, app.controllers[controller][route], controller);
+			}
 		}
 	}
 });

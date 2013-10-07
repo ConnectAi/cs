@@ -4,8 +4,7 @@
 	var express = require("express"),
 		http = require("http"),
 		path = require("path"),
-		RedisStore = require("connect-redis")(express),
-		stylus = require("stylus");
+		RedisStore = require("connect-redis")(express);
 	// Make the console pretty.
 	require("consoleplusplus");
 
@@ -106,7 +105,7 @@
 	;
 		
 	// static location
-	var statics = express.static(`${app.dirs.external}/public`,props);
+	var statics = express.static(`${external}/public`,props);
 	// use static location
 	server.use(statics);	
 	
@@ -128,24 +127,11 @@
 		}))
 		
 		// we shouldn't run this every time :(
-		.use(stylus.middleware({
+		.use(require("stylus").middleware({
 			src: `${external}/private`,
 			dest: `${external}/public`,
 			compress: true,
-			debug: true,
-			compile: function(str,path) {
-				var styl = stylus(str);
-				
-				// custom stylus variables
-				for(let fnName in server.stylus) {
-					styl.use(function(style) {
-						style.define(fnName, function() {
-							return server.stylus[fnName](stylus);
-						});
-					});
-				}
-				return styl;
-			}
+			debug: true
 		}))
 		// Send all view-or-API requests through a pipe,
 		// extending req/res as needed.
