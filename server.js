@@ -45,7 +45,6 @@
 		reduce: false
 	}).reduce((files, file) => {
 		files[file.name] = file.exports;
-		files[file.name].name = file.name;
 		return files;
 	}, {});
 
