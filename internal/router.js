@@ -69,9 +69,7 @@ var pipe = function(req, res, next) {
 
 var wrapHandler = function(handler) {
 	return function(req, res, next) {
-		let params = req.route.keys.map((key) => {
-			return req.params[key.name];
-		});
+		let params = req.route.keys.map((key) => req.params[key.name]);
 		handler.call(this, req, res, next, ...params);
 	};
 };
