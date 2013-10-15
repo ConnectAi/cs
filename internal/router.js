@@ -67,6 +67,15 @@ var pipe = function(req, res, next) {
 	next();
 };
 
+var wrapHandler = function(handler) {
+	return function(req, res, next) {
+		let params = req.route.keys.map((key) => {
+			return req.params[key.name];
+		});
+		handler.call(this, req, res, next, ...params);
+	};
+};
+
 var makeRoute = function(verb, route = controller, handlers, controller = "") {
 	let originalRoute = route;
 
@@ -84,6 +93,12 @@ var makeRoute = function(verb, route = controller, handlers, controller = "") {
 		route = new RegExp(`^\\/${controller}(\\/.*)?`);
 	} else {
 		route = (app.config.path + route).replace(/^\/\//, "/");
+	}
+
+	if (typeof handlers === "function") {
+		handlers = wrapHandler(handlers);
+	} else if (Array.isArray(handlers)) {
+		handlers = handlers.map(wrapHandler);
 	}
 
 	server[verb](route, handlers);
