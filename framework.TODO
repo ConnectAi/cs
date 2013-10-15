@@ -24,20 +24,17 @@ express:
 	✔ @5 route re-writing @done (13-09-25 09:47)
 		as opposed to res.redirect()
 		this exists (res.render()), but should possibly be streamlined
-	☐ @? make routes as keys work in controllers
+	✔ @? make routes as keys work in controllers @done (13-10-15 13:10)
 		this is primarily to allow for infinitely deep routes
 	✔ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js @done (13-07-21 13:22)
-	☐ @? reassign controller actions when parsing
-		I want to be able to say app.controllers.Users.get.notes instead of app.controllers.Users["get /notes"]
 	☐ make routes case-insensitive
 		I want to say "POST /action"
 	☐ server.use doesn't really work, because of when we run it
 		I couldn't find an easy solution for this, as even running them right before routes is in app.loader.then, which makes it after the error-handling middleware...
 changes:
 	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
-	☐ move /routes.js => /controllers/index.js
-	☐ new controller syntax (https://github.com/ConnectAi/node-framework/issues/1)
-	☐ @? get rid of empty actions calling res.view() I think
+	✔ move /routes.js => /controllers/index.js @done (13-10-15 13:10)
+	✔ new controller syntax (https://github.com/ConnectAi/node-framework/issues/1) @done (13-10-15 13:10)
 enhancements:
 	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 	☐ make models defined in such a way that they can benefit from inheritance
@@ -76,7 +73,7 @@ features:
 ☐ double repo
 	✔ @1 install app-level npm modules (moment, gm, etc) @done (13-07-18 00:23)
 	✔ @5 distribution @done (13-07-18 00:23)
-	☐ experiment with making cornerstone an npm module
+	☐ experiment with making cornerstone a global npm module
 ☐ future
 	☐ @? database adapters
 ☐ Documentation
