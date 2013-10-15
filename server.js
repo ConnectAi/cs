@@ -22,34 +22,33 @@
 ////////////////
 //	MODULES
 ////////////////
-	
+
 	// control when the app is done loading
 	var appLoader = when.defer();
 	app.loader = appLoader.promise;
-	
+
 	// app directories
 	var {external, internal} = app.dirs = {
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
-	
+
 	// config
 	app.config = require(`${internal}/config`);
-	
+
 	// get util, define time
 	app.util = require(`${internal}/util`);
 	global.Time = app.util.Time;
-	
+
 	// get all our controllers
 	app.controllers = app.util.loader.dirSync("controllers", {
-		reduce: false,
-		whitelist: (file) => (file !== "index.js")
+		reduce: false
 	}).reduce((files, file) => {
 		files[file.name] = file.exports;
 		files[file.name].name = file.name;
 		return files;
 	}, {});
-	
+
 	// get the router
 	app.router = require(`${internal}/router`);
 	// get the controller
@@ -67,17 +66,17 @@
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
 
-	
+
 /////////////////////////////
 //	ENVIROMENT SPECIFIC STUFF
 ////////////////////////////
 	var props = {};
 	server
 		.configure("production", function() {
-			
+
 			// cache to one day
 			props = {maxAge: 100 * 60 * 60 * 24};
-			
+
 			// set production console level
 			console.setLevel(console.LEVELS.WARN);
 
@@ -90,7 +89,7 @@
 		.configure("development", function() {
 			// no cache for dev
 			props =  {maxAge: 0};
-			
+
 			// Log all the things.
 			//server.use(express.logger("dev"));
 			console.setLevel(console.LEVELS.DEBUG);
@@ -104,12 +103,12 @@
 
 		})
 	;
-		
+
 	// static location
 	var statics = express.static(`${external}/public`,props);
 	// use static location
-	server.use(statics);	
-	
+	server.use(statics);
+
 ////////////////
 //	SETUP
 ////////////////
@@ -126,7 +125,7 @@
 			secret: "Shh! It's a secret.",
 			store: new RedisStore()
 		}))
-		
+
 		// we shouldn't run this every time :(
 		.use(require("stylus").middleware({
 			src: `${external}/private`,
@@ -153,7 +152,7 @@
 			}
 		})
 	;
-	
+
 	// server stylus var for custom stylus things
 	server.stylus = {};
 

@@ -120,8 +120,8 @@ var handleRoute = function(route, handlers, controller) {
 
 app.loader.then(function() {
 	// Make routes for each policy defined in the config.
-	for (let route in app.config.routes) {
-		let handlers = app.config.routes[route];
+	for (let route in app.controllers.index) {
+		let handlers = app.controllers.index[route];
 		handleRoute(route, handlers);
 	}
 

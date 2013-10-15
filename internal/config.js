@@ -1,5 +1,4 @@
 var external = require(`${app.dirs.external}/config`);
-external.routes = require(`${app.dirs.external}/controllers`);
 
 var defaults = {
 	name: "[name]",
@@ -13,8 +12,7 @@ var config = {
 	port: external.port || defaults.port,
 	env: (process.argv.length === 3) ? process.argv[2] : defaults.env,
 	path: external.path || defaults.path,
-	db: external.db,
-	routes: external.routes
+	db: external.db
 };
 
 
