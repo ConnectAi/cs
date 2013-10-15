@@ -90,6 +90,7 @@ var makeRoute = function(verb, route = controller, handlers, controller = "") {
 }
 
 var handleRoute = function(route, handlers, controller) {
+	if (typeof handlers === "string") return;
 	if (!Array.isArray(handlers)) handlers = [handlers];
 
 	var groups = [];
@@ -126,8 +127,8 @@ app.loader.then(function() {
 	}
 
 	for (let controller in app.controllers) {
-		for (let route in app.controllers[controller]) {
-			if(typeof app.controllers[controller][route] !== "string") {
+		if (controller !== "index") {
+			for (let route in app.controllers[controller]) {
 				handleRoute(route, app.controllers[controller][route], controller);
 			}
 		}
