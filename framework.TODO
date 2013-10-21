@@ -1,63 +1,24 @@
-✔ app.utilities.log @done (13-07-02 23:27)
-	appends to .log file
-✔ make external routes override/create routes @done (13-06-26 18:50)
-✔ make a config setting for title, which lets them use markdown syntax to set page titles or something @done (13-07-04 20:37)
-	"{{name}} | {{action}} {{controller}} {{id}}"
-✔ policies in config, allow non array @done (13-07-04 18:13)
-✔ handle `date` and similar MySQL types with node @done (13-07-01 18:48)
-✔ handle controller/method without a controller existing @done (13-07-07 23:27)
-errors:
-	✔ error page @done (13-06-26 21:59)
-	✔ user error page (going to an ID and not found) @done (13-06-26 21:59)
-	✔ ajax errors @done (13-06-26 18:34)
-	✔ error redirect @done (13-07-07 23:27)
-ES6:
-	✔ node_modules regex error @done (13-07-01 18:39)
-	✔ require methods need to compile everything in es6 @done (13-07-01 18:39)
-	✔ escape backticks in quasi literals @done (13-07-01 18:54)
-	✔ properties in classes @done (13-07-07 23:19)
-	☐ @∞ parse external js files
-		could be from private -> public, just like stylus
-		this is actually pending https://github.com/google/traceur-compiler/issues/314
 express:
-	✔ enviroments && config talking @done (13-07-06 18:40)
-	✔ @5 route re-writing @done (13-09-25 09:47)
-		as opposed to res.redirect()
-		this exists (res.render()), but should possibly be streamlined
-	✔ @? make routes as keys work in controllers @done (13-10-15 13:10)
-		this is primarily to allow for infinitely deep routes
-	✔ @2 make controller instances before routes.js is parsed, so controller actions can be used within routes.js @done (13-07-21 13:22)
-	☐ make routes case-insensitive
-		I want to say "POST /action"
+	☐ make routes case-sensitive
 	☐ server.use doesn't really work, because of when we run it
 		I couldn't find an easy solution for this, as even running them right before routes is in app.loader.then, which makes it after the error-handling middleware...
 changes:
-	✔ @? make controllers objects instead of classes @done (13-07-20 23:20)
-	✔ move /routes.js => /controllers/index.js @done (13-10-15 13:10)
-	✔ new controller syntax (https://github.com/ConnectAi/node-framework/issues/1) @done (13-10-15 13:10)
+	☐ experiment with making cornerstone a global npm module
 enhancements:
-	✔ swap out Q for when (https://github.com/cujojs/when) @done (13-07-10 18:34)
 	☐ make models defined in such a way that they can benefit from inheritance
 		for example {ED, GC, IP} should be able to inherit from User
 	☐? possibly controllers as well ^^^^^
+	☐ parse external js files
+		could be from private/js -> public/js, just like stylus
 	prod:
 		☐ concat/minify scripts and styles
-		✔ gzip resources @done (13-07-21 13:42)
 		☐ compress images
-		✔ far-future expires headers @done (13-07-21 15:23)
 		☐ cache busters
 			likely option-based:  git sha1s, timestamps, none
 features:
-	✔ make a Time class @done (13-07-11 22:52)
-		with getters, and a custom toString
-	✔ {{{include}}} @done (13-07-11 23:17)
-		✔ make the helper, so we don't need partials @done (13-07-05 17:43)
-		✔ assume .html unless specified @done (13-07-11 23:09)
-		☐ @? make path dynamic, based on leading /
-			after thinking on this for a bit, I don't think it's possible
-	✔ app.util.loader(dir, [whitelist-regex]) @done (13-07-21 22:48)
-		we'll make it convention to use this in routes.js to get the services dir
-	☐ streamed log (websockets)
+	☐ websockets
+		☐ API access
+		☐ streamed log
 	☐ dynamic layout (or lack thereof) based on !!req.xhr
 	database:
 		☐ make an app.db function that lets you select specified columns
@@ -70,57 +31,5 @@ features:
 				.select("user.first_name", "cart.id")
 				.from("user", "cart")
 				.where("user.id < cart.id");
-☐ double repo
-	✔ @1 install app-level npm modules (moment, gm, etc) @done (13-07-18 00:23)
-	✔ @5 distribution @done (13-07-18 00:23)
-	☐ experiment with making cornerstone a global npm module
 ☐ future
-	☐ @? database adapters
-☐ Documentation
-	☐ hbs partials
-	☐ hbs block parts
-	☐ custom hbs helpers
-	☐ classes
-	☐ models
-	☐ views
-	☐ router keys in controllers
-	☐ controller restful keys
-	☐ services
-	☐ policies
-	☐ db model (including one off methods)
-	☐ running production vs dev
-	☐ the app global
-	☐ custom req and res methods (res.console, res.error)
-	☐ Q
-	☐ Redis
-	☐ ES6
-		☐ () => {} scope
-		☐ default params
-		☐ spread into variables
-		☐ super
-		☐ quasi literals
-
-
-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-Archive:
- ✔ create the req/res extended functionality @done (13-06-17 20:34)
- ✔ inheritance of controllers @done (13-06-17 22:03)
- ✔ read FS for controllers @done (13-06-17 22:20)
- ✔ create DB class and methods @done (13-06-19 01:41)
- ✔ get layouts working @done (13-06-19 23:35)
- ✔ overrides @done (13-06-19 23:35)
- ✔ abstract router @done (13-06-17 20:38)
- ✔ make the global variable a custom object, instead of express' app @done (13-06-17 20:42)
- ✔ move controllers/index to /internal @done (13-06-19 09:51)
- ✔ move models/index to /internal @done (13-06-19 09:52)
- ✔ move views to /external @done (13-06-18 19:25)
- ✔ move route functions from controller to router @done (13-06-19 09:09)
- ✔ res.toConsole() @done (13-06-20 00:07)
- ✔ res.console.log(), res.console.warn() @done (13-06-20 00:07)
- ✔ uppercase models/controllers @done (13-06-19 09:52)
- ✔ get index routes working @done (13-06-19 08:54)
- ✔ make creating/accessing routes easier @done (13-06-19 09:08)
- ✔ authentication process @done (13-06-24 23:29)
- ✔ better server starting process @done (13-06-24 19:34)
- ✔ policies @done (13-06-24 23:29)
- ✔ services @done (13-06-24 23:29)
+	☐ database adapters
