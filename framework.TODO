@@ -8,6 +8,7 @@ enhancements:
 	☐ make models defined in such a way that they can benefit from inheritance
 		for example {ED, GC, IP} should be able to inherit from User
 	☐? possibly controllers as well ^^^^^
+	☐ nib for stylus baked in
 	☐ parse external js files
 		could be from private/js -> public/js, just like stylus
 	prod:
@@ -16,6 +17,7 @@ enhancements:
 		☐ cache busters
 			likely option-based:  git sha1s, timestamps, none
 features:
+	☐ allow for middleware
 	☐ websockets
 		☐ API access
 		☐ streamed log
