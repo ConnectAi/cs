@@ -5,7 +5,9 @@
 		http = require("http"),
 		path = require("path"),
 		hbs = require("hbs"),
-		RedisStore = require("connect-redis")(express);
+		RedisStore = require("connect-redis")(express),
+		stylus = require("stylus"),
+		nib = require("nib");
 	// Make the console pretty.
 	require("consoleplusplus");
 
@@ -32,7 +34,9 @@
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
-
+	
+	log('EXTERNAL',external);
+	
 	// config
 	app.config = require(`${internal}/config`);
 
@@ -102,6 +106,17 @@
 	;
 
 ////////////////
+//	NIB
+////////////////
+function compile(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .set('compress', true)
+    .use(nib())
+    .import('nib');
+}
+
+////////////////
 //	SETUP
 ////////////////
 	server
@@ -117,11 +132,12 @@
 			secret: "Shh! It's a secret.",
 			store: new RedisStore()
 		}))
-		.use(require("stylus").middleware({
+		.use(stylus.middleware({
 			src: `${external}/private`,
 			dest: `${external}/public`,
 			compress: true,
-			debug: true
+			debug: true,
+			compile: compile
 		}))
 		.use(express.static(`${external}/public`, props))
 		// Send all view-or-API requests through a pipe,
@@ -151,7 +167,7 @@
 //	START
 ////////////////
 	var start = function() {
-		require(`${app.dirs.external}/bootstrap`);
+		require(`${app.dirs.external}/app`);
 
 		http.createServer(server).listen(server.get("port"), function() {
 			console.info("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
