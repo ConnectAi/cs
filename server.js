@@ -67,12 +67,11 @@
 
 
 /////////////////////////////
-//	ENVIROMENT SPECIFIC STUFF
+//	ENVIROMENT SPECIFIC
 ////////////////////////////
 	var props = {};
 	server
 		.configure("production", function() {
-
 			// cache to one day
 			props = {maxAge: 100 * 60 * 60 * 24};
 
@@ -99,14 +98,8 @@
 				console.error(err.stack);
 				process.exit(1);
 			});
-
 		})
 	;
-
-	// static location
-	var statics = express.static(`${external}/public`,props);
-	// use static location
-	server.use(statics);
 
 ////////////////
 //	SETUP
@@ -124,14 +117,13 @@
 			secret: "Shh! It's a secret.",
 			store: new RedisStore()
 		}))
-
-		// we shouldn't run this every time :(
 		.use(require("stylus").middleware({
 			src: `${external}/private`,
 			dest: `${external}/public`,
 			compress: true,
 			debug: true
 		}))
+		.use(express.static(`${external}/public`, props))
 		// Send all view-or-API requests through a pipe,
 		// extending req/res as needed.
 		.use(app.router.pipe)
