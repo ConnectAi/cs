@@ -1,4 +1,3 @@
-log(`${app.dirs.external}/config`);
 var external = require(`${app.dirs.external}/config`);
 
 var defaults = {

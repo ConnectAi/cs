@@ -34,9 +34,7 @@
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
-	
-	log('EXTERNAL',external);
-	
+
 	// config
 	app.config = require(`${internal}/config`);
 
