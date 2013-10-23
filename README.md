@@ -288,16 +288,16 @@ Let's run our app behind Nginx on port `8000`. This assumes your app is living i
 
 	start on started mountall
 	stop on shutdown
-
+	
 	respawn
 	respawn limit 99 5
-
+	
 	script
-		export HOME="/var/www/your-app"
-		cd $HOME
-		exec /usr/bin/node /var/www/your-app/index.js production >> /var/log/node.log 2>&1
+	    export HOME="/var/www"
+	    cd $HOME
+	    exec /usr/bin/node /var/www/index.js production >> /var/log/node.log 2>&1
 	end script
-
+	
 	post-start script
 	end script
 
