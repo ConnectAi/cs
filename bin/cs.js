@@ -13,21 +13,26 @@ program
 
 program.command("init [folder]")
 	.description("Create an empty cornerstone project or reinitialize an existing one.")
-	.action(function(folder) {
+	.option("-b, --bare", "bare project")
+	.action(function(folder, options) {
 		var dir = process.cwd();
 		if (folder) dir = path.join(dir, folder);
 
-		ghdown("git@github.com:ConnectAi/cornerstone-skeleton.git", dir)
-			.on("error", function(err) {
-				console.error(err);
-			})
-			.on("end", function() {
-				fs.unlink(path.join(dir, ".gitignore"));
-				npm.load(require(path.join(dir, "./package")), function() {
-					npm.commands.install();
-				});
-			})
-		;
+		if (options.bare) {
+			console.log("bare project");
+		} else {
+			ghdown("git@github.com:ConnectAi/cornerstone-skeleton.git", dir)
+				.on("error", function(err) {
+					console.error(err);
+				})
+				.on("end", function() {
+					fs.unlink(path.join(dir, ".gitignore"));
+					npm.load(require(path.join(dir, "./package")), function() {
+						npm.commands.install();
+					});
+				})
+			;
+		}
 	})
 ;
 
