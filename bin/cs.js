@@ -11,17 +11,18 @@ program
 	.version(require("../package").version)
 ;
 
-program.command("init")
+program.command("init [folder]")
 	.description("Create an empty cornerstone project or reinitialize an existing one.")
-	.action(function() {
+	.action(function(folder) {
 		var dir = process.cwd();
+		if (folder) dir = path.join(dir, folder);
 
-		ghdown("git@github.com:ConnectAi/cornerstone-skeleton.git", process.cwd())
+		ghdown("git@github.com:ConnectAi/cornerstone-skeleton.git", dir)
 			.on("error", function(err) {
 				console.error(err);
 			})
 			.on("end", function() {
-				fs.unlink(".gitignore");
+				fs.unlink(path.join(dir, ".gitignore"));
 				npm.load(require(path.join(dir, "./package")), function() {
 					npm.commands.install();
 				});
