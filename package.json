@@ -1,11 +1,12 @@
 {
   "name": "cornerstone",
-  "version": "0.1.0",
-  "description": "ES6-based framework for node.js",
+  "version": "0.1.1",
+  "description": "ES6-based framework for Node.js",
   "engines": {
     "node": ">=0.8"
   },
   "main": "./app.js",
+  "bin": "./bin/cs.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ConnectAi/cornerstone"
@@ -21,6 +22,7 @@
     "source-map-support": "~0.2.3",
     "consoleplusplus": "~1.2.0",
     "dateformat": "~1.0.6-1.2.3",
-    "nib": "~1.0.1"
+    "nib": "~1.0.1",
+    "commander": "~2.0.0"
   }
 }

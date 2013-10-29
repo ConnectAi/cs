@@ -4,6 +4,9 @@ express:
 		I couldn't find an easy solution for this, as even running them right before routes is in app.loader.then, which makes it after the error-handling middleware...
 changes:
 	☐ experiment with making cornerstone a global npm module
+		☐ init
+		☐ db-to-model
+		☐ model-to-db
 enhancements:
 	☐ make models defined in such a way that they can benefit from inheritance
 		for example {ED, GC, IP} should be able to inherit from User
