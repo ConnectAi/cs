@@ -49,11 +49,23 @@ program.command("init [folder]")
 						});
 
 					dirs.forEach(function(dir) {
-						fs.mkdirSync(outputFolder + "/" + dir);
+						var where = outputFolder + "/" + dir;
+						if (!fs.existsSync(where)) {
+							fs.mkdirSync(where);
+							console.log("Writing", where);
+						} else {
+							console.log("Skipping", where);
+						}
 					});
 
 					files.forEach(function(file) {
-						request(urls.raw + file).pipe(fs.createWriteStream(outputFolder + "/" + file));
+						var where = outputFolder + "/" + file;
+						if (!fs.existsSync(where)) {
+							request(urls.raw + file).pipe(fs.createWriteStream(where));
+							console.log("Writing", where);
+						} else {
+							console.log("Skipping", where);
+						}
 					});
 				}
 			});
