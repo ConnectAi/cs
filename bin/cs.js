@@ -22,6 +22,7 @@ program.command("init [folder]")
 	.action(function(folder, options) {
 		var outputFolder = process.cwd();
 		if (folder) outputFolder = path.join(outputFolder, folder);
+		if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder);
 
 		if (options.bare) {
 			console.log("bare project");
@@ -67,6 +68,12 @@ program.command("init [folder]")
 							console.log("Skipping", where);
 						}
 					});
+
+					if (folder) {
+						var config = require(outputFolder + "/config.json");
+						config.name = folder;
+						fs.writeFile(outputFolder + "/config.json", JSON.stringify(config, null, "\t"));
+					}
 				}
 			});
 		}
