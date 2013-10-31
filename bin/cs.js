@@ -33,23 +33,13 @@ program.command("init [folder]")
 			}, function(err, res, body) {
 				var dirs, files;
 				if (!err && res.statusCode == 200) {
-					dirs = body.tree
-						.filter(function(branch) {
-							return branch.type === "tree";
-						})
-						.map(function(branch) {
-							return branch.path;
-						});
+					var nodes = body.tree.reduce(function(nodes, branch) {
+						if (!(branch.type in nodes)) nodes[branch.type] = [];
+						nodes[branch.type].push(branch.path);
+						return nodes;
+					}, {});
 
-					files = body.tree
-						.filter(function(branch) {
-							return branch.type !== "tree";
-						})
-						.map(function(branch) {
-							return branch.path;
-						});
-
-					dirs.forEach(function(dir) {
+					nodes.tree.forEach(function(dir) {
 						var where = outputFolder + "/" + dir;
 						if (!fs.existsSync(where)) {
 							fs.mkdirSync(where);
@@ -59,21 +49,24 @@ program.command("init [folder]")
 						}
 					});
 
-					files.forEach(function(file) {
+					nodes.blob.forEach(function(file) {
 						var where = outputFolder + "/" + file;
 						if (!fs.existsSync(where)) {
-							request(urls.raw + file).pipe(fs.createWriteStream(where));
+							var writer = fs.createWriteStream(where);
+							request(urls.raw + file).pipe(writer);
+
+							if (folder && file === "config.json") {
+								writer.on("finish", function() {
+									var config = require(where);
+									config.name = folder;
+									fs.writeFile(where, JSON.stringify(config, null, "\t"));
+								});
+							}
 							console.log("Writing", where);
 						} else {
 							console.log("Skipping", where);
 						}
 					});
-
-					if (folder) {
-						var config = require(outputFolder + "/config.json");
-						config.name = folder;
-						fs.writeFile(outputFolder + "/config.json", JSON.stringify(config, null, "\t"));
-					}
 				}
 			});
 		}
