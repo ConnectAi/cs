@@ -19,12 +19,15 @@ var setupHandlebars = function() {
 	    return val;
 	});
 
-	hbs.registerHelper("include", function(file, ...args) {
-		var context = args[0];
-		if (args.length === 1) context = this;
+	hbs.registerHelper("include", function(file, context, options) {
+		if (arguments.length < 3) {
+			options = context;
+			context = this;
+		}
 		if (!/\.[\w-]+$/.test(file)) file += ".html";
 		var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
 		var contents = fs.readFileSync(filepath, "utf8") || "";
+		if (options.hash.inline) return contents;
 		return hbs.compile(contents)(context);
 	});
 
@@ -33,7 +36,7 @@ var setupHandlebars = function() {
 		var args = slice.call(arguments, 0, -1);
 		var options = slice.call(arguments, -1)[0];
 		if (!args.length) args.unshift(this);
-		if (options.hash.write) {
+		if (options.hash.inline) {
 			return `<script>console.log("LOG:", ${JSON.stringify(args)});</script>`;
 		}
 		return console.log("LOG:", args) || "";
