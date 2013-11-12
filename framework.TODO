@@ -38,3 +38,4 @@ features:
 				.where("user.id < cart.id");
 ☐ future
 	☐ database adapters
+☐ document rewrite and redirect
