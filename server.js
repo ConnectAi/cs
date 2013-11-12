@@ -165,11 +165,13 @@ function compile(str, path) {
 //	START
 ////////////////
 	var start = function() {
-		require(`${app.dirs.external}/app`);
-
-		http.createServer(server).listen(server.get("port"), function() {
+		let listener = http.createServer(server).listen(server.get("port"), function() {
 			console.info("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
+
+		server.io = require("socket.io").listen(listener);
+
+		require(`${app.dirs.external}/app`);
 
 		// Now that all the resources have been loaded,
 		// run all code that depends on them.
