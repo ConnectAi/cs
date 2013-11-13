@@ -8,8 +8,8 @@ var fs = require("fs")
 ;
 
 var urls = {
-	raw: "https://raw.github.com/ConnectAi/cornerstone-skeleton/master/",
-	tree: "https://api.github.com/repos/connectai/cornerstone-skeleton/git/trees/master?recursive=1"
+	raw: "https://raw.github.com/ConnectAi/cornerstone-skeleton/dev/master/",
+	tree: "https://api.github.com/repos/connectai/cornerstone-skeleton/git/trees/dev%2Fmaster?recursive=1"
 };
 
 program
