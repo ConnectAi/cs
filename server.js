@@ -170,6 +170,7 @@ function compile(str, path) {
 		});
 
 		server.io = require("socket.io").listen(listener);
+		server.io.set("log level", 2);
 
 		require(`${app.dirs.external}/app`);
 
