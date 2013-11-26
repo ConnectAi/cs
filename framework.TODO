@@ -7,6 +7,8 @@ changes:
 		☐ init
 		☐ db-to-model
 		☐ model-to-db
+fixes:
+	☐ make {{extend}} work with req.redirect()
 enhancements:
 	☐ make models defined in such a way that they can benefit from inheritance
 		for example {ED, GC, IP} should be able to inherit from User
