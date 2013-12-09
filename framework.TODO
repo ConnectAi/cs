@@ -27,6 +27,7 @@ features:
 		☐ API access
 		☐ streamed log
 	☐ dynamic layout (or lack thereof) based on !!req.xhr
+	☐ arbitrary config items
 	database:
 		☐ make an app.db function that lets you select specified columns
 			db.find(["id", "first_name"], "id = 2", "user");
