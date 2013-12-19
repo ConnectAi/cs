@@ -28,6 +28,11 @@ var pipe = function(req, res, next) {
 				.replace(/^\//, "")
 				.replace(/\/(:|index).*/, "");
 		}
+		
+		// a prefixed path as an option
+		if(res.locals.path) {
+			path = res.locals.path + "/" + path;
+		}
 
 		// Expose public data to browser.
 		res.locals.exposed.public = expose;

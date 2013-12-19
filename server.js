@@ -34,9 +34,14 @@
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
-
+	
 	// config
 	app.config = require(`${internal}/config`);
+	
+	// cache
+	app.CACHE = {};
+	// includes cache
+	app.CACHE.includes = {};
 
 	// get util, define time
 	app.util = require(`${internal}/util`);

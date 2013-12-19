@@ -19,13 +19,24 @@ var setupHandlebars = function() {
 	    return val;
 	});
 
-	hbs.registerHelper("include", function(file, ...args) {
-		var context = args[0];
-		if (args.length === 1) context = this;
-		if (!/\.[\w-]+$/.test(file)) file += ".html";
-		var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
-		var contents = fs.readFileSync(filepath, "utf8") || "";
-		return hbs.compile(contents)(context);
+	hbs.registerHelper("include", function(file, context, options) {
+		
+		if (arguments.length < 3) {
+             options = context;
+             context = this;
+        }
+		
+		if(app.CACHE.includes[file]) {
+			return app.CACHE.includes[file](context);
+		} else {
+		
+			if (!/\.[\w-]+$/.test(file)) file += ".html";
+			var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
+			var contents = fs.readFileSync(filepath, "utf8") || "";
+			if (options.hash.inline) return contents;
+			app.CACHE.includes[file] = hbs.compile(contents);
+			return hbs.compile(contents)(context);
+		}
 	});
 
 	hbs.registerHelper("log", function() {
@@ -122,6 +133,8 @@ var setupHandlebars = function() {
 					}else{
 						return l in r;
 					}
+				} else if(typeof r === 'string') {
+					return !!~r.indexOf(l);
 				}
 			}
 		};

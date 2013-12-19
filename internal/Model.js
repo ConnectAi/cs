@@ -83,7 +83,7 @@ class Model {
 		// run the query
 		return this.query(q, data)
 			.then((result) => {
-				return result.insertId || id;
+				return result.insertId || id || true;
 			});
 	}
 
