@@ -5,7 +5,6 @@
 		http = require("http"),
 		path = require("path"),
 		hbs = require("hbs"),
-		RedisStore = require("connect-redis")(express),
 		stylus = require("stylus"),
 		nib = require("nib");
 	// Make the console pretty.
@@ -126,10 +125,16 @@ function compile(str, path) {
 		.use(express.bodyParser())
 		.use(express.methodOverride())
 		.use(express.cookieParser())
-		.use(express.session({
-			secret: "Shh! It's a secret.",
-			store: new RedisStore()
-		}))
+		.use(express.session(
+			(function() {
+				let session = { secret: "Shh! It's a secret." };
+				if (app.config.useRedis) {
+					let RedisStore = require("connect-redis")(express);
+					session.store = new RedisStore();
+				}
+				return session;
+			})()
+		))
 		.use(stylus.middleware({
 			src: `${external}/private`,
 			dest: `${external}/public`,
