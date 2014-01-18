@@ -29,7 +29,10 @@ program.command("init [folder]")
 		} else {
 			request.get({
 				url: urls.tree,
-				json: true
+				json: true,
+				headers: {
+					"User-Agent": "request"
+				}
 			}, function(err, res, body) {
 				var dirs, files;
 				if (!err && res.statusCode == 200) {
