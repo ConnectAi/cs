@@ -174,8 +174,10 @@ function compile(str, path) {
 			console.info("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 
-		server.io = require("socket.io").listen(listener);
-		server.io.set("log level", 2);
+		if (app.config.useSockets) {
+			server.io = require("socket.io").listen(listener);
+			server.io.set("log level", 2);
+		}
 
 		require(`${app.dirs.external}/app`);
 

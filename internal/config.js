@@ -4,7 +4,9 @@ var defaults = {
 	name: "[name]",
 	port: process.env.PORT || 3000,
 	env: process.env.NODE_ENV || "development",
-	path: "/"
+	path: "/",
+	useRedis: false,
+	useSockets: true
 };
 
 var config = {
@@ -12,7 +14,9 @@ var config = {
 	port: external.port || defaults.port,
 	env: (process.argv.length === 3) ? process.argv[2] : defaults.env,
 	path: external.path || defaults.path,
-	db: external.db
+	db: external.db,
+	useRedis: external.useRedis || defaults.useRedis,
+	useSockets: external.useSockets || defaults.useSockets
 };
 
 
