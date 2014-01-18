@@ -20,15 +20,23 @@ var setupHandlebars = function() {
 	});
 
 	hbs.registerHelper("include", function(file, context, options) {
+		
 		if (arguments.length < 3) {
-			options = context;
-			context = this;
+             options = context;
+             context = this;
+        }
+		
+		if(app.CACHE.includes[file]) {
+			return app.CACHE.includes[file](context);
+		} else {
+		
+			if (!/\.[\w-]+$/.test(file)) file += ".html";
+			var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
+			var contents = fs.readFileSync(filepath, "utf8") || "";
+			if (options.hash.inline) return contents;
+			app.CACHE.includes[file] = hbs.compile(contents);
+			return hbs.compile(contents)(context);
 		}
-		if (!/\.[\w-]+$/.test(file)) file += ".html";
-		var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
-		var contents = fs.readFileSync(filepath, "utf8") || "";
-		if (options.hash.inline) return contents;
-		return hbs.compile(contents)(context);
 	});
 
 	hbs.registerHelper("log", function() {
@@ -36,7 +44,7 @@ var setupHandlebars = function() {
 		var args = slice.call(arguments, 0, -1);
 		var options = slice.call(arguments, -1)[0];
 		if (!args.length) args.unshift(this);
-		if (options.hash.inline) {
+		if (options.hash.write) {
 			return `<script>console.log("LOG:", ${JSON.stringify(args)});</script>`;
 		}
 		return console.log("LOG:", args) || "";
@@ -125,6 +133,8 @@ var setupHandlebars = function() {
 					}else{
 						return l in r;
 					}
+				} else if(typeof r === 'string') {
+					return !!~r.indexOf(l);
 				}
 			}
 		};
