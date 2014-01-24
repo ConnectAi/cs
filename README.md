@@ -304,27 +304,12 @@ Let's run our app behind Nginx on port `8000`. This assumes your app is living i
 
 ###nginx setup
 
-	upstream <<APP_NAME>> {
-    	server 127.0.0.1:8001;
-	}
-	
 	server {
-	    server_name <<DOMAIN>>;
-	    listen 80;
-	    access_log  /var/log/nginx/app.node.log;
-	
-	    location / {
-	      proxy_pass http://<<APP_NAME>>;
-	      proxy_redirect off;
-	      proxy_set_header X-Real-IP $remote_addr;
-	      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-	      proxy_set_header Host $http_host;
-	      proxy_set_header X-NginX-Proxy true;
-	      proxy_http_version 1.1;
-	      proxy_set_header Upgrade $http_upgrade;
-	      proxy_set_header Connection "upgrade";
-	
-	    }
+		listen 80;
+		server_name <<DOMAIN>>;
+		location / {
+			proxy_pass	http://127.0.0.1:3500/;
+		}
 	}
 
 
