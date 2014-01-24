@@ -303,12 +303,13 @@ Let's run our app behind Nginx on port `8000`. This assumes your app is living i
 
 
 ###nginx setup
+#### assumes your app is running on 8000
 
 	server {
 		listen 80;
 		server_name <<DOMAIN>>;
 		location / {
-			proxy_pass	http://127.0.0.1:3500/;
+			proxy_pass	http://127.0.0.1:8000/;
 		}
 	}
 
