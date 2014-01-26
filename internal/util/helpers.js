@@ -22,9 +22,9 @@ var setupHandlebars = function() {
 	hbs.registerHelper("include", function(file, context, options) {
 		
 		if (arguments.length < 3) {
-             options = context;
-             context = this;
-        }
+        		options = context;
+        		context = this;
+        	}
 		
 		if(app.CACHE.includes[file]) {
 			return app.CACHE.includes[file](context);
