@@ -39,8 +39,6 @@
 
 	// cache
 	app.CACHE = {};
-	// includes cache
-	app.CACHE.includes = {};
 
 	// get util, define time
 	app.util = require(`${internal}/util`);

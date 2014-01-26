@@ -1,5 +1,4 @@
 var fs = require("fs");
-var Time = require("./Time");
 
 var capitalize = function(word) {
 	return word[0].toUpperCase() + word.substr(1);
@@ -19,15 +18,30 @@ var randomString = function(length = 8) {
 };
 
 var log = function(line) {
-	var date = new Time().format("Y-M-D | h:m:s");
-	fs.appendFile("app.log", `${date}:\t${line}\n`);
+	var D = date.getDate(),
+		M = date.getMonth() + 1,
+		Y = date.getFullYear(),
+		h = date.getHours(),
+		m = date.getMinutes(),
+		s = date.getSeconds();
+	fs.appendFile("app.log", `${Y}-${M}-${D} | ${h}:${m}${s}:\t${line}\n`);
 };
 
 var include = function(path) {
+	// make sure we have an includes cache var
 	if(!app.CACHE.includes) app.CACHE.includes = {};
-	if(app.CACHE.includes[path]) {
-		return hbs.compile(app.CACHE.includes[file](context);
+	
+	// prepend the external dir
+	path = app.dirs.external + '/' + path;
+	
+	// if there is no cached path
+	if(!app.CACHE.includes[path]) {
+		var contents = fs.readFileSync(path, "utf8") || "";
+		app.CACHE.includes[path] = contents;
 	}
+	
+	// return the compiled function
+	return hbs.compile(app.CACHE.includes[path]);
 }
 
 require("./helpers")();
@@ -37,7 +51,6 @@ module.exports = {
 	validateEmail,
 	randomString,
 	log,
-	Time,
 	include,
 	loader: require("./loader")
 };
