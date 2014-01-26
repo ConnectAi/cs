@@ -45,7 +45,7 @@ config.db = config.db[config.db.adapter];
 // Handle non-colliding arbitrary config settings.
 let settings = Object.keys(config);
 for (let setting in external) {
-	if (!settings.indexOf(setting)) {
+	if (!~settings.indexOf(setting)) {
 		config[setting] = external[setting];
 	}
 }

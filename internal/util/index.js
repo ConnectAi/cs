@@ -23,6 +23,13 @@ var log = function(line) {
 	fs.appendFile("app.log", `${date}:\t${line}\n`);
 };
 
+var include = function(path) {
+	if(!app.CACHE.includes) app.CACHE.includes = {};
+	if(app.CACHE.includes[path]) {
+		return hbs.compile(app.CACHE.includes[file](context);
+	}
+}
+
 require("./helpers")();
 
 module.exports = {
@@ -31,5 +38,6 @@ module.exports = {
 	randomString,
 	log,
 	Time,
+	include,
 	loader: require("./loader")
 };
