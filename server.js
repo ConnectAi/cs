@@ -110,13 +110,13 @@
 ////////////////
 //	NIB
 ////////////////
-function compile(str, path) {
-  return stylus(str)
-    .set('filename', path)
-    .set('compress', true)
-    .use(nib())
-    .import('nib');
-}
+	var compile = function(str, path) {
+		return stylus(str)
+			.set('filename', path)
+			.set('compress', true)
+			.use(nib())
+			.import('nib');
+	};
 
 ////////////////
 //	SETUP
@@ -147,6 +147,14 @@ function compile(str, path) {
 			debug: true,
 			compile: compile
 		}))
+		.use((function() {
+			var busters = require(`${internal}/modules/cache`).busters;
+
+			let buster = "none";
+			if (app.config.cacheBuster in busters) buster = app.config.cacheBuster;
+			console.log("buster", buster);
+			return busters[buster];
+		})())
 		.use(express.static(`${external}/public`, props))
 		// Send all view-or-API requests through a pipe,
 		// extending req/res as needed.

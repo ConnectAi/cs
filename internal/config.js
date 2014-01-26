@@ -10,7 +10,8 @@ var defaults = {
 	env: process.env.NODE_ENV || "development",
 	path: "/",
 	useRedis: false,
-	useSockets: true
+	useSockets: true,
+	cacheBuster: "none"
 };
 
 var override = function(setting) {
@@ -24,7 +25,8 @@ var config = {
 	path: override("path"),
 	db: external.db,
 	useRedis: override("useRedis"),
-	useSockets: override("useSockets")
+	useSockets: override("useSockets"),
+	cacheBuster: override("cacheBuster")
 };
 
 for (let env in environments) {
