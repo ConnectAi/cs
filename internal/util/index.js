@@ -1,5 +1,4 @@
 var fs = require("fs");
-var Time = require("./Time");
 
 var capitalize = function(word) {
 	return word[0].toUpperCase() + word.substr(1);
@@ -19,8 +18,13 @@ var randomString = function(length = 8) {
 };
 
 var log = function(line) {
-	var date = new Time().format("Y-M-D | h:m:s");
-	fs.appendFile("app.log", `${date}:\t${line}\n`);
+	var D = date.getDate(),
+		M = date.getMonth() + 1,
+		Y = date.getFullYear(),
+		h = date.getHours(),
+		m = date.getMinutes(),
+		s = date.getSeconds();
+	fs.appendFile("app.log", `${Y}-${M}-${D} | ${h}:${m}${s}:\t${line}\n`);
 };
 
 require("./helpers")();
@@ -30,6 +34,5 @@ module.exports = {
 	validateEmail,
 	randomString,
 	log,
-	Time,
 	loader: require("./loader")
 };

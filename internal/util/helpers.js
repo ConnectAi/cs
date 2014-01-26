@@ -19,23 +19,28 @@ var setupHandlebars = function() {
 		return val;
 	});
 
+	// Setup cache store
+	app.CACHE.includes = {};
 	hbs.registerHelper("include", function(file, context, options) {
 		if (arguments.length < 3) {
-			 options = context;
-			 context = this;
+			options = context;
+			context = this;
 		}
-		
-		// check the cache
-		if(app.CACHE.includes[file]) {
-			return app.CACHE.includes[file](context);
+
+		var contents;
+		// Check the cache
+		if (file in app.CACHE.includes) {
+			contents = app.CACHE.includes[file](context);
 		} else {
 			if (!/\.[\w-]+$/.test(file)) file += ".html";
-			var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
-			var contents = fs.readFileSync(filepath, "utf8") || "";
-			if (options.hash.inline) return contents;
-			app.CACHE.includes[file] = hbs.compile(contents);
-			return hbs.compile(contents)(context);
+			let filepath = path.resolve(`${app.dirs.external}/views/${file}`);
+			contents = fs.readFileSync(filepath, "utf8") || "";
 		}
+
+		// Cache the contents for future use
+		app.CACHE.includes[file] = contents;
+		if (options.hash.parse === false) return contents;
+		return hbs.compile(contents)(context);
 	});
 
 	hbs.registerHelper("log", function() {
@@ -43,13 +48,13 @@ var setupHandlebars = function() {
 		var args = slice.call(arguments, 0, -1);
 		var options = slice.call(arguments, -1)[0];
 		if (!args.length) args.unshift(this);
-		if (options.hash.write) {
+		if (options.hash.client) {
 			return `<script>console.log("LOG:", ${JSON.stringify(args)});</script>`;
 		}
 		return console.log("LOG:", args) || "";
 	});
 
-	hbs.registerHelper('inArray', function() {
+	hbs.registerHelper("inArray", function() {
 		var args = Array.prototype.slice.call(arguments);
 		var needle = args[0];
 		var haystack = args[1];
