@@ -1,6 +1,6 @@
 {
   "name": "cs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "ES6-based framework for Node.js",
   "engines": {
     "node": ">=0.8"

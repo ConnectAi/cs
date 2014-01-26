@@ -132,12 +132,11 @@
 		.use(express.cookieParser())
 		.use(express.session(
 			(function() {
-				let session = { secret: "Shh! It's a secret." };
-				if (app.config.useRedis) {
-					let RedisStore = require("connect-redis")(express);
-					session.store = new RedisStore();
-				}
-				return session;
+				var stores = require(`${internal}/modules/session`);
+
+				let store = { secret: "Shh! It's a secret." };
+				if (app.config.session in stores) store = stores[app.config.session](store);
+				return store;
 			})()
 		))
 		.use(stylus.middleware({
@@ -183,10 +182,10 @@
 ////////////////
 	var start = function() {
 		let listener = http.createServer(server).listen(server.get("port"), function() {
-			console.info("CornerStone listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
+			console.info("Cornerstone listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 
-		if (app.config.useSockets) {
+		if (app.config.sockets) {
 			server.io = require("socket.io").listen(listener);
 			server.io.set("log level", 2);
 		}

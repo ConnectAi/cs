@@ -10,8 +10,8 @@ var defaults = {
 	port: process.env.PORT || 3000,
 	env: process.env.NODE_ENV || "development",
 	path: "/",
-	useRedis: false,
-	useSockets: true,
+	session: "memory",
+	sockets: false,
 	cacheBuster: "none"
 };
 
@@ -26,8 +26,8 @@ var config = {
 	env:  override("env"),
 	path: override("path"),
 	db: external.db,
-	useRedis: override("useRedis"),
-	useSockets: override("useSockets"),
+	session: override("session"),
+	sockets: override("sockets"),
 	cacheBuster: override("cacheBuster")
 };
 

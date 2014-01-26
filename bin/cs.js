@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var fs = require("fs")
- ,  path = require("path")
- ,  npm = require("npm")
- ,  program = require("commander")
- ,  request = require("request")
+var fs = require("fs"),
+	path = require("path"),
+	npm = require("npm"),
+	program = require("commander"),
+	request = require("request")
 ;
 
 var urls = {
@@ -36,12 +36,14 @@ program.command("init [folder]")
 			}, function(err, res, body) {
 				var dirs, files;
 				if (!err && res.statusCode == 200) {
+					// Split files from git into folders (tree) and files (blob).
 					var nodes = body.tree.reduce(function(nodes, branch) {
 						if (!(branch.type in nodes)) nodes[branch.type] = [];
 						nodes[branch.type].push(branch.path);
 						return nodes;
 					}, {});
 
+					// First make each directory.
 					nodes.tree.forEach(function(dir) {
 						var where = outputFolder + "/" + dir;
 						if (!fs.existsSync(where)) {
@@ -52,6 +54,7 @@ program.command("init [folder]")
 						}
 					});
 
+					// Then save each file.
 					nodes.blob.forEach(function(file) {
 						var where = outputFolder + "/" + file;
 						if (!fs.existsSync(where)) {
