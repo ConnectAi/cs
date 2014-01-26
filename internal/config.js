@@ -4,6 +4,7 @@ var external = require(`${app.dirs.external}/config`);
 var environments = external.env || {};
 external.env = (process.argv.length === 3) ? process.argv[2] : undefined;
 
+// Default config values.
 var defaults = {
 	name: "[name]",
 	port: process.env.PORT || 3000,
@@ -18,6 +19,7 @@ var override = function(setting) {
 	return (typeof external[setting] !== "undefined") ? external[setting] : defaults[setting];
 };
 
+// Set core values.
 var config = {
 	name: override("name"),
 	port: override("port"),
@@ -29,6 +31,7 @@ var config = {
 	cacheBuster: override("cacheBuster")
 };
 
+// Environment-specific overrides.
 for (let env in environments) {
 	if (env === config.env) {
 		for (let override in environments[env]) {
@@ -39,6 +42,15 @@ for (let env in environments) {
 
 config.db = config.db[config.db.adapter];
 
+// Handle non-colliding arbitrary config settings.
+let settings = Object.keys(config);
+for (let setting in external) {
+	if (!settings.indexOf(setting)) {
+		config[setting] = external[setting];
+	}
+}
+
+// Set accessible settings in express.
 server.set("name", config.name);
 server.set("port", config.port);
 server.set("env", config.env);

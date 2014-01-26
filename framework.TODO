@@ -4,7 +4,7 @@ express:
 		I couldn't find an easy solution for this, as even running them right before routes is in app.loader.then, which makes it after the error-handling middleware...
 changes:
 	☐ experiment with making cornerstone a global npm module
-		☐ init
+		✔ init @done (14-01-25 22:02)
 		☐ db-to-model
 		☐ model-to-db
 fixes:
@@ -27,7 +27,7 @@ features:
 		☐ API access
 		☐ streamed log
 	☐ dynamic layout (or lack thereof) based on !!req.xhr
-	☐ arbitrary config items
+	✔ arbitrary config items @done (14-01-25 22:02)
 	database:
 		☐ make an app.db function that lets you select specified columns
 			db.find(["id", "first_name"], "id = 2", "user");
