@@ -183,7 +183,7 @@
 ////////////////
 	var start = function() {
 		let listener = http.createServer(server).listen(server.get("port"), function() {
-			console.info("Framework listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
+			console.info("CornerStone listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 
 		if (app.config.useSockets) {
