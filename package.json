@@ -1,6 +1,6 @@
 {
   "name": "cs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "ES6-based framework for Node.js",
   "engines": {
     "node": ">=0.8"
@@ -25,10 +25,10 @@
   "dependencies": {
     "express": "3.4.0",
     "stylus": "~0.38.0",
-    "mysql": "git://github.com/felixge/node-mysql.git#a4544158321d8ae67f2efb3392bb16402fb221c2",
+    "mysql": "~2.0.0",
     "hbs": "2.4.0",
     "connect-redis": "~1.4.5",
-    "traceur": "git://github.com/google/traceur-compiler.git#324cbca70c0d4457bdacaa86387b43a5a8c3f10f",
+    "traceur": "git://github.com/google/traceur-compiler.git#a8249ab83ce2db37cb55f39723754491944c813b",
     "when": "2.4.0",
     "source-map-support": "~0.2.3",
     "consoleplusplus": "~1.2.0",

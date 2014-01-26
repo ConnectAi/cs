@@ -33,10 +33,10 @@
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
-	
+
 	// config
 	app.config = require(`${internal}/config`);
-	
+
 	// cache
 	app.CACHE = {};
 	// includes cache
@@ -152,7 +152,6 @@
 
 			let buster = "none";
 			if (app.config.cacheBuster in busters) buster = app.config.cacheBuster;
-			console.log("buster", buster);
 			return busters[buster];
 		})())
 		.use(express.static(`${external}/public`, props))

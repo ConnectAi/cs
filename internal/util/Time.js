@@ -1,9 +1,8 @@
 var dateformat = require("dateformat");
 
-private @date;
 class Time {
 	constructor(date = new Date()) {
-		this.@date = new Date(date);
+		this.date = new Date(date);
 	}
 
 	toString() {
@@ -20,32 +19,32 @@ class Time {
 
 	// Convenience.
 		format(...args) {
-			return dateformat(this.@date, ...args);
+			return dateformat(this.date, ...args);
 		}
 
 	// Singular (numeric output).
 		get year() {
-			return this.@date.getFullYear();
+			return this.date.getFullYear();
 		}
 
 		get month() {
-			return this.@date.getMonth();
+			return this.date.getMonth();
 		}
 
 		get day() {
-			return this.@date.getDate();
+			return this.date.getDate();
 		}
 
 		get hour() {
-			return this.@date.getHours();
+			return this.date.getHours();
 		}
 
 		get minute() {
-			return this.@date.getMinutes();
+			return this.date.getMinutes();
 		}
 
 		get second() {
-			return this.@date.getSeconds();
+			return this.date.getSeconds();
 		}
 
 	// Plural (string output).
@@ -75,7 +74,7 @@ class Time {
 
 	// Standards.
 		get iso() {
-			return this.@date.toISOString().replace(/Z.*$/, "");
+			return this.date.toISOString().replace(/Z.*$/, "");
 		}
 
 		get isoDate() {

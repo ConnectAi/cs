@@ -7,6 +7,7 @@ changes:
 		✔ init @done (14-01-25 22:02)
 		☐ db-to-model
 		☐ model-to-db
+	☐ consider using or wrapping es6 promises
 fixes:
 	☐ make {{extend}} work with req.redirect()
 enhancements:
@@ -41,4 +42,5 @@ features:
 				.where("user.id < cart.id");
 ☐ future
 	☐ database adapters
+	☐ put thought into how using types could help us (or make us more safe -_-)
 ☐ document rewrite and redirect
