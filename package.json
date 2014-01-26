@@ -1,5 +1,5 @@
 {
-  "name": "cornerstone",
+  "name": "cs",
   "version": "0.1.4",
   "description": "ES6-based framework for Node.js",
   "engines": {
