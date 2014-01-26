@@ -6,30 +6,29 @@ var setupHandlebars = function() {
 	var blocks = {};
 
 	hbs.registerHelper("extend", function(name, context) {
-	    var block = blocks[name];
-	    if (!block) {
-	        block = blocks[name] = [];
-	    }
-	    block.push(context.fn(this));
+		var block = blocks[name];
+		if (!block) {
+			block = blocks[name] = [];
+		}
+		block.push(context.fn(this));
 	});
 
 	hbs.registerHelper("block", function(name) {
-	    var val = (blocks[name] || []).join("\n");
-	    blocks[name] = [];
-	    return val;
+		var val = (blocks[name] || []).join("\n");
+		blocks[name] = [];
+		return val;
 	});
 
 	hbs.registerHelper("include", function(file, context, options) {
-		
 		if (arguments.length < 3) {
-        		options = context;
-        		context = this;
-        	}
+			 options = context;
+			 context = this;
+		}
 		
+		// check the cache
 		if(app.CACHE.includes[file]) {
 			return app.CACHE.includes[file](context);
 		} else {
-		
 			if (!/\.[\w-]+$/.test(file)) file += ".html";
 			var filepath = path.resolve(`${app.dirs.external}/views/${file}`);
 			var contents = fs.readFileSync(filepath, "utf8") || "";
