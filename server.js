@@ -6,6 +6,7 @@
 		path = require("path"),
 		hbs = require("hbs"),
 		stylus = require("stylus"),
+		fs = require("fs"),
 		nib = require("nib");
 	// Make the console pretty.
 	require("consoleplusplus");
@@ -69,6 +70,14 @@
 	// Lets us access an instance of a model, for convenience.
 	app.db = new app.Model();
 
+
+/////////////////////////////
+//	SERVICES
+////////////////////////////
+app.services = {};
+fs.readdirSync("services").forEach( (item) => {
+	app.services[item] = require(`${external}/services/${item}`);
+});
 
 /////////////////////////////
 //	ENVIROMENT SPECIFIC
