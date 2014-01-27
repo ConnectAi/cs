@@ -3,6 +3,9 @@
 Web framework built on Node.js.
 
 This node framework is a production-ready Node.js framework that takes advantage of ECMAScript 6 through the use of [Google Traceur](https://github.com/google/traceur-compiler).  It is built on top of [express](http://expressjs.com) at its core, and also uses [when.js](https://github.com/cujojs/when) for many of the internal APIs.
+____
+View the docs on [Models](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/models.md), [Controllers](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/controllers.md) and [Views](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/views.md)  
+____
 
 ## Prereqs and Opinions
 - [Node.js](http://nodejs.org) and [NPM](https://npmjs.org)
@@ -91,9 +94,11 @@ note: If you're running CS behind nginx, you don't need the word `production`
 	./public
 	./private
 	./views
+	./services
 
 - `./public` is your web root.  All static files, js, css, images, etc. go here.
 - `./private` is where you put things to be compiled such as stylus, coffeescript, or ES6 files.  By default, stylus files will compile and minify files into public/css automatically.
+- `./services` is the location of all services which are basically CS extended functionality
 
 
 ## Debugging
