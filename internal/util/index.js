@@ -1,6 +1,7 @@
 var fs = require("fs");
 
 var log = function(line) {
+	var date = new Date();
 	var D = date.getDate(),
 		M = date.getMonth() + 1,
 		Y = date.getFullYear(),
