@@ -44,3 +44,20 @@ features:
 	☐ database adapters
 	☐ put thought into how using types could help us (or make us more safe -_-)
 ☐ document rewrite and redirect
+
+
+
+MODELS what I want
+	- models can made of any query, or a model file
+	- a model can be defined with a database table without making a whole file for it
+	- any model should have
+		- get() to get all
+		- get(5) to get id
+		- get(5,10) to get range
+		- get("where") to get with where clause
+	- model files are where you can define hasOne or hasMany relationships
+		- this would let the get calls get more data
+	- models can be set to get, and cached globally so other users don't have to get that data again
+		- should have a expire time set so that refreshes
+	- models should have an adapter so that they don't have to use mysql
+	- models should be able to be expanded with new data and be able to deep copied into when needed
