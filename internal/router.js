@@ -36,10 +36,11 @@ var pipe = function(req, res, next) {
 
 		// Expose public data to browser.
 		res.locals.exposed.public = expose;
-
+		
 		if (app.config.debug) {
 			// For debugging.
 			res.locals.exposed.private = data;
+			res.locals.exposed.config = app.config;
 			res.locals.exposed.session = req.session;
 		}
 
@@ -54,7 +55,7 @@ var pipe = function(req, res, next) {
 			port: server.get("port"),
 			env: server.get("env")
 		},
-
+		config: app.config,
 		req,
 		status: res.statusCode,
 		session: req.session,

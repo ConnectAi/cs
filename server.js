@@ -194,7 +194,7 @@ fs.readdirSync("services").forEach( (item) => {
 
 		if (app.config.sockets) {
 			server.io = require("socket.io").listen(listener);
-			server.io.set("log level", 2);
+			server.io.set("log level", 0);
 		}
 
 		require(`${app.dirs.external}/app`);

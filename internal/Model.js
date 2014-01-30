@@ -40,6 +40,7 @@ class Model {
 				});
 
 				var result = connection.query(...query);
+
 				this.log(result.sql + "\n");
 			}
 		});
@@ -153,6 +154,18 @@ class Model {
 	log(line) {
 		// Apend to the log file.
 		app.util.log(line);
+		
+		if(app.config.sockets) {
+			if(server.socket) {
+				server.socket.emit("queries",line);
+			} else {
+				server.io.sockets.on("connection", function(socket) {
+					server.socket = socket;
+					socket.emit("queries",line);
+				});
+			}
+		}
+		
 	}
 
 	error() {
