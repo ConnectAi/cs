@@ -12,6 +12,10 @@ var urls = {
 	tree: "https://api.github.com/repos/connectai/cornerstone-skeleton/git/trees/dev%2Fmaster?recursive=1"
 };
 
+var getEnd = function(p) {
+	return p.split("/").pop();
+};
+
 program
 	.version(require("../package").version)
 ;
@@ -20,17 +24,30 @@ program.command("init [name] [path]")
 	.description("Create an empty cornerstone project or reinitialize an existing one.")
 	.option("-b, --bare", "bare project")
 	.action(function(name, directory, options) {
-		// If a name was given but no directory, default to the name.
-		if (!directory && name) directory = name;
+		// If a directory was given but no name, swap variables.
+		if (name && !directory && /[.\/]/.test(name)) {
+			directory = name;
+			name = getEnd(path.resolve(directory));
+		}
 
-		// If a directory was given, use that.
-		// Otherwise use pwd.
-		var folder = (directory) ? path.resolve(directory) : process.pwd();
+		if (!name && !directory) {
+			// If no name nor directory were given, default to the current directory.
+			name = getEnd(process.cwd());
+			directory = process.cwd().split("/").slice(0, -1).join("/");
+		} else if (name && !directory) {
+			// If a name was given but no directory, default to the name.
+			directory = name;
+		} else if (!name && directory) {
+			// If a directory was given but no name, default to the directory.
+			name = path.normalize(directory);
+		}
+		// Make directory an absolute path.
+		directory = path.resolve(directory);
 
-		// Be like `mv` and `copy` in that behavior is based whether the directory exists.
-		if (fs.existsSync(folder)) folder = path.join(folder, name);
+		// Be like `mv` and `copy` in that behavior is based on whether the directory exists.
+		if (getEnd(directory) !== name && fs.existsSync(directory)) directory = path.join(directory, name);
 		// Make the directory if it does not exist.
-		if (!fs.existsSync(folder)) fs.mkdirSync(folder);
+		if (!fs.existsSync(directory)) fs.mkdirSync(directory);
 
 		if (options.bare) {
 			console.log("bare project");
@@ -53,7 +70,7 @@ program.command("init [name] [path]")
 
 					// First make each directory.
 					nodes.tree.forEach(function(dir) {
-						var where = folder + "/" + dir;
+						var where = directory + "/" + dir;
 						if (!fs.existsSync(where)) {
 							fs.mkdirSync(where);
 							console.log("Writing", where);
@@ -64,7 +81,7 @@ program.command("init [name] [path]")
 
 					// Then save each file.
 					nodes.blob.forEach(function(file) {
-						var where = folder + "/" + file;
+						var where = directory + "/" + file;
 						if (!fs.existsSync(where)) {
 							var writer = fs.createWriteStream(where);
 							request(urls.raw + file).pipe(writer);
