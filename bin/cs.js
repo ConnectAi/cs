@@ -16,13 +16,19 @@ program
 	.version(require("../package").version)
 ;
 
-program.command("init [folder]")
+program.command("init [name] [path]")
 	.description("Create an empty cornerstone project or reinitialize an existing one.")
 	.option("-b, --bare", "bare project")
-	.action(function(folder, options) {
-		var outputFolder = process.cwd();
-		if (folder) outputFolder = path.join(outputFolder, folder);
-		if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder);
+	.action(function(name, directory, options) {
+		// If a name was given but no directory, default to the name.
+		if (!directory && name) directory = name;
+
+		// If a directory was given, use that.
+		// Otherwise use pwd.
+		var folder = (directory) ? path.resolve(directory) : process.pwd();
+
+		// Make the directory if it does not exist.
+		if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 
 		if (options.bare) {
 			console.log("bare project");
@@ -45,7 +51,7 @@ program.command("init [folder]")
 
 					// First make each directory.
 					nodes.tree.forEach(function(dir) {
-						var where = outputFolder + "/" + dir;
+						var where = folder + "/" + dir;
 						if (!fs.existsSync(where)) {
 							fs.mkdirSync(where);
 							console.log("Writing", where);
@@ -56,15 +62,15 @@ program.command("init [folder]")
 
 					// Then save each file.
 					nodes.blob.forEach(function(file) {
-						var where = outputFolder + "/" + file;
+						var where = folder + "/" + file;
 						if (!fs.existsSync(where)) {
 							var writer = fs.createWriteStream(where);
 							request(urls.raw + file).pipe(writer);
 
-							if (folder && file === "config.json") {
+							if (name && file === "config.json") {
 								writer.on("finish", function() {
 									var config = require(where);
-									config.name = folder;
+									config.name = name;
 									fs.writeFile(where, JSON.stringify(config, null, "\t"));
 								});
 							}
