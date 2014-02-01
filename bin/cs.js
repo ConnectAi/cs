@@ -27,6 +27,8 @@ program.command("init [name] [path]")
 		// Otherwise use pwd.
 		var folder = (directory) ? path.resolve(directory) : process.pwd();
 
+		// Be like `mv` and `copy` in that behavior is based whether the directory exists.
+		if (fs.existsSync(folder)) folder = path.join(folder, name);
 		// Make the directory if it does not exist.
 		if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 
