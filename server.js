@@ -21,10 +21,10 @@
 	global.when = require("when");
 	global.hbs = hbs;
 
+
 ////////////////
 //	MODULES
 ////////////////
-
 	// control when the app is done loading
 	var appLoader = when.defer();
 	app.loader = appLoader.promise;
@@ -79,6 +79,7 @@ fs.readdirSync("services").forEach( (item) => {
 	app.services[item] = require(`${external}/services/${item}`);
 });
 
+
 /////////////////////////////
 //	ENVIROMENT SPECIFIC
 ////////////////////////////
@@ -114,6 +115,7 @@ fs.readdirSync("services").forEach( (item) => {
 		})
 	;
 
+
 ////////////////
 //	NIB
 ////////////////
@@ -124,6 +126,7 @@ fs.readdirSync("services").forEach( (item) => {
 			.use(nib())
 			.import('nib');
 	};
+
 
 ////////////////
 //	SETUP
@@ -184,9 +187,12 @@ fs.readdirSync("services").forEach( (item) => {
 	// server stylus var for custom stylus things
 	server.stylus = {};
 
+
 ////////////////
 //	START
 ////////////////
+	process.title = "cornerstone";
+
 	var start = function() {
 		let listener = http.createServer(server).listen(server.get("port"), function() {
 			console.info("Cornerstone listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
