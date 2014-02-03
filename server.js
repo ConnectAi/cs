@@ -136,14 +136,13 @@ fs.readdirSync("services").forEach( (item) => {
 		.set("view engine", "html")
 		.engine("html", hbs.__express)
 		.use(express.compress())
-		.use(express.favicon())
+		.use(express.favicon(`${external}/public/favicon.ico`))
 		.use(express.bodyParser())
 		.use(express.methodOverride())
 		.use(express.cookieParser())
 		.use(express.session(
 			(function() {
 				var stores = require(`${internal}/modules/session`);
-
 				let store = { secret: "Shh! It's a secret." };
 				if (app.config.session in stores) store = stores[app.config.session](store);
 				return store;

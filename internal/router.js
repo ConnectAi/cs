@@ -102,13 +102,12 @@ var makeRoute = function(verb, route = controller, handlers, controller = "") {
 	} else {
 		route = (app.config.path + route).replace(/^\/\//, "/");
 	}
-
+	
 	if (typeof handlers === "function") {
 		handlers = wrapHandler(handlers);
 	} else if (Array.isArray(handlers)) {
 		handlers = handlers.map(wrapHandler);
 	}
-
 	server[verb](route, handlers);
 }
 
