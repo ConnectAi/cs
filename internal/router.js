@@ -29,9 +29,12 @@ var pipe = function(req, res, next) {
 				.replace(/\/(:|index).*/, "");
 		}
 		
+		// if changing layout
+		if(res.layout) res.locals.layout = res.layout;
+		
 		// a prefixed path as an option
-		if(res.locals.path) {
-			path = res.locals.path + "/" + path;
+		if(res.path) {
+			path = res.path + "/" + path;
 		}
 
 		// Expose public data to browser.
@@ -42,6 +45,7 @@ var pipe = function(req, res, next) {
 			res.locals.exposed.private = data;
 			res.locals.exposed.config = app.config;
 			res.locals.exposed.session = req.session;
+			res.locals.exposed.controller = req.url.split("/")[1];
 		}
 
 		res.locals({ params: req.params })
@@ -61,7 +65,7 @@ var pipe = function(req, res, next) {
 		session: req.session,
 		query: req.query,
 		body: req.body,
-
+		controller : req.url.split("/")[1],
 		title: server.get("name")
 	});
 

@@ -204,4 +204,4 @@ Hey we have ES6, `let`'s use it
         - `"/:id/:username?"(req, res, next, id, username) {}`
 
 - Views
-	- Are any HTML or hbs file. They can be included, compiled or parsed. You can put them in folders to organize.  Views are rendered with a layout which is just another view defined in res.locals.layout. 
+	- Are any HTML or hbs file. They can be included, compiled or parsed. You can put them in folders to organize.  Views are rendered with a layout which is just another view defined in res.layout. 

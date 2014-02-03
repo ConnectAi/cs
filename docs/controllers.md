@@ -33,6 +33,25 @@
     };
 
 
+### Middleware
+Middleware is really cool.  It let's you do stuff that affects all actions in this controller.
+
+    "*" (req,res,next) {
+    	
+    	// a good thing to do here, is check the session
+    	if(!req.session) res.redirect("/login");
+    	
+    	// define a specific layout for this controller
+    	res.layout = "foo/layout";
+    	
+    	// CS will now look in /veiws/foo
+    	res.path = "foo";
+    	
+    	// you have to call next at the end of this, otherwise it won't hit your route.
+    	next();
+    	
+    }
+
 ### req
 
     // Session data
