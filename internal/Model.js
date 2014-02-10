@@ -58,7 +58,7 @@ class Model {
 		var id = 0;
 
 		// if we have an id, update
-		if (primaryKey in data) {
+		if ((primaryKey in data) && data[primaryKey]) {
 			q = "UPDATE `"+table+"` SET ? WHERE `"+primaryKey+"` = '"+data[primaryKey]+"'";
 
 			// save this id so we can return it in the deferred

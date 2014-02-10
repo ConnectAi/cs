@@ -79,7 +79,6 @@ fs.readdirSync("services").forEach( (item) => {
 	app.services[item] = require(`${external}/services/${item}`);
 });
 
-
 /////////////////////////////
 //	ENVIROMENT SPECIFIC
 ////////////////////////////
@@ -136,7 +135,7 @@ fs.readdirSync("services").forEach( (item) => {
 		.set("view engine", "html")
 		.engine("html", hbs.__express)
 		.use(express.compress())
-		.use(express.favicon(`${external}/public/favicon.ico`))
+		.use(express.favicon(__dirname + '/public/favicon.ico'))
 		.use(express.bodyParser())
 		.use(express.methodOverride())
 		.use(express.cookieParser())

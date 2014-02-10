@@ -48,7 +48,7 @@ var pipe = function(req, res, next) {
 			res.locals.exposed.controller = req.url.split("/")[1];
 		}
 
-		res.locals({ params: req.params })
+		res.locals({ params: req.params });
 		res.render(path, data);
 	};
 
