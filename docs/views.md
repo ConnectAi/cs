@@ -10,18 +10,18 @@
 - The same variables are available here as the view.
 
 
-### Block
-defines a placeholder (foo) in your layout file to be extended using the {{{extend}}} helper in another view.
+### Hook
+defines a placeholder (foo) in your layout file to be extended using the {{{bind}}} helper in another view.
 
-    {{{block "foo"}}}
+    {{{hook "foo"}}}
 
 
-### Extend
+### Bind
 The content of a placeholder defined by {{{block}}} in a layout
 
-    {{{#extend "styles"}}}
+    {{{#bind "styles"}}}
         <link rel="stylesheet" href="specific.css">
-    {{{/extend}}}
+    {{{/bind}}}
 
 ### Template Variables
 Any variable that you pass to the first paramater of res.json()  

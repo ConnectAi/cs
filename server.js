@@ -7,6 +7,7 @@
 		hbs = require("hbs"),
 		stylus = require("stylus"),
 		fs = require("fs"),
+		EventEmitter = require("events").EventEmitter,
 		nib = require("nib");
 	// Make the console pretty.
 	require("consoleplusplus");
@@ -15,20 +16,16 @@
 ////////////////
 //	GLOBALS
 ////////////////
-	global.app = {};
+	// app can fire off app-wide events, like when it is started.
+	global.app = new EventEmitter();
 	global.server = express();
 	global.log = console.log;
-	global.when = require("when");
 	global.hbs = hbs;
 
 
 ////////////////
 //	MODULES
 ////////////////
-	// control when the app is done loading
-	var appLoader = when.defer();
-	app.loader = appLoader.promise;
-
 	// app directories
 	var {external, internal} = app.dirs = {
 		external: path.resolve(),
@@ -205,7 +202,7 @@ fs.readdirSync("services").forEach( (item) => {
 
 		// Now that all the resources have been loaded,
 		// run all code that depends on them.
-		appLoader.resolve();
+		app.emit("start");
 	};
 
 exports.start = start;

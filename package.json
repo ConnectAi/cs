@@ -31,7 +31,6 @@
     "hbs": "2.4.0",
     "connect-redis": "~1.4.5",
     "traceur": "git://github.com/google/traceur-compiler.git#a8249ab83ce2db37cb55f39723754491944c813b",
-    "when": "2.4.0",
     "source-map-support": "~0.2.3",
     "consoleplusplus": "~1.2.0",
     "nib": "~1.0.1",
