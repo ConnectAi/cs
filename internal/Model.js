@@ -154,7 +154,7 @@ class Model {
 	log(line) {
 		// Apend to the log file.
 		app.util.log(line);
-		
+
 		if(app.config.sockets) {
 			if(server.socket) {
 				server.socket.emit("queries",line);
@@ -165,7 +165,7 @@ class Model {
 				});
 			}
 		}
-		
+
 	}
 
 	error() {
@@ -192,6 +192,6 @@ function connect() {
 }
 
 // connect when done
-app.loader.then(connect);
+app.on("start", connect);
 
 module.exports = Model;

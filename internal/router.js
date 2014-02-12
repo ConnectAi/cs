@@ -28,10 +28,10 @@ var pipe = function(req, res, next) {
 				.replace(/^\//, "")
 				.replace(/\/(:|index).*/, "");
 		}
-		
+
 		// if changing layout
 		if(res.layout) res.locals.layout = res.layout;
-		
+
 		// a prefixed path as an option
 		if(res.path) {
 			path = res.path + "/" + path;
@@ -39,7 +39,7 @@ var pipe = function(req, res, next) {
 
 		// Expose public data to browser.
 		res.locals.exposed.public = expose;
-		
+
 		if (app.config.debug) {
 			// For debugging.
 			res.locals.exposed.private = data;
@@ -102,7 +102,7 @@ var makeRoute = function(verb, route = controller, handlers, controller = "") {
 	} else {
 		route = (app.config.path + route).replace(/^\/\//, "/");
 	}
-	
+
 	if (typeof handlers === "function") {
 		handlers = wrapHandler(handlers);
 	} else if (Array.isArray(handlers)) {
@@ -141,7 +141,7 @@ var handleRoute = function(route, handlers, controller) {
 	});
 };
 
-app.loader.then(function() {
+app.on("start", function() {
 	// Make routes for each policy defined in the config.
 	for (let route in app.controllers.index) {
 		let handlers = app.controllers.index[route];
