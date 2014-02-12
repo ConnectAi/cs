@@ -8,14 +8,13 @@ View the docs on [Models](https://github.com/ConnectAi/cornerstone/blob/dev/mast
 ____
 
 # Prereqs and Opinions
-test
+
 - [Node.js](http://nodejs.org) and [NPM](https://npmjs.org)
 - MySQL (you (currently) need MySQL to benefit from models, though you may use Cornerstone without)
 - Redis (for sessions) Memory also supported and is on by default. But if you want persistent sessions, turn on redis.
 
 
 # Installation
-____
 
 The idea here is that you have your app in development on Git. Then you'll clone or deploy to your production server, and run CS in production mode.
 
@@ -76,7 +75,6 @@ _You should probably still install the init script above_
 
 
 # How to run
-___
 
 ### Development
 	> cd {{app dir}}
@@ -88,10 +86,8 @@ ___
 note: If you're in your CS dir already, you can just run `cs run`  
 note: If you're running CS behind nginx, you don't need the word `production`
 
-____
 
 # Config
-___
 
 `config.json`
 
@@ -131,8 +127,6 @@ ___
 
 
 # Directory Structure
-___
-
 
 	./controllers
 	./models
@@ -148,7 +142,6 @@ ___
 
 
 # Debugging
-___
 
 
 - To run in debug mode, run `> node index` or `> node index development` (`development` is the default environment).
@@ -164,7 +157,6 @@ ___
 
 
 # Utilities
-___
 
 
 ### Include
@@ -172,7 +164,6 @@ ___
 	var compiledHTML = app.util.include(path/to/file)(data);
 
 # Services
-___
 
 Services are a way to share complete parts of CS that are just arbitrary functions.
 ### Create a service
@@ -199,13 +190,11 @@ Sample service package.json for gmail service
 _Currently the services package.json don't do anything_
 
 # ES6 Goodies
-___
 
 [Read about the cool stuff ES6 can do you for you](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/es6.md)	
 
 
 # Dictionary
-___
 
 
 - Models
