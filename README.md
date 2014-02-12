@@ -12,42 +12,80 @@ ____
 - MySQL (you (currently) need MySQL to benefit from models, though you may use Cornerstone without)
 - Redis (for sessions) Memory also supported and is on by default. But if you want persistent sessions, turn on redis.
 
+____
+
 ## Installation
 The idea here is that you have your app in development on GIT. Then you'll clone to your live server, and run CS in production mode.
 
 ### Development
 	> npm install -g cs
-	> cs init {{appname}} --sample
-	
-- `--sample` will download our sample app to get you started.  Leave that off if you want a blank app  
-- `--redis` will turn on redis sessions. You can modify this is `config.json`  
-- `--socket` will turn on socketIO 
+	> cs init {{appname}}
 
 ### Production (with Nginx & GIT)
 
     > npm install -g cs
-    > cs init {{your-repo}}.git /var/www 
- 	> cs production myapp
- 	> /etc/nginx restart
+    > git clone {{yourapp}} /your/app/dir
+    > cd /your/app/dir
+    > npm install
+    
+Add your Nginx Rule (Assumes your production port is 3000)
+	
+	server {
+	    listen 80;
+	    server_name {{yourDomain.com}}
+	    access_log  /var/log/nginx/node.log;
+		location / {
+			proxy_pass	http://127.0.0.1:3000/;
+		}
+	}
+	
+Create a service in /etc/init/node.conf
+	
+	description "node server"
+
+	start on started mountall
+	stop on shutdown
+	
+	respawn
+	respawn limit 99 5
+	
+	script
+	    export HOME="{{APP DIR}}}"
+	    cd $HOME
+	    exec /usr/bin/node {{APP DIR}}}/index.js production >> /var/log/node.log 2>&1
+	end script
+	
+	post-start script
+	end script
+    
+    
+Restart Nginx
+	
+	/etc/init.d/nginx restart
 
 ### Production (_without_ Nginx & GIT)
 
  	# get your files onto the live server and SSH in
     > npm install -g cs
-    > cd /var/www   
- 	> cs init
+    > cd {{APP DIR}}  
+ 	> npm install
 
+_You should probably still install the init script above_
+
+____
 
 ## How to run
 ### Development
-	> cs run myapp
-	> open http://localhost:3000
+	> cd {{APP DIR}}
+	> cs run
 ### Live
-	> cs run myapp production
-	> open http://myawesomesite.com
+	> start {{WHATEVER YOU CALLED THE FILE IN /ETC/INIT}}
+
 	
 note: If you're in your CS dir already, you can just run `cs run`  
 note: If you're running CS behind nginx, you don't need the word `production`
+
+____
 
 ## Config
 `config.json`
