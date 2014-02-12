@@ -69,9 +69,6 @@ class Model {
 			q = "INSERT INTO `"+table+"` SET ?";
 		}
 
-		// log the query
-		//this.log(q);
-
 		// find any NOW()'s and convert them
 		for (let key in data) {
 			if (data[key] === "NOW()") {
@@ -106,11 +103,11 @@ class Model {
 			.then(function(row) {
 				if (row) {
 					for (let i in row) {
-						resolve(row[i]);
+						return row[i];
 						break;
 					}
 				} else {
-					resolve(false);
+					return false;
 				}
 			});
 	}
@@ -119,18 +116,15 @@ class Model {
 	querySingle(q) {
 		return this.query(q)
 			.then(function(rows) {
-				resolve(rows[0]);
+				return rows[0];
 			});
 	}
 
 	bulkInsert(keys = [], values = [], table = this.table) {
 		// handle keys
 		keys = keys.join(",");
-
 		var sql = "INSERT INTO `"+table+"` ("+keys+") VALUES ?";
-
 		this.log(sql);
-
 		return this.query(sql, [values]);
 	}
 
@@ -168,7 +162,8 @@ class Model {
 						app.config.db[option] = options[option];
 					}
 					connection.release();
-					resolve(err);
+					if(err) reject(err);
+					else resolve(options);
 				});
 			});
 		});
