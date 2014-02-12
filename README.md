@@ -2,7 +2,7 @@
 
 Web framework built on Node.js.
 
-This node framework is a production-ready Node.js framework that takes advantage of ECMAScript 6 through the use of [Google Traceur](https://github.com/google/traceur-compiler).  It is built on top of [express](http://expressjs.com) at its core, and also uses [when.js](https://github.com/cujojs/when) for many of the internal APIs.
+This node framework is a production-ready Node.js framework that takes advantage of ECMAScript 6 through the use of [Google Traceur](https://github.com/google/traceur-compiler).  It is built on top of [express](http://expressjs.com) at its core.
 ____
 View the docs on [Models](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/models.md), [Controllers](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/controllers.md) and [Views](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/views.md)  
 ____
@@ -11,7 +11,7 @@ ____
 
 - [Node.js](http://nodejs.org) and [NPM](https://npmjs.org)
 - MySQL (you (currently) need MySQL to benefit from models, though you may use Cornerstone without)
-- Redis (for sessions) Memory also supported and is on by default. But if you want persistent sessions, turn on redis.
+- Redis (for sessions) Memory not supported in 1.0.
 
 
 # Installation
