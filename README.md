@@ -153,7 +153,7 @@ ____
 
 
 ## Util
-CS comes with a couple useful utilities.
+
 ### Include
 	// include and compile a template
 	var compiledHTML = app.util.include(path/to/file)(data);
