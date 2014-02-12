@@ -8,7 +8,6 @@ View the docs on [Models](https://github.com/ConnectAi/cornerstone/blob/dev/mast
 ____
 
 # Prereqs and Opinions
-----
 
 - [Node.js](http://nodejs.org) and [NPM](https://npmjs.org)
 - MySQL (you (currently) need MySQL to benefit from models, though you may use Cornerstone without)
