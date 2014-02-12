@@ -67,7 +67,7 @@ Restart Nginx
 
  	# get your files onto the live server and SSH in
     > npm install -g cs
-    > cd {{APP DIR}}  
+    > cd {{app dir}}  
  	> npm install
 
 _You should probably still install the init script above_
@@ -76,10 +76,10 @@ ____
 
 ## How to run
 ### Development
-	> cd {{APP DIR}}
+	> cd {{app dir}}
 	> cs run
 ### Live
-	> start {{WHATEVER YOU CALLED THE FILE IN /ETC/INIT}}
+	> start {{whatever you called the file in /etc/init/}}
 
 	
 note: If you're in your CS dir already, you can just run `cs run`  
@@ -180,6 +180,8 @@ Sample service package.json for gmail service
 	    "emailjs": "~0.3.5"
 	  }
 	}
+	
+_Currently the services package.json don't do anything_
 
 ## ES6 Goodies
 Hey we have ES6, `let`'s use it
