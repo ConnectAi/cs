@@ -21,6 +21,8 @@ The idea here is that you have your app in development on Git. Then you'll clone
 ### Development
 	> npm install -g cs
 	> cs init {{appname}}
+	> npm install
+	> cs run
 
 ### Production (with Nginx & Git)
 
