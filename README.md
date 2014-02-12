@@ -7,14 +7,17 @@ ____
 View the docs on [Models](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/models.md), [Controllers](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/controllers.md) and [Views](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/views.md)  
 ____
 
-## Prereqs and Opinions
+# Prereqs and Opinions
+___
+
 - [Node.js](http://nodejs.org) and [NPM](https://npmjs.org)
 - MySQL (you (currently) need MySQL to benefit from models, though you may use Cornerstone without)
 - Redis (for sessions) Memory also supported and is on by default. But if you want persistent sessions, turn on redis.
 
-____
 
-## Installation
+# Installation
+___
+
 The idea here is that you have your app in development on Git. Then you'll clone or deploy to your production server, and run CS in production mode.
 
 ### Development
@@ -72,9 +75,10 @@ Restart Nginx
 
 _You should probably still install the init script above_
 
-____
 
-## How to run
+# How to run
+___
+
 ### Development
 	> cd {{app dir}}
 	> cs run
@@ -87,7 +91,9 @@ note: If you're running CS behind nginx, you don't need the word `production`
 
 ____
 
-## Config
+# Config
+___
+
 `config.json`
 
 - you can make any arbitrary configs you want
@@ -125,7 +131,9 @@ ____
 
 
 
-## Directory Structure
+# Directory Structure
+___
+
 
 	./controllers
 	./models
@@ -139,7 +147,11 @@ ____
 - `./services` is the location of all services which are basically CS extended functionality
 
 
-## Debugging
+
+# Debugging
+___
+
+
 - To run in debug mode, run `> node index` or `> node index development` (`development` is the default environment).
 - `./app.log` is a log of all database queries.
 - In a view you have `{{log variable}}` to log a hbs variable to the node console
@@ -152,13 +164,17 @@ ____
 	- `CS.server`  -- server vars (which are available in your view)
 
 
-## Util
+# Utilities
+___
+
 
 ### Include
 	// include and compile a template
 	var compiledHTML = app.util.include(path/to/file)(data);
 
-## Services
+# Services
+___
+
 Services are a way to share complete parts of CS that are just arbitrary functions.
 ### Create a service
 - Create `services/yourservice/index.js`
@@ -183,52 +199,15 @@ Sample service package.json for gmail service
 	
 _Currently the services package.json don't do anything_
 
-## ES6 Goodies
-Hey we have ES6, `let`'s use it
+# ES6 Goodies
+___
 
-    // expand and object into variables
-    var {a, b, c} = myObjectWith3Keys;
-
-
-    // expand and array into variables
-    var [a, b, c] = myArrayWith3Indecies;
-
-
-    // use let as a temp variable
-    for(let i = 0; i <= thing; i++) {}
-
-
-    // loop through properties of mine not my prototypes
-    for(let key of object) {}
-
-
-    // keeping the parent 'this' scope (and not having to write 'function'
-    var myFunc = (some, params) => {
-        // my 'this' has not changed scope
-    }
-
-    // quasi literals.  You can have variables and JS inside a string!
-    var coolString = `Happy ${3 + .14} ${day}`;
-
-
-    // Default arguments
-    var speak(greeting = "hello", recipient = "world") {
-        return `${greeting} ${recipient}!`;
-    };
-
-
-    // no need to repeat keys and values in object if identical
-    var one = 1, two = 2, three = 3;
-    function foo() {
-        return {
-            one: one, 	// no longer necessary
-         	two,       	// good to go
-            three
-        }
-    }
+[Read about the cool stuff ES6 can do you for you](https://github.com/ConnectAi/cornerstone/blob/dev/master/docs/es6.md)	
 
 
 # Dictionary
+___
+
 
 - Models
     - are ES6 Classes, inheriting from a base model.
