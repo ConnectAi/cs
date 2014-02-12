@@ -15,13 +15,13 @@ ____
 ____
 
 ## Installation
-The idea here is that you have your app in development on GIT. Then you'll clone to your live server, and run CS in production mode.
+The idea here is that you have your app in development on Git. Then you'll clone or deploy to your production server, and run CS in production mode.
 
 ### Development
 	> npm install -g cs
 	> cs init {{appname}}
 
-### Production (with Nginx & GIT)
+### Production (with Nginx & Git)
 
     > npm install -g cs
     > git clone {{yourapp}} /your/app/dir
@@ -63,7 +63,7 @@ Restart Nginx
 	
 	/etc/init.d/nginx restart
 
-### Production (_without_ Nginx & GIT)
+### Production (_without_ Nginx & Git)
 
  	# get your files onto the live server and SSH in
     > npm install -g cs
