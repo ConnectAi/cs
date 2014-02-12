@@ -16,7 +16,7 @@ ____
 
 
 # Installation
-___
+____
 
 The idea here is that you have your app in development on Git. Then you'll clone or deploy to your production server, and run CS in production mode.
 
