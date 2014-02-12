@@ -11,17 +11,17 @@
 
 
 ### Hook
-defines a placeholder (foo) in your layout file to be extended using the {{{bind}}} helper in another view.
+defines a placeholder (foo) in your layout file to be extended using the {{bind}} helper in another view.
 
     {{{hook "foo"}}}
 
 
 ### Bind
-The content of a placeholder defined by {{{block}}} in a layout
+The content of a placeholder defined by {{{hook}}} in a layout
 
-    {{{#bind "styles"}}}
+    {{#bind "styles"}}
         <link rel="stylesheet" href="specific.css">
-    {{{/bind}}}
+    {{/bind}}
 
 ### Template Variables
 Any variable that you pass to the first paramater of res.json()  
