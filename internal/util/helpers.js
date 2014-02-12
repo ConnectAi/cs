@@ -3,20 +3,19 @@ var path = require("path");
 var hbs = require("hbs");
 
 var setupHandlebars = function() {
-	var blocks = {};
-
-	hbs.registerHelper("extend", function(name, context) {
-		var block = blocks[name];
-		if (!block) {
-			block = blocks[name] = [];
-		}
-		block.push(context.fn(this));
+	var hooks = {};
+	hbs.registerHelper("hook", function(name) {
+		var val = (hooks[name] || []).join("\n");
+		hooks[name] = [];
+		return val;
 	});
 
-	hbs.registerHelper("block", function(name) {
-		var val = (blocks[name] || []).join("\n");
-		blocks[name] = [];
-		return val;
+	hbs.registerHelper("bind", function(name, context) {
+		var hook = hooks[name];
+		if (!hook) {
+			hook = hooks[name] = [];
+		}
+		hook.push(context.fn(this));
 	});
 
 	// Setup cache store
