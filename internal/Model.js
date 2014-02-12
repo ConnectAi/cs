@@ -11,41 +11,39 @@ class Model {
 	}
 
 	query(q, ...args) {
-		var def = when.defer();
+		return new Promise((resolve, reject) => {
+			var query = [q];
 
-		var query = [q];
-
-		if (args.length === 0) {
-		}
-		if (args.length === 1) {
-			query.push(args[0]);
-		}
-
-		pool.getConnection((err, connection) => {
-			if (err) {
-				this.log(err);
-				this.error(err, q);
-				def.reject(err);
-			} else {
-				query.push((err, res) => {
-					if (err) {
-						this.log(err);
-						this.error(err, q);
-						def.reject(err);
-					} else {
-						def.resolve(res);
-					}
-
-					connection.release();
-				});
-
-				var result = connection.query(...query);
-
-				this.log(result.sql + "\n");
+			if (args.length === 0) {
 			}
-		});
+			if (args.length === 1) {
+				query.push(args[0]);
+			}
 
-		return def.promise;
+			pool.getConnection((err, connection) => {
+				if (err) {
+					this.log(err);
+					this.error(err, q);
+					reject(new Error(err));
+				} else {
+					query.push((err, res) => {
+						if (err) {
+							this.log(err);
+							this.error(err, q);
+							reject(new Error(err));
+						} else {
+							resolve(res);
+						}
+
+						connection.release();
+					});
+
+					var result = connection.query(...query);
+
+					this.log(result.sql + "\n");
+				}
+			});
+		});
 	}
 
 	"delete"(where = "", table = this.table) {
@@ -104,35 +102,31 @@ class Model {
 
 	// db query to get a single value
 	queryValue(q) {
-		var def = when.defer();
-
-		this
-		.querySingle(q)
-		.then(function(row) {
-			if (row) {
-				for (let i in row) {
-					def.resolve(row[i]);
-					break;
+		return new Promise((resolve, reject) => {
+			this
+			.querySingle(q)
+			.then(function(row) {
+				if (row) {
+					for (let i in row) {
+						resolve(row[i]);
+						break;
+					}
+				} else {
+					resolve(false);
 				}
-			} else {
-				def.resolve(false);
-			}
+			});
 		});
-
-		return def.promise;
 	}
 
 	// db query to get a single array
 	querySingle(q) {
-		var def = when.defer();
-
-		this
-		.query(q)
-		.then(function(rows) {
-			def.resolve(rows[0]);
+		return new Promise((resolve, reject) => {
+			this
+			.query(q)
+			.then(function(rows) {
+				resolve(rows[0]);
+			});
 		});
-
-		return def.promise;
 	}
 
 	bulkInsert(keys = [], values = [], table = this.table) {
@@ -173,17 +167,17 @@ class Model {
 	}
 
 	change(options) {
-		var def = when.defer();
-		pool.getConnection((err, connection) => {
-			connection.changeUser(options, (err) => {
-				for (let option in options) {
-					app.config.db[option] = options[option];
-				}
-				connection.release();
-				def.resolve(err);
+		return new Promise((resolve, reject) => {
+			pool.getConnection((err, connection) => {
+				connection.changeUser(options, (err) => {
+					for (let option in options) {
+						app.config.db[option] = options[option];
+					}
+					connection.release();
+					resolve(err);
+				});
 			});
 		});
-		return def.promise;
 	}
 }
 
