@@ -102,9 +102,7 @@ class Model {
 
 	// db query to get a single value
 	queryValue(q) {
-		return new Promise((resolve, reject) => {
-			this
-			.querySingle(q)
+		return this.querySingle(q)
 			.then(function(row) {
 				if (row) {
 					for (let i in row) {
@@ -115,18 +113,14 @@ class Model {
 					resolve(false);
 				}
 			});
-		});
 	}
 
 	// db query to get a single array
 	querySingle(q) {
-		return new Promise((resolve, reject) => {
-			this
-			.query(q)
+		return this.query(q)
 			.then(function(rows) {
 				resolve(rows[0]);
 			});
-		});
 	}
 
 	bulkInsert(keys = [], values = [], table = this.table) {
