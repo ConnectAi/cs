@@ -5,7 +5,9 @@ var fs = require("fs"),
 	npm = require("npm"),
 	program = require("commander"),
 	request = require("request"),
-	nodemon = require("nodemon")
+	nodemon = require("nodemon"),
+	sys = require("sys"),
+	exec = require("child_process").exec
 ;
 
 var urls = {
@@ -103,6 +105,7 @@ program.command("init [name] [path]")
 
 program.command("run [app]")
 	.description("Run a Cornerstone app.")
+	.option("-o, --open", "Open the URL")
 	.action(function(app, options) {
 		nodemon({
 			script: "index.js",
@@ -119,7 +122,20 @@ program.command("run [app]")
 		.on("restart", function(files) {
 			console.log("App has restarted due to", files);
 		});
+		
+		// open
+		if(options.open) {
+			var config = require(process.cwd() + "/config");
+			setTimeout(function() {
+				var url = "http://localhost:" + config.port;
+				exec("open "+url);
+			},1000);
+		}
+		
+		
 	})
 ;
+
+
 
 program.parse(process.argv)
