@@ -43,6 +43,23 @@ You also have access to the session via
 	
 	{{session}}
 
+### Variables in EVERY view
+Using CS built in middleware we can add a variable that every single view gets
+in your controllers/index.js add a `"*"()` method if you don't have one already.
+
+    "*"(req,res,next) {
+    	
+    	// get the current year
+    	var d = new Date();
+    	var year = d.getFullYear();
+    	
+    	// every view now has {{year}}
+    	res.locals.year = year;
+    	
+    }
+    
+Side note. You can do this in a specific controller to make variables available only for that controller instead of app-wide. Also, if one of your res.view()s overwrite the variable, it will in fact be overwritten.
+
 ### Include
 Inlude another file. This will take private varaibles and be parsed just like everything else.
 
