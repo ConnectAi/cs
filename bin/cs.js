@@ -109,7 +109,8 @@ program.command("run [app]")
 	.action(function(app, options) {
 		nodemon({
 			script: "index.js",
-			ext: "js json"
+			ext: "js json",
+			exec: "node --harmony"
 		});
 
 		nodemon
@@ -122,7 +123,7 @@ program.command("run [app]")
 		.on("restart", function(files) {
 			console.log("App has restarted due to", files);
 		});
-		
+
 		// open
 		if(options.open) {
 			var config = require(process.cwd() + "/config");
@@ -131,8 +132,8 @@ program.command("run [app]")
 				exec("open "+url);
 			},1000);
 		}
-		
-		
+
+
 	})
 ;
 

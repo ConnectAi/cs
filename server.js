@@ -43,12 +43,11 @@
 	global.Time = app.util.Time;
 
 	// get all our controllers
-	app.controllers = app.util.loader.dirSync("controllers", {
-		reduce: false
-	}).reduce((files, file) => {
-		files[file.name] = file.exports;
-		return files;
-	}, {});
+	app.controllers = app.util.loader.dirSync("controllers", { reduce: false })
+		.reduce((files, file) => {
+			files[file.name] = file.exports;
+			return files;
+		}, {});
 
 	// get the router
 	app.router = require(`${internal}/router`);
@@ -57,15 +56,14 @@
 	// the model
 	app.Model = require(`${internal}/Model`);
 	// all the models
-	app.models = app.util.loader.dirSync("models", {reduce: false})
+	app.models = app.util.loader.dirSync("models", { reduce: false })
 		.reduce(function(files, file) {
-			files[file.name] = new file.exports(file.name);
+			files[file.name] = file.exports;
 			return files;
-		}, {})
-	;
+		}, {});
 
 	// Lets us access an instance of a model, for convenience.
-	app.db = new app.Model();
+	app.db = app.Model;
 
 
 /////////////////////////////

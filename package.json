@@ -38,6 +38,7 @@
     "npm": "~1.3.13",
     "request": "~2.27.0",
     "socket.io": "~0.9.16",
-    "nodemon": "~1.0.14"
+    "nodemon": "~1.0.14",
+    "harmony-reflect": "0.0.13"
   }
 }
