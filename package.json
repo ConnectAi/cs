@@ -39,6 +39,8 @@
     "request": "~2.27.0",
     "socket.io": "~0.9.16",
     "nodemon": "~1.0.14",
-    "harmony-reflect": "0.0.13"
+    "harmony-reflect": "0.0.13",
+    "connect": "^2.16.1",
+    "cookie": "^0.1.2"
   }
 }

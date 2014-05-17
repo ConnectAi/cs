@@ -42,6 +42,10 @@ var setupHandlebars = function() {
 		return hbs.compile(contents)(context);
 	});
 
+	hbs.registerHelper("stream", function(id) {
+		return `<var data-promise="${id}"></var>`;
+	});
+
 	hbs.registerHelper("log", function() {
 		var slice = Array.prototype.slice;
 		var args = slice.call(arguments, 0, -1);

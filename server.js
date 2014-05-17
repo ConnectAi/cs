@@ -61,6 +61,8 @@
 			files[file.name] = file.exports;
 			return files;
 		}, {});
+	// primarily for sockets
+	app.connections = {};
 
 	// Lets us access an instance of a model, for convenience.
 	app.db = app.Model;
@@ -137,11 +139,22 @@ fs.readdirSync("services").forEach( (item) => {
 		.use(express.session(
 			(function() {
 				var stores = require(`${internal}/modules/session`);
-				let store = { secret: "Shh! It's a secret." };
+				let store = {
+					key: 'express.sid',
+					secret: app.config.secret
+				};
 				if (app.config.session in stores) store = stores[app.config.session](store);
+				app.session = store;
 				return store;
 			})()
 		))
+		.use(function(req, res, next) {
+			if (!app.config.sockets) return next();
+			if (req.sessionID in app.connections) {
+				req.sock = app.connections[req.sessionID];
+			}
+			next();
+		})
 		.use(stylus.middleware({
 			src: `${external}/private`,
 			dest: `${external}/public`,
@@ -191,9 +204,30 @@ fs.readdirSync("services").forEach( (item) => {
 			console.info("Cornerstone listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
 
+		// https://gist.github.com/bobbydavid/2640463
 		if (app.config.sockets) {
 			server.io = require("socket.io").listen(listener);
 			server.io.set("log level", 0);
+
+			// Set up two-way session/socket access.
+			server.io.set('authorization', function(handshake, accept) {
+				if (!handshake.headers.cookie) return accept('Session cookie required.' , false);
+
+				handshake.cookie = require('cookie').parse(handshake.headers.cookie);
+				handshake.cookie = require('connect').utils.parseSignedCookies(handshake.cookie, app.config.secret);
+				handshake.sessionID = handshake.cookie['express.sid'];
+
+				app.session.store.get(handshake.sessionID, function(err, session) {
+					if (err) return accept('Error in session store.', false);
+					if (!session) return accept('Session not found.', false);
+					return accept(null, true);
+				});
+			});
+
+			server.io.sockets.on("connection", function(socket) {
+				var sessionID = socket.handshake.sessionID;
+				app.connections[sessionID] = socket;
+			});
 		}
 
 		require(`${app.dirs.external}/app`);

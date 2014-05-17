@@ -50,6 +50,18 @@ var pipe = function(req, res, next) {
 
 		res.locals({ params: req.params });
 		res.render(path, data);
+
+		for (let key in data) {
+			if (data[key] instanceof Promise) {
+				server.io.sockets.on("connection", function(socket) {
+					if (req.sessionID === socket.handshake.sessionID) {
+						data[key].then(function(data) {
+							socket.emit("stream", [key, data]);
+						});
+					}
+				});
+			}
+		}
 	};
 
 	// Set variables for views.

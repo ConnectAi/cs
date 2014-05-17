@@ -166,7 +166,8 @@ Model.log = function(line) {
 	// Apend to the log file.
 	app.util.log(line);
 
-	if(app.config.sockets) {
+	// TODO: Rework with new socket model
+	/*if(app.config.sockets) {
 		if(server.socket) {
 			server.socket.emit("queries",line);
 		} else {
@@ -175,7 +176,7 @@ Model.log = function(line) {
 				socket.emit("queries",line);
 			});
 		}
-	}
+	}*/
 };
 
 Model.error = function() {
