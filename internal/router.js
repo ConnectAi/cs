@@ -53,13 +53,15 @@ var pipe = function(req, res, next) {
 
 		for (let key in data) {
 			if (data[key] instanceof Promise) {
-				server.io.sockets.on("connection", function(socket) {
+				let listener = function(socket) {
 					if (req.sessionID === socket.handshake.sessionID) {
 						data[key].then(function(data) {
 							socket.emit("stream", [key, data]);
 						});
+						server.io.sockets.removeListener('connection', listener);
 					}
-				});
+				};
+				server.io.sockets.on("connection", listener);
 			}
 		}
 	};
