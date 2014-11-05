@@ -8,3 +8,9 @@
 	- extend the model
 	- `res.view({model:{sean:"clark"});` would send the model to the page, avaiable as {{model.sean}}
 		- it would extend any other `res.view.model` that existed in this res,req chains
+		
+- make sockets more integrated
+- make generators more integrated
+- upgrade to ESnext
+- expose CS middleware, and make stylus a plugin
+- get rid of models, make a CS-mysql and CS-mongo service that plugs in
