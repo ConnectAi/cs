@@ -1,1 +1,3 @@
-require('esnext!./server').start();
+require('6to5/register');
+
+require('./server').start();

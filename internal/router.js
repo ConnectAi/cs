@@ -98,7 +98,10 @@ var wrapHandler = function(handler) {
 	};
 };
 
-var makeRoute = function(verb, route = controller, handlers, controller = "") {
+
+let makeRoute = function(verb, route, handlers, controller = "") {
+	if (!route) route = controller;
+
 	let originalRoute = route;
 
 	if (route.indexOf("/") !== 0) {
