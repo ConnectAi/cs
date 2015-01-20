@@ -1,17 +1,17 @@
-var fs = require("fs");
-var path = require("path");
-var hbs = require("hbs");
+let fs = require("fs");
+let path = require("path");
+let hbs = require("hbs");
 
-var setupHandlebars = function() {
-	var hooks = {};
+let setupHandlebars = function() {
+	let hooks = {};
 	hbs.registerHelper("hook", function(name) {
-		var val = (hooks[name] || []).join("\n");
+		let val = (hooks[name] || []).join("\n");
 		hooks[name] = [];
 		return val;
 	});
 
 	hbs.registerHelper("bind", function(name, context) {
-		var hook = hooks[name];
+		let hook = hooks[name];
 		if (!hook) {
 			hook = hooks[name] = [];
 		}
@@ -26,7 +26,7 @@ var setupHandlebars = function() {
 			context = this;
 		}
 
-		var contents;
+		let contents;
 		// Check the cache
 		if (file in app.CACHE.includes) {
 			contents = app.CACHE.includes[file](context);
@@ -47,9 +47,9 @@ var setupHandlebars = function() {
 	});
 
 	hbs.registerHelper("log", function() {
-		var slice = Array.prototype.slice;
-		var args = slice.call(arguments, 0, -1);
-		var options = slice.call(arguments, -1)[0];
+		let slice = Array.prototype.slice;
+		let args = slice.call(arguments, 0, -1);
+		let options = slice.call(arguments, -1)[0];
 		if (!args.length) args.unshift(this);
 		if (options.hash.client) {
 			return `<script>console.log("LOG:", ${JSON.stringify(args)});</script>`;
@@ -62,7 +62,7 @@ var setupHandlebars = function() {
 	//	{{#iff one two}}:  one === two
 	//	{{#iff one "[operator]" two}}:  one [operator] two
 	hbs.registerHelper("iff", function() {
-		var args = Array.prototype.slice.call(arguments);
+		let args = Array.prototype.slice.call(arguments);
 
 		var	left = args[0],
 			operator = "===",
@@ -90,7 +90,7 @@ var setupHandlebars = function() {
 			right = (""+right).toLowerCase();
 		}
 
-		var operators = {
+		let operators = {
 			"^==$": function(l, r) { return l == r; },
 			"^!=$": function(l, r) { return l !== r; },
 			"^IS$|^===$": function(l, r) { return l === r; },
@@ -105,7 +105,7 @@ var setupHandlebars = function() {
 			"^typeof$": function(l, r) { return typeof l == r; },
 			"^isArray$": function(l, r) { return Array.isArray(l); },
 			"^IN$|^E$": function(l, r) {
-				var isPresent = false;
+				let isPresent = false;
 				if (typeof r === "object") {
 					if (r.indexOf && r instanceof Array) {
 						if (/^\d+$/.test(l)) {
@@ -121,7 +121,7 @@ var setupHandlebars = function() {
 			}
 		};
 
-		var op, result, expression;
+		let op, result, expression;
 		for (op in operators) {
 			expression = RegExp(op, "i");
 

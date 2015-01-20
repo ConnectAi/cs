@@ -1,10 +1,10 @@
 // Add convenience methods to req/res.
-var pipe = function(req, res, next) {
+let pipe = function(req, res, next) {
 	res.console = function(...args) {
-		var html =
 			`<script>console.log(
 				${args.map((arg) => JSON.stringify(arg))}
 			);</script>`;
+		let html =
 		res.send(html);
 	};
 
@@ -91,7 +91,8 @@ var pipe = function(req, res, next) {
 	next();
 };
 
-var wrapHandler = function(handler) {
+
+let wrapHandler = function(handler) {
 	return function(req, res, next) {
 		let params = req.route.keys.map((key) => req.params[key.name]);
 		handler.call(this, req, res, next, ...params);
@@ -128,11 +129,11 @@ let makeRoute = function(verb, route, handlers, controller = "") {
 	server[verb](route, handlers);
 }
 
-var handleRoute = function(route, handlers, controller) {
+let handleRoute = function(route, handlers, controller) {
 	if (typeof handlers === "string") return;
 	if (!Array.isArray(handlers)) handlers = [handlers];
 
-	var groups = [];
+	let groups = [];
 
 	handlers.forEach((handler) => {
 		let verb = "all";

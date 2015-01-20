@@ -1,7 +1,7 @@
 ////////////////
 //	NATIVES
 ////////////////
-	var express = require("express"),
+	let express = require("express"),
 		http = require("http"),
 		path = require("path"),
 		hbs = require("hbs"),
@@ -27,7 +27,7 @@
 //	MODULES
 ////////////////
 	// app directories
-	var {external, internal} = app.dirs = {
+	let { external, internal } = app.dirs = {
 		external: path.resolve(),
 		internal: path.join(__dirname, "/internal")
 	};
@@ -79,7 +79,7 @@ fs.readdirSync("services").forEach( (item) => {
 /////////////////////////////
 //	ENVIROMENT SPECIFIC
 ////////////////////////////
-	var props = {};
+	let props = {};
 	server
 		.configure("production", function() {
 			// cache to one day
@@ -115,7 +115,7 @@ fs.readdirSync("services").forEach( (item) => {
 ////////////////
 //	NIB
 ////////////////
-	var compile = function(str, path) {
+	let compile = function(str, path) {
 		return stylus(str)
 			.set('filename', path)
 			.set('compress', true)
@@ -138,7 +138,7 @@ fs.readdirSync("services").forEach( (item) => {
 		.use(express.cookieParser())
 		.use(express.session(
 			(function() {
-				var stores = require(`${internal}/modules/session`);
+				let stores = require(`${internal}/modules/session`);
 				let store = {
 					key: 'express.sid',
 					secret: app.config.secret
@@ -163,7 +163,7 @@ fs.readdirSync("services").forEach( (item) => {
 			compile: compile
 		}))
 		.use((function() {
-			var busters = require(`${internal}/modules/cache`).busters;
+			let busters = require(`${internal}/modules/cache`).busters;
 
 			let buster = "none";
 			if (app.config.cacheBuster in busters) buster = app.config.cacheBuster;
@@ -199,7 +199,7 @@ fs.readdirSync("services").forEach( (item) => {
 ////////////////
 	process.title = "cornerstone";
 
-	var start = function() {
+	let start = function() {
 		let listener = http.createServer(server).listen(server.get("port"), function() {
 			console.info("Cornerstone listening at http://%s:%d [%s]", "localhost", server.get("port"), server.get("env"));
 		});
@@ -225,7 +225,7 @@ fs.readdirSync("services").forEach( (item) => {
 			});
 
 			server.io.sockets.on("connection", function(socket) {
-				var sessionID = socket.handshake.sessionID;
+				let sessionID = socket.handshake.sessionID;
 				app.connections[sessionID] = socket;
 			});
 		}

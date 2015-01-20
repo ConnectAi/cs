@@ -1,3 +1,3 @@
-var Controller = {};
+let Controller = {};
 
 module.exports = Controller;

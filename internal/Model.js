@@ -1,8 +1,8 @@
 require("harmony-reflect");
-var mysql = require("mysql");
+let mysql = require("mysql");
 
 
-var copy = function(from, to) {
+let copy = function(from, to) {
 	for (let prop in from) {
 		if (from.hasOwnProperty(prop)) {
 			to[prop] = from[prop];
@@ -11,8 +11,8 @@ var copy = function(from, to) {
 	return to;
 };
 
-var serializeClause = function(q, delimeter = " AND ", nulls = true) {
-	var clause,
+let serializeClause = function(q, delimeter = " AND ", nulls = true) {
+	let clause,
 		where = [];
 	for (let prop in q) {
 		if (q.hasOwnProperty(prop)) {
@@ -47,11 +47,11 @@ class Model {
 }
 
 
-var pool;
+let pool;
 
 Model.query = function(q, ...args) {
 	return new Promise((resolve, reject) => {
-		var query = [q];
+		let query = [q];
 
 		if (args.length === 0) {
 		}
@@ -77,7 +77,7 @@ Model.query = function(q, ...args) {
 					connection.release();
 				});
 
-				var result = connection.query(...query);
+				let result = connection.query(...query);
 
 				this.log(result.sql + "\n");
 			}
@@ -86,8 +86,8 @@ Model.query = function(q, ...args) {
 };
 
 Model.find = function(q = {}, filter = {}, limit = -1) {
-	var select = "";
-	var clause = serializeClause(q);
+	let select = "";
+	let clause = serializeClause(q);
 
 	if (Array.isArray(filter)) {
 		select = filter.join(",");
@@ -102,7 +102,7 @@ Model.find = function(q = {}, filter = {}, limit = -1) {
 		select = "*";
 	}
 
-	var query = `SELECT ${select} FROM ${this.$collection} WHERE ${clause}`;
+	let query = `SELECT ${select} FROM ${this.$collection} WHERE ${clause}`;
 	if (limit > -1) query += ` LIMIT ${limit}`;
 
 	return this.query(query)
@@ -119,7 +119,7 @@ Model.findOne = function(q = {}, filter = {}) {
 };
 
 Model.insert = function(data = {}) {
-	var query = `INSERT INTO ${this.$collection} SET `;
+	let query = `INSERT INTO ${this.$collection} SET `;
 
 	query += Object.keys(data)
 		.filter(function(prop) {
@@ -134,8 +134,8 @@ Model.insert = function(data = {}) {
 };
 
 Model.update = function(q = {}, data = {}) {
-	var fields = serializeClause(data, ",", false);
-	var clause = serializeClause(q);
+	let fields = serializeClause(data, ",", false);
+	let clause = serializeClause(q);
 	return this.query(`UPDATE ${this.$collection} SET ${fields} WHERE ${clause}`);
 };
 
@@ -209,13 +209,13 @@ app.on("start", connect);
 
 app.model = function(name, model, collection = name.toLowerCase()) {
 	// Handle both construct and apply the same way
-	var constructSpy = function(target, [data, exists], _args) {
+	let constructSpy = function(target, [data, exists], _args) {
 		if (typeof data === "undefined" && typeof _args !== "undefined" && _args.length) {
 			data = _args[0];
 			exists = _args[1];
 		}
 
-		var instance = new target(data);
+		let instance = new target(data);
 
 		// Get model name
 		Object.defineProperty(instance, "$model", {
