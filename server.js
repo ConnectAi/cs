@@ -186,14 +186,13 @@ fs.readdirSync("services").forEach( (item) => {
 //	CS COMPONENTS
 ////////////////
 	// find any cs-* packages
-	var files = fs.readdirSync(`${external}/node_modules`);
-	var components = files.reduce(function(all, file) {
-		if(file.substr(0,3) === "cs-") {
-			var component = require(`${external}/node_modules/${file}`);
-			all.push(component);
+	let packages = require('./package').dependencies;
+	let components = {};
+	for (let package in packages) {
+		if (package.substr(0, 3) === "cs-") {
+			components.push(require(package));
 		}
-		return all;
-	},[]);
+	}
 
 ////////////////
 //	START
@@ -218,6 +217,5 @@ fs.readdirSync("services").forEach( (item) => {
 	};
 
 // once we have all components, start
-exports.start = Promise.all(components).then(function() {
-	return start;
-});
+module.exports = Promise.all(components)
+	.then(start);

@@ -36,6 +36,7 @@ traceur.require.makeDefault(function(path) {
 	return reg;
 });
 
-require("./server").start.then(function(start) {
-	start();
-});
+require("./server")
+	.then(function(start) {
+		start();
+	});
