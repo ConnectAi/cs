@@ -186,7 +186,7 @@ fs.readdirSync("services").forEach( (item) => {
 //	CS COMPONENTS
 ////////////////
 	// find any cs-* packages
-	let packages = require('./package').dependencies;
+	let packages = require('${external}/package').dependencies;
 	let components = {};
 	for (let package in packages) {
 		if (package.substr(0, 3) === "cs-") {
