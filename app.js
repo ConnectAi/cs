@@ -1,3 +1,6 @@
 require('6to5/register');
 
-require('./server').start();
+require("./server")
+	.then(function(start) {
+		start();
+	});
