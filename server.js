@@ -12,7 +12,6 @@
 	// Make the console pretty.
 	require("consoleplusplus");
 
-
 ////////////////
 //	GLOBALS
 ////////////////
@@ -21,6 +20,7 @@
 	global.server = express();
 	global.log = console.log;
 	global.hbs = hbs;
+	/* globals app, server, log, hbs */
 
 
 ////////////////
@@ -193,6 +193,18 @@ fs.readdirSync("services").forEach( (item) => {
 	// server stylus var for custom stylus things
 	server.stylus = {};
 
+////////////////
+//	CS COMPONENTS
+////////////////
+	// find any cs-* packages
+	let packages = require(`${external}/package`).dependencies;
+	let components = [];
+	for (let package in packages) {
+		if (package.substr(0, 3) === "cs-") {
+			let packagePath = `${external}/node_modules/${package}`;
+			components.push(require(packagePath));
+		}
+	}
 
 ////////////////
 //	START
@@ -237,4 +249,6 @@ fs.readdirSync("services").forEach( (item) => {
 		app.emit("start");
 	};
 
-exports.start = start;
+// once we have all components, start
+module.exports = Promise.all(components)
+	.then(start);
