@@ -1,24 +1,30 @@
 ## Models
+
+```js
 `/models/file.js`
 
-    class File extends app.Model {
+class File extends app.Model {
 
-        upload(files) {
-            // ...upload a file
-            return ...
-        }
+    upload(files) {
+	// ...upload a file
+	return ...
+    }
 
-    );
-    module.exports = File;
+);
+module.exports = File;
+```
 
 
 ### app.db (mysql package)
+
 - Methods can be freely called from `app.db`.
 - Methods can be called on a model where the model's defaults are set.
 - All methods return a `when.js` deferred.
 - All queries are logged to `./app.log`
 
+
 #### save / update
+
 	app.db.save( data, [table], [primaryKey]);
 		// data is either an array of objects (bulk insert)
 		// or single object
@@ -30,14 +36,18 @@
 
 
 #### delete
+
 	app.db.delete(where, [table])
 		// delete passing a where string
 		// change table optional
 		// returns deleted ID
 
+
 #### get by id
+
 	app.db.findById(id, [table])
 	// returns array
+
 
 #### get by any where
 	app.db.find(where, [table])

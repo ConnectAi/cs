@@ -1,7 +1,12 @@
 ## Views
-`/views/user.html`
+
+```
+/views/user.html
+```
+
 
 ### Layouts
+
 - By default all views use `/views/layout.html`.
 - Actions can change layout by serving `res.view({ layout: "mylayout" })`.
 - You can specify no layout by setting `res.view({ layout: false })`.
@@ -11,75 +16,109 @@
 
 
 ### Hook
+
 defines a placeholder (foo) in your layout file to be extended using the {{bind}} helper in another view.
 
-    {{{hook "foo"}}}
+```
+{{{hook "foo"}}}
+```
 
 
 ### Bind
+
 The content of a placeholder defined by {{{hook}}} in a layout
 
-    {{#bind "styles"}}
-        <link rel="stylesheet" href="specific.css">
-    {{/bind}}
+```html
+{{#bind "styles"}}
+	<link rel="stylesheet" href="specific.css">
+{{/bind}}
+```
+
 
 ### Template Variables
-Any variable that you pass to the first paramater of res.json()  
-Also any private variables CS makes available. With debugging on check CS.private for more.  
+
+Any variable that you pass to the first paramater of res.json()
+Also any private variables CS makes available. With debugging on check CS.private for more.
 See [The official Handlebars docs](http://handlebarsjs.com/) for more
 
-    {{variable}}
+```
+{{variable}}
+```
 
 If you need to preseve HTML tags
-	
-	{{{variable}}}
+
+```
+{{{variable}}}
+```
 
 If you need to loop over an array or object
 
-    {{#each variable}}
-        {{thing}}
-    {{/each}}
+```
+{{#each variable}}
+	{{thing}}
+{{/each}}
+```
+
 You also have access to the session via
-	
-	{{session}}
+
+```
+{{session}}
+```
+
 
 ### Variables in EVERY view
+
 Using CS built in middleware we can add a variable that every single view gets
 in your controllers/index.js add a `"*"()` method if you don't have one already.
 
-    "*"(req,res,next) {
-    	
-    	// get the current year
-    	var d = new Date();
-    	var year = d.getFullYear();
-    	
-    	// every view now has {{year}}
-    	res.locals.year = year;
-    	
-    }
-    
+```js
+"*"(req,res,next) {
+
+	// get the current year
+	var d = new Date();
+	var year = d.getFullYear();
+
+	// every view now has {{year}}
+	res.locals.year = year;
+
+}
+```
+
 Side note. You can do this in a specific controller to make variables available only for that controller instead of app-wide. Also, if one of your res.view()s overwrite the variable, it will in fact be overwritten.
 
+
 ### Include
+
 Inlude another file. This will take private varaibles and be parsed just like everything else.
 
-    {{{include "header"}}}
+```
+{{{include "header"}}}
+```
 
 Using parse=false will cause the template NOT to be parsed. Meaning you can use this template for client side handlebars.
 
-	{{{include "header" parse=false}}}
+```
+{{{include "header" parse=false}}}
+```
 
 
 ### Debugging
+
 Log a template variable out to the node.js console
-	
-	{{log variable}}
-	
+
+```
+{{log variable}}
+```
+
 Log a template variable out to the browser console
-	
-	{{log variable client=true}}
-	
-When running in development mode `cs run` or `cs run dev` you can use the browser console to view all template variables.  
+
+```
+{{log variable client=true}}
+```
+
+When running in development mode `cs run` or `cs run dev` you can use the browser console to view all template variables.
 ** Note: This only works if you keep `window.CS = {{{json exposed}}};` in your layout.
 
-	CS.private
+```js
+CS.private
+```
