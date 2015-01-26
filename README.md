@@ -5,7 +5,7 @@ Web framework built on Node.js.
 This node framework is a production-ready Node.js framework that takes advantage of ECMAScript 6 features through the use of [6to5](http://6to5.org/).
 It is built on top of [Express](http://expressjs.com).
 
-> View the docs on [models](docs/models.md), [controllers](docs/controllers.md) and [views](docs/views.md)
+> View the docs on [controllers](docs/controllers.md) and [views](docs/views.md).
 
 
 # Requirements
@@ -231,10 +231,6 @@ Sample service package.json for gmail service
 
 # Dictionary
 
-
-- Models
-	- are ES6 Classes, inheriting from a base model.
-	- Their functions are called **Methods**
 
 - Controllers
 	- are objects.

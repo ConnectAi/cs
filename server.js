@@ -1,6 +1,7 @@
 ////////////////
 //	NATIVES
 ////////////////
+
 	let express = require("express"),
 		http = require("http"),
 		path = require("path"),
@@ -15,6 +16,7 @@
 ////////////////
 //	GLOBALS
 ////////////////
+
 	// app can fire off app-wide events, like when it is started.
 	global.app = new EventEmitter();
 	global.server = express();
@@ -26,6 +28,7 @@
 ////////////////
 //	MODULES
 ////////////////
+
 	// app directories
 	let { external, internal } = app.dirs = {
 		external: path.resolve(),
@@ -51,34 +54,36 @@
 
 	// get the router
 	app.router = require(`${internal}/router`);
+
 	// get the controller
 	app.Controller = require(`${internal}/Controller`);
-	// the model
-	app.Model = require(`${internal}/Model`);
+
 	// all the models
 	app.models = app.util.loader.dirSync("models", { reduce: false })
 		.reduce(function(files, file) {
 			files[file.name] = file.exports;
 			return files;
 		}, {});
+
 	// primarily for sockets
 	app.connections = {};
-
-	// Lets us access an instance of a model, for convenience.
-	app.db = app.Model;
 
 
 /////////////////////////////
 //	SERVICES
 ////////////////////////////
+
 app.services = {};
+
 fs.readdirSync("services").forEach( (item) => {
 	app.services[item] = require(`${external}/services/${item}`);
 });
 
+
 /////////////////////////////
 //	ENVIROMENT SPECIFIC
 ////////////////////////////
+
 	let props = {};
 	server
 		.configure("production", function() {
@@ -108,13 +113,13 @@ fs.readdirSync("services").forEach( (item) => {
 				console.error(err.stack);
 				process.exit(1);
 			});
-		})
-	;
+		});
 
 
 ////////////////
 //	NIB
 ////////////////
+
 	let compile = function(str, path) {
 		return stylus(str)
 			.set('filename', path)
@@ -127,6 +132,7 @@ fs.readdirSync("services").forEach( (item) => {
 ////////////////
 //	SETUP
 ////////////////
+
 	server
 		.set("views", `${external}/views`)
 		.set("view engine", "html")
@@ -187,15 +193,17 @@ fs.readdirSync("services").forEach( (item) => {
 					status: 404
 				});
 			}
-		})
-	;
+		});
 
-	// server stylus var for custom stylus things
+	// server stylus variable for custom stylus things
+	// TODO: remove
 	server.stylus = {};
+
 
 ////////////////
 //	CS COMPONENTS
 ////////////////
+
 	// find any cs-* packages
 	let packages = require(`${external}/package`).dependencies;
 	let components = [];
@@ -206,9 +214,11 @@ fs.readdirSync("services").forEach( (item) => {
 		}
 	}
 
+
 ////////////////
 //	START
 ////////////////
+
 	process.title = "cornerstone";
 
 	let start = function() {
@@ -248,6 +258,11 @@ fs.readdirSync("services").forEach( (item) => {
 		// run all code that depends on them.
 		app.emit("start");
 	};
+
+
+////////////////
+//	EXPORT
+////////////////
 
 // once we have all components, start
 module.exports = Promise.all(components)
