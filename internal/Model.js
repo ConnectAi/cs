@@ -14,6 +14,10 @@ var copy = function(from, to) {
 var serializeClause = function(q, delimeter = " AND ", nulls = true) {
 	var clause,
 		where = [];
+
+	// No need to serialize if the query is already a string
+	if (typeof q === 'string') return q;
+
 	for (let prop in q) {
 		if (q.hasOwnProperty(prop)) {
 			clause = (q[prop] === null && nulls)
