@@ -45,7 +45,7 @@ See [The official Handlebars docs](http://handlebarsjs.com/) for more
 {{variable}}
 ```
 
-If you need to preseve HTML tags
+If you need to preserve HTML tags
 
 ```
 {{{variable}}}
@@ -66,21 +66,26 @@ You also have access to the session via
 ```
 
 
+If one or more of the values passed to the view are promises, Cornerstone will send the data to the browser when the promise resolves.
+You can tell it to output this data in the view when it arrives by using the `{{stream}}` helper:
+
+```handlebars
+{{{stream "promiseKey"}}}
+```
+
 ### Variables in EVERY view
 
 Using CS built in middleware we can add a variable that every single view gets
 in your controllers/index.js add a `"*"()` method if you don't have one already.
 
 ```js
-"*"(req,res,next) {
+"*"(req, res, next) {
+    // get the current year
+    var d = new Date();
+    var year = d.getFullYear();
 
-	// get the current year
-	var d = new Date();
-	var year = d.getFullYear();
-
-	// every view now has {{year}}
-	res.locals.year = year;
-
+    // every view now has {{year}}
+    res.locals.year = year;
 }
 ```
 

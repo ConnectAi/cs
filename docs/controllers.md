@@ -1,7 +1,7 @@
 ## Controllers
 
 ```js
-`/controllers/person.js`
+// /controllers/person.js
 
 module.exports = {
 
@@ -28,10 +28,11 @@ module.exports = {
     "save/:id"(req, res, next, id) {},
 
     // single method with 2 tokens, where page isn't required
-    "goto/:id/:page?"(req, res, next, id, page) {}
+    "goto/:id/:page?"(req, res, next, id, page) {},
 
     // a route that matches outside this controller
-    "/bringATowel"(req, res, next) {},
+    "/bringATowel"(req, res, next) {}
+
 };
 ```
 
@@ -92,6 +93,32 @@ res.json({});
 // output text
 res.send("");
 ```
+
+If a promise is passed in the private data of a `res.view()`, it sends the data when it arrives via web sockets
+In the following example, `baz` will be sent via web sockets once the promise resolves:
+
+```js
+let somePromise = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        resolve('BOOM!');
+    }, 5000);
+});
+
+res.view({
+    foo: "bar",
+    baz: somePromise
+});
+```
+
+The template to match this could be:
+
+```handlebars
+<h1>{{foo}}</h1>
+<p>{{{stream "baz"}}}</p>
+```
+
+At first, the markup rendered by the browser will be simply `<h1>bar</h1>`.
+Once `somePromise` resolves, the result (`BOOM!`) will appear inside the `<p>` tag.
 
 
 ### next
