@@ -1,6 +1,7 @@
 let fs = require("fs");
 let path = require("path");
 
+
 let dirSync = function(dir, options = {}) {
 	let filepath = path.resolve(`${app.dirs.external}/${dir}`);
 
@@ -29,26 +30,27 @@ let dirSync = function(dir, options = {}) {
 	let files = fs
 		.readdirSync(filepath)
 		.filter(filter)
-		.map(function(file){
+		.map(function(file) {
 			return file.replace(/\.\w+$/, "");
 		})
 		.map((name) => {
 			return {
 				name,
 				exports: require(filepath + "/" + name)
-			}
+			};
 		});
 
 	if (options.reduce) {
 		files = files
 			.reduce((files, file) => {
-				files[file.name] = file.exports
+				files[file.name] = file.exports;
 				return files;
 			}, {});
 	}
 
 	return files;
 };
+
 
 module.exports = {
 	dirSync

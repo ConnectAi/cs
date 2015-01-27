@@ -2,6 +2,7 @@ let fs = require("fs");
 let path = require("path");
 let hbs = require("hbs");
 
+
 let setupHandlebars = function() {
 	let hooks = {};
 	hbs.registerHelper("hook", function(name) {
@@ -57,14 +58,15 @@ let setupHandlebars = function() {
 		return console.log("LOG:", args) || "";
 	});
 
-	//	Handlebars Equality helper.
-	//	{{#iff one}}:  !!one
-	//	{{#iff one two}}:  one === two
-	//	{{#iff one "[operator]" two}}:  one [operator] two
+	/** Handlebars Equality helper.
+	 * {{#iff one}}:  !!one
+	 * {{#iff one two}}:  one === two
+	 * {{#iff one "[operator]" two}}:  one [operator] two
+	 */
 	hbs.registerHelper("iff", function() {
 		let args = Array.prototype.slice.call(arguments);
 
-		var	left = args[0],
+		var left = args[0],
 			operator = "===",
 			right,
 			options = {};
@@ -86,33 +88,59 @@ let setupHandlebars = function() {
 		}
 
 		if (options.hash && options.hash["case"] === false) {
-			left = (""+left).toLowerCase();
-			right = (""+right).toLowerCase();
+			left = ("" + left).toLowerCase();
+			right = ("" + right).toLowerCase();
 		}
 
 		let operators = {
-			"^==$": function(l, r) { return l == r; },
-			"^!=$": function(l, r) { return l !== r; },
-			"^IS$|^===$": function(l, r) { return l === r; },
-			"^NOT$|^IS NOT$|^!==$|^!$": function(l, r) { return l != r; },
-			"^OR$": function(l, r) { return l || r; },
-			"^AND$|^&&$": function(l, r) { return l && r; },
-			"^MOD$|^%$": function(l, r) { return !(l % r); },
-			"^<$": function(l, r) { return l < r; },
-			"^>$": function(l, r) { return l > r; },
-			"^<=$": function(l, r) { return l <= r; },
-			"^>=$": function(l, r) { return l >= r; },
-			"^typeof$": function(l, r) { return typeof l == r; },
-			"^isArray$": function(l, r) { return Array.isArray(l); },
+			"^==$": function(l, r) {
+				return l == r;
+			},
+			"^!=$": function(l, r) {
+				return l !== r;
+			},
+			"^IS$|^===$": function(l, r) {
+				return l === r;
+			},
+			"^NOT$|^IS NOT$|^!==$|^!$": function(l, r) {
+				return l != r;
+			},
+			"^OR$": function(l, r) {
+				return l || r;
+			},
+			"^AND$|^&&$": function(l, r) {
+				return l && r;
+			},
+			"^MOD$|^%$": function(l, r) {
+				return !(l % r);
+			},
+			"^<$": function(l, r) {
+				return l < r;
+			},
+			"^>$": function(l, r) {
+				return l > r;
+			},
+			"^<=$": function(l, r) {
+				return l <= r;
+			},
+			"^>=$": function(l, r) {
+				return l >= r;
+			},
+			"^typeof$": function(l, r) {
+				return typeof l == r;
+			},
+			"^isArray$": function(l, r) {
+				return Array.isArray(l);
+			},
 			"^IN$|^E$": function(l, r) {
 				let isPresent = false;
 				if (typeof r === "object") {
 					if (r.indexOf && r instanceof Array) {
 						if (/^\d+$/.test(l)) {
-							isPresent = !!~r.indexOf(+l) || !!~r.indexOf(""+l);
+							isPresent = !!~r.indexOf(+l) || !!~r.indexOf("" + l);
 						}
 						return isPresent || !!~r.indexOf(l);
-					}else{
+					} else {
 						return l in r;
 					}
 				} else if (typeof r === "string") {
@@ -130,14 +158,14 @@ let setupHandlebars = function() {
 
 				if (result) {
 					return options.fn(this);
-				}else{
+				} else {
 					return options.inverse(this);
 				}
 			}
 		}
 
 		if (!operators[operator]) {
-			throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+			throw new Error("Handlerbars `compare` Helper does not know the operator " + operator);
 		}
 	});
 
@@ -145,5 +173,6 @@ let setupHandlebars = function() {
 		return JSON.stringify(what);
 	});
 };
+
 
 module.exports = setupHandlebars;

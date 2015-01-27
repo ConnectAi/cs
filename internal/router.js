@@ -1,10 +1,11 @@
 // Add convenience methods to req/res.
 let pipe = function(req, res, next) {
 	res.console = function(...args) {
-			`<script>console.log(
+		let html = `
+			<script>console.log(
 				${args.map((arg) => JSON.stringify(arg))}
-			);</script>`;
-		let html =
+			);</script>
+		`;
 		res.send(html);
 	};
 
@@ -30,10 +31,10 @@ let pipe = function(req, res, next) {
 		}
 
 		// if changing layout
-		if(res.layout) res.locals.layout = res.layout;
+		if (res.layout) res.locals.layout = res.layout;
 
 		// a prefixed path as an option
-		if(res.path) {
+		if (res.path) {
 			path = res.path + "/" + path;
 		}
 
@@ -56,9 +57,9 @@ let pipe = function(req, res, next) {
 				let listener = function(socket) {
 					if (req.sessionID === socket.handshake.sessionID) {
 						data[key].then(function(data) {
-							socket.emit("stream", [key, data]);
+							socket.emit("stream", [ key, data ]);
 						});
-						server.io.sockets.removeListener('connection', listener);
+						server.io.sockets.removeListener("connection", listener);
 					}
 				};
 				server.io.sockets.on("connection", listener);
@@ -79,7 +80,7 @@ let pipe = function(req, res, next) {
 		session: req.session,
 		query: req.query,
 		body: req.body,
-		controller : req.url.split("/")[1],
+		controller: req.url.split("/")[1],
 		title: server.get("name")
 	});
 

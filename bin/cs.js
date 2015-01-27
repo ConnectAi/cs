@@ -7,8 +7,7 @@ var fs = require("fs"),
 	request = require("request"),
 	nodemon = require("nodemon"),
 	sys = require("sys"),
-	exec = require("child_process").exec
-;
+	exec = require("child_process").exec;
 
 var urls = {
 	raw: "https://raw.github.com/ConnectAi/cornerstone-skeleton/master/",
@@ -19,9 +18,10 @@ var getEnd = function(p) {
 	return p.split("/").pop();
 };
 
+
 program
-	.version(require("../package").version)
-;
+	.version(require("../package").version);
+
 
 program.command("init [name] [path]")
 	.description("Create an empty Cornerstone project or reinitialize an existing one.")
@@ -100,8 +100,8 @@ program.command("init [name] [path]")
 				});
 			}
 		});
-	})
-;
+	});
+
 
 program.command("run [app]")
 	.description("Run a Cornerstone app.")
@@ -114,29 +114,25 @@ program.command("run [app]")
 		});
 
 		nodemon
-		.on("start", function() {
-			console.log("App has started.");
-		})
-		.on("quit", function() {
-			console.log("App has quit.");
-		})
-		.on("restart", function(files) {
-			console.log("App has restarted due to", files);
-		});
+			.on("start", function() {
+				console.log("App has started.");
+			})
+			.on("quit", function() {
+				console.log("App has quit.");
+			})
+			.on("restart", function(files) {
+				console.log("App has restarted due to", files);
+			});
 
 		// open
-		if(options.open) {
+		if (options.open) {
 			var config = require(process.cwd() + "/config");
 			setTimeout(function() {
 				var url = "http://localhost:" + config.port;
-				exec("open "+url);
-			},1000);
+				exec("open " + url);
+			}, 1000);
 		}
-
-
-	})
-;
-
+	});
 
 
 program.parse(process.argv)

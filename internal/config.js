@@ -23,7 +23,7 @@ let override = function(setting) {
 let config = {
 	name: override("name"),
 	port: override("port"),
-	env:  override("env"),
+	env: override("env"),
 	path: override("path"),
 	db: external.db,
 	session: override("session"),
