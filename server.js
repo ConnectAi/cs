@@ -212,9 +212,9 @@ server.stylus = {};
 // find any cs-* packages
 let packages = require(`${external}/package`).dependencies;
 let components = [];
-for (let package in packages) {
-	if (package.substr(0, 3) === "cs-") {
-		let packagePath = `${external}/node_modules/${package}`;
+for (let pack in packages) {
+	if (pack.substr(0, 3) === "cs-") {
+		let packagePath = `${external}/node_modules/${pack}`;
 		components.push(require(packagePath));
 	}
 }

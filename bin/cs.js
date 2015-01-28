@@ -110,7 +110,7 @@ program.command("run [app]")
 		nodemon({
 			script: "index.js",
 			ext: "js json",
-			exec: "node --harmony"
+			exec: "node"
 		});
 
 		nodemon
