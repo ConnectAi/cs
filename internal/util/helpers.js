@@ -1,17 +1,18 @@
-var fs = require("fs");
-var path = require("path");
-var hbs = require("hbs");
+let fs = require("fs");
+let path = require("path");
+let hbs = require("hbs");
 
-var setupHandlebars = function() {
-	var hooks = {};
+
+let setupHandlebars = function() {
+	let hooks = {};
 	hbs.registerHelper("hook", function(name) {
-		var val = (hooks[name] || []).join("\n");
+		let val = (hooks[name] || []).join("\n");
 		hooks[name] = [];
 		return val;
 	});
 
 	hbs.registerHelper("bind", function(name, context) {
-		var hook = hooks[name];
+		let hook = hooks[name];
 		if (!hook) {
 			hook = hooks[name] = [];
 		}
@@ -26,7 +27,7 @@ var setupHandlebars = function() {
 			context = this;
 		}
 
-		var contents;
+		let contents;
 		// Check the cache
 		if (file in app.CACHE.includes) {
 			contents = app.CACHE.includes[file](context);
@@ -42,10 +43,14 @@ var setupHandlebars = function() {
 		return hbs.compile(contents)(context);
 	});
 
+	hbs.registerHelper("stream", function(id) {
+		return `<var data-promise="${id}"></var>`;
+	});
+
 	hbs.registerHelper("log", function() {
-		var slice = Array.prototype.slice;
-		var args = slice.call(arguments, 0, -1);
-		var options = slice.call(arguments, -1)[0];
+		let slice = Array.prototype.slice;
+		let args = slice.call(arguments, 0, -1);
+		let options = slice.call(arguments, -1)[0];
 		if (!args.length) args.unshift(this);
 		if (options.hash.client) {
 			return `<script>console.log("LOG:", ${JSON.stringify(args)});</script>`;
@@ -53,14 +58,15 @@ var setupHandlebars = function() {
 		return console.log("LOG:", args) || "";
 	});
 
-	//	Handlebars Equality helper.
-	//	{{#iff one}}:  !!one
-	//	{{#iff one two}}:  one === two
-	//	{{#iff one "[operator]" two}}:  one [operator] two
+	/** Handlebars Equality helper.
+	 * {{#iff one}}:  !!one
+	 * {{#iff one two}}:  one === two
+	 * {{#iff one "[operator]" two}}:  one [operator] two
+	 */
 	hbs.registerHelper("iff", function() {
-		var args = Array.prototype.slice.call(arguments);
+		let args = Array.prototype.slice.call(arguments);
 
-		var	left = args[0],
+		var left = args[0],
 			operator = "===",
 			right,
 			options = {};
@@ -82,33 +88,59 @@ var setupHandlebars = function() {
 		}
 
 		if (options.hash && options.hash["case"] === false) {
-			left = (""+left).toLowerCase();
-			right = (""+right).toLowerCase();
+			left = ("" + left).toLowerCase();
+			right = ("" + right).toLowerCase();
 		}
 
-		var operators = {
-			"^==$": function(l, r) { return l == r; },
-			"^!=$": function(l, r) { return l !== r; },
-			"^IS$|^===$": function(l, r) { return l === r; },
-			"^NOT$|^IS NOT$|^!==$|^!$": function(l, r) { return l != r; },
-			"^OR$": function(l, r) { return l || r; },
-			"^AND$|^&&$": function(l, r) { return l && r; },
-			"^MOD$|^%$": function(l, r) { return !(l % r); },
-			"^<$": function(l, r) { return l < r; },
-			"^>$": function(l, r) { return l > r; },
-			"^<=$": function(l, r) { return l <= r; },
-			"^>=$": function(l, r) { return l >= r; },
-			"^typeof$": function(l, r) { return typeof l == r; },
-			"^isArray$": function(l, r) { return Array.isArray(l); },
+		let operators = {
+			"^==$": function(l, r) {
+				return l == r;
+			},
+			"^!=$": function(l, r) {
+				return l !== r;
+			},
+			"^IS$|^===$": function(l, r) {
+				return l === r;
+			},
+			"^NOT$|^IS NOT$|^!==$|^!$": function(l, r) {
+				return l != r;
+			},
+			"^OR$": function(l, r) {
+				return l || r;
+			},
+			"^AND$|^&&$": function(l, r) {
+				return l && r;
+			},
+			"^MOD$|^%$": function(l, r) {
+				return !(l % r);
+			},
+			"^<$": function(l, r) {
+				return l < r;
+			},
+			"^>$": function(l, r) {
+				return l > r;
+			},
+			"^<=$": function(l, r) {
+				return l <= r;
+			},
+			"^>=$": function(l, r) {
+				return l >= r;
+			},
+			"^typeof$": function(l, r) {
+				return typeof l == r;
+			},
+			"^isArray$": function(l, r) {
+				return Array.isArray(l);
+			},
 			"^IN$|^E$": function(l, r) {
-				var isPresent = false;
+				let isPresent = false;
 				if (typeof r === "object") {
 					if (r.indexOf && r instanceof Array) {
 						if (/^\d+$/.test(l)) {
-							isPresent = !!~r.indexOf(+l) || !!~r.indexOf(""+l);
+							isPresent = !!~r.indexOf(+l) || !!~r.indexOf("" + l);
 						}
 						return isPresent || !!~r.indexOf(l);
-					}else{
+					} else {
 						return l in r;
 					}
 				} else if (typeof r === "string") {
@@ -117,7 +149,7 @@ var setupHandlebars = function() {
 			}
 		};
 
-		var op, result, expression;
+		let op, result, expression;
 		for (op in operators) {
 			expression = RegExp(op, "i");
 
@@ -126,14 +158,14 @@ var setupHandlebars = function() {
 
 				if (result) {
 					return options.fn(this);
-				}else{
+				} else {
 					return options.inverse(this);
 				}
 			}
 		}
 
 		if (!operators[operator]) {
-			throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+			throw new Error("Handlerbars `compare` Helper does not know the operator " + operator);
 		}
 	});
 
@@ -141,5 +173,6 @@ var setupHandlebars = function() {
 		return JSON.stringify(what);
 	});
 };
+
 
 module.exports = setupHandlebars;

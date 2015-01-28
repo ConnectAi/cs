@@ -1,10 +1,11 @@
 // Add convenience methods to req/res.
-var pipe = function(req, res, next) {
+let pipe = function(req, res, next) {
 	res.console = function(...args) {
-		var html =
-			`<script>console.log(
+		let html = `
+			<script>console.log(
 				${args.map((arg) => JSON.stringify(arg))}
-			);</script>`;
+			);</script>
+		`;
 		res.send(html);
 	};
 
@@ -30,10 +31,10 @@ var pipe = function(req, res, next) {
 		}
 
 		// if changing layout
-		if(res.layout) res.locals.layout = res.layout;
+		if (res.layout) res.locals.layout = res.layout;
 
 		// a prefixed path as an option
-		if(res.path) {
+		if (res.path) {
 			path = res.path + "/" + path;
 		}
 
@@ -50,6 +51,20 @@ var pipe = function(req, res, next) {
 
 		res.locals({ params: req.params });
 		res.render(path, data);
+
+		for (let key in data) {
+			if (data[key] instanceof Promise) {
+				let listener = function(socket) {
+					if (req.sessionID === socket.handshake.sessionID) {
+						data[key].then(function(data) {
+							socket.emit("stream", [ key, data ]);
+						});
+						server.io.sockets.removeListener("connection", listener);
+					}
+				};
+				server.io.sockets.on("connection", listener);
+			}
+		}
 	};
 
 	// Set variables for views.
@@ -65,7 +80,7 @@ var pipe = function(req, res, next) {
 		session: req.session,
 		query: req.query,
 		body: req.body,
-		controller : req.url.split("/")[1],
+		controller: req.url.split("/")[1],
 		title: server.get("name")
 	});
 
@@ -77,14 +92,18 @@ var pipe = function(req, res, next) {
 	next();
 };
 
-var wrapHandler = function(handler) {
+
+let wrapHandler = function(handler) {
 	return function(req, res, next) {
 		let params = req.route.keys.map((key) => req.params[key.name]);
 		handler.call(this, req, res, next, ...params);
 	};
 };
 
-var makeRoute = function(verb, route = controller, handlers, controller = "") {
+
+let makeRoute = function(verb, route, handlers, controller = "") {
+	if (!route) route = controller;
+
 	let originalRoute = route;
 
 	if (route.indexOf("/") !== 0) {
@@ -111,11 +130,11 @@ var makeRoute = function(verb, route = controller, handlers, controller = "") {
 	server[verb](route, handlers);
 }
 
-var handleRoute = function(route, handlers, controller) {
+let handleRoute = function(route, handlers, controller) {
 	if (typeof handlers === "string") return;
 	if (!Array.isArray(handlers)) handlers = [handlers];
 
-	var groups = [];
+	let groups = [];
 
 	handlers.forEach((handler) => {
 		let verb = "all";

@@ -1,11 +1,11 @@
-var external = require(`${app.dirs.external}/config`);
+let external = require(`${app.dirs.external}/config`);
 
 // This finagling is to avoid changing apps that use cs.
-var environments = external.env || {};
+let environments = external.env || {};
 external.env = (process.argv.length === 3) ? process.argv[2] : undefined;
 
 // Default config values.
-var defaults = {
+let defaults = {
 	name: "[name]",
 	port: process.env.PORT || 3000,
 	env: process.env.NODE_ENV || "development",
@@ -15,15 +15,15 @@ var defaults = {
 	cacheBuster: "none"
 };
 
-var override = function(setting) {
+let override = function(setting) {
 	return (typeof external[setting] !== "undefined") ? external[setting] : defaults[setting];
 };
 
 // Set core values.
-var config = {
+let config = {
 	name: override("name"),
 	port: override("port"),
-	env:  override("env"),
+	env: override("env"),
 	path: override("path"),
 	db: external.db,
 	session: override("session"),

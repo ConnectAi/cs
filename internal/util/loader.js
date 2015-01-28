@@ -1,13 +1,14 @@
-var fs = require("fs");
-var path = require("path");
+let fs = require("fs");
+let path = require("path");
 
-var dirSync = function(dir, options = {}) {
-	var filepath = path.resolve(`${app.dirs.external}/${dir}`);
-	
+
+let dirSync = function(dir, options = {}) {
+	let filepath = path.resolve(`${app.dirs.external}/${dir}`);
+
 	if (!("whitelist" in options)) options.whitelist = /^([\w][\w\-_. ]*)\.js$/;
 	if (!("reduce" in options)) options.reduce = true;
 
-	var filter;
+	let filter;
 	// Whitelist can either be a function, regex, or an array of filenames.
 	if (typeof options.whitelist === "function") {
 		filter = options.whitelist;
@@ -26,29 +27,30 @@ var dirSync = function(dir, options = {}) {
 	}
 
 	// Build list of files in this directory.
-	var files = fs
+	let files = fs
 		.readdirSync(filepath)
 		.filter(filter)
-		.map(function(file){
+		.map(function(file) {
 			return file.replace(/\.\w+$/, "");
 		})
 		.map((name) => {
 			return {
 				name,
 				exports: require(filepath + "/" + name)
-			}
+			};
 		});
 
 	if (options.reduce) {
 		files = files
 			.reduce((files, file) => {
-				files[file.name] = file.exports
+				files[file.name] = file.exports;
 				return files;
 			}, {});
 	}
 
 	return files;
 };
+
 
 module.exports = {
 	dirSync
