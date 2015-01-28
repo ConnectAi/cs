@@ -181,6 +181,7 @@ server
 		return busters[buster];
 	})())
 	.use(express.static(`${external}/public`, props))
+	.use("/bower_components", express.static(`${external}/bower_components`))
 	// Send all view-or-API requests through a pipe,
 	// extending req/res as needed.
 	.use(app.router.pipe)
