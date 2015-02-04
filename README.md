@@ -1,4 +1,4 @@
-# CornerStone Docs
+# Cornerstone
 
 Web framework built on Node.js.
 
@@ -8,14 +8,14 @@ It is built on top of [Express](http://expressjs.com).
 > View the docs on [controllers](docs/controllers.md) and [views](docs/views.md).
 
 
-# Requirements
+## Requirements
 
 - [Node.js](http://nodejs.org) and [NPM](https://npmjs.org)
 - optional:
 	- [Redis](http://redis.io/) (for sessions)
 
 
-# Installation
+## Installation
 
 The idea here is that you have your app in development on Git. Then you'll clone or deploy to your production server, and run CS in production mode.
 
@@ -29,72 +29,12 @@ The idea here is that you have your app in development on Git. Then you'll clone
 > cs run
 ```
 
+### Production
 
-### Production (with Nginx & Git)
-
-```bash
-> npm install -g cs
-> git clone {{yourapp}} /your/app/dir
-> cd /your/app/dir
-> npm install
-```
-
-Add your Nginx Rule (Assumes your production port is 3000)
-
-```
-server {
-	listen 80;
-	server_name {{yourDomain.com}}
-	access_log  /var/log/nginx/node.log;
-	location / {
-		proxy_pass	http://127.0.0.1:3000/;
-	}
-}
-```
-
-Create a service in /etc/init/node.conf
-
-```
-description "node server"
-
-start on started mountall
-stop on shutdown
-
-respawn
-respawn limit 99 5
-
-script
-	export HOME="{{APP DIR}}}"
-	cd $HOME
-	exec /usr/bin/node {{APP DIR}}}/index.js production >> /var/log/node.log 2>&1
-end script
-
-post-start script
-end script
-```
+See [production docs](docs/production.md).
 
 
-Restart Nginx
-
-```bash
-> /etc/init.d/nginx restart
-```
-
-
-### Production (_without_ Nginx & Git)
-
-```bash
-# get your files onto the live server and SSH in
-> npm install -g cs
-> cd {{app dir}}
-> npm install
-```
-
-> You should probably still install the init script above
-
-
-# How to run
-
+## Running
 
 ### Development
 
@@ -104,18 +44,12 @@ Restart Nginx
 ```
 
 
-### Live
+### Production
 
-```bash
-> start {{whatever you called the file in /etc/init/}}
-```
+See [production docs](docs/production.md).
 
 
-note: If you're in your CS dir already, you can just run `cs run`
-note: If you're running CS behind nginx, you don't need the word `production`
-
-
-# Config
+## Config
 
 ```
 config.json
@@ -127,26 +61,21 @@ config.json
 
 ```json
 {
-	"name" 		: "appname",
-	"port" 		: "8000"
-	"session" 	: "redis | memory",
-	"debug" 	: false | true,
-	"db" : {
-		"adapter"  : "mysql",
-		"mysql"	   : {
-			"host" : "localhost",
-			"user" : "root",
-			"password" : "",
-			"database" : "db"
+	"name": "appname",
+	"port": "8000",
+	"session": "redis",
+	"debug": false,
+	"db": {
+		"adapter": "mongodb",
+		"mongodb" : {
+			"host": "mongodb://localhost:27017/sixtyvocab"
 		}
 	},
-	"env" : {
-		"production" : {
-			"port" : 80,
-			"db" : { ... }
-			}
+	"env": {
+		"production": {
+			"port": 80
 		},
-		"development" : {
+		"development": {
 			"debug": true
 		}
 	}
@@ -154,7 +83,7 @@ config.json
 ```
 
 
-# Directory Structure
+## Directory Structure
 
 ```
 ./controllers
@@ -170,7 +99,7 @@ config.json
 - `./services` is the location of all services which are basically CS extended functionality
 
 
-# Debugging
+## Debugging
 
 - To run in debug mode, run `> node index` or `> node index development` (`development` is the default environment).
 - `./app.log` is a log of all database queries.
@@ -184,21 +113,22 @@ config.json
 	- `CS.server`  -- server vars (which are available in your view)
 
 
-# Utilities
-
+## Utilities
 
 ### Include
 
 ```js
 // include and compile a template
-var compiledHTML = app.util.include(path/to/file)(data);
+var compiledHTML = app.util.include("path/to/file")(data);
 ```
 
 
-# Services
+## Services
 
 Services are a way to share complete parts of CS that are just arbitrary functions.
+
 ### Create a service
+
 - Create `services/yourservice/index.js`
 - Create a `package.json` defining your attributes and dependecies
 - make sure your file `module.exports = ...`
@@ -224,13 +154,12 @@ Sample service package.json for gmail service
 > Currently the services package.json don't do anything
 
 
-# ES6 Goodies
+## ES6 Goodies
 
 [Read about the cool stuff ES6 can do you for you](docs/es6.md)
 
 
-# Dictionary
-
+## Dictionary
 
 - Controllers
 	- are objects.
