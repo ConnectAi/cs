@@ -6,8 +6,6 @@ Some recommendations for running in production environments.
 
 ### Nginx and Git method (recommended)
 
-> NOTE: This is just what we do---you can do whatever you want.
-
 ```bash
 > npm install -g cs
 > git clone {{yourapp}} /your/app/dir
