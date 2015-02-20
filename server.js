@@ -236,6 +236,7 @@ let start = function() {
 	if (app.config.sockets) {
 		server.io = require("socket.io").listen(listener);
 		server.io.set("log level", 0);
+		server.io.sockets.setMaxListeners(0);
 
 		// Set up two-way session/socket access.
 		server.io.set('authorization', function(handshake, accept) {

@@ -52,19 +52,39 @@ let pipe = function(req, res, next) {
 		res.locals({ params: req.params });
 		res.render(path, data);
 
-		for (let key in data) {
-			if (data[key] instanceof Promise) {
-				let listener = function(socket) {
-					if (req.sessionID === socket.handshake.sessionID) {
-						data[key].then(function(data) {
-							socket.emit("stream", [ key, data ]);
-						});
-						server.io.sockets.removeListener("connection", listener);
-					}
-				};
-				server.io.sockets.on("connection", listener);
+		let makeListener = function(promise, key) {
+			let listener = function(socket) {
+				if (req.sessionID === socket.handshake.sessionID) {
+					promise.then(function(value) {
+						socket.emit("stream", [ key, value ]);
+					});
+					server.io.sockets.removeListener("connection", listener);
+				}
+			};
+			server.io.sockets.on("connection", listener);
+		};
+
+		let checkForPromises = function(item, name) {
+			if (item instanceof Promise) {
+				makeListener(item, name);
 			}
-		}
+		};
+
+		let loopOverAndCheckForPromises = function(collection) {
+			for (let key in collection) {
+				let value = collection[key];
+
+				if (value instanceof Promise) {
+					makeListener(value, key);
+				} else if (Array.isArray(value)) {
+					value.forEach(checkForPromises);
+				}
+			}
+		};
+
+		loopOverAndCheckForPromises(data);
+		if (data.promises) loopOverAndCheckForPromises(data);
+
 	};
 
 	// Set variables for views.
