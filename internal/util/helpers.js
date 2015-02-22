@@ -47,6 +47,14 @@ let setupHandlebars = function() {
 		return `<var data-promise="${id}"></var>`;
 	});
 
+	hbs.registerHelper('for', function(from, to, incr, block) {
+		let accum = '';
+		for(let i = from; i < to; i += incr) {
+			accum += block.fn(i);
+		}
+		return accum;
+	});
+
 	hbs.registerHelper("log", function() {
 		let slice = Array.prototype.slice;
 		let args = slice.call(arguments, 0, -1);

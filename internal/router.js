@@ -64,26 +64,18 @@ let pipe = function(req, res, next) {
 			server.io.sockets.on("connection", listener);
 		};
 
-		let checkForPromises = function(item, name) {
-			if (item instanceof Promise) {
-				makeListener(item, name);
-			}
-		};
-
 		let loopOverAndCheckForPromises = function(collection) {
 			for (let key in collection) {
 				let value = collection[key];
 
 				if (value instanceof Promise) {
 					makeListener(value, key);
-				} else if (Array.isArray(value)) {
-					value.forEach(checkForPromises);
 				}
 			}
 		};
 
-		loopOverAndCheckForPromises(data);
-		if (data.promises) loopOverAndCheckForPromises(data);
+		// loopOverAndCheckForPromises(data);
+		if (data.promises) data.promises.forEach(makeListener);
 
 	};
 
