@@ -7,7 +7,7 @@ module.exports = {
 	},
 
 	redis: function(session) {
-		let express = require("express");
+		let express = require("express-session");
 		let RedisStore = require("connect-redis")(express);
 		session.store = new RedisStore();
 		return session;

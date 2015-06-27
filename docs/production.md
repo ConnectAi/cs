@@ -44,3 +44,10 @@ Restart Nginx
 ``` bash
 forever start -c "node --harmony" index.js production
 ```
+
+## How to restart
+
+``` bash
+forever restart index.js
+```
+

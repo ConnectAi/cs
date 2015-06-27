@@ -107,9 +107,9 @@ let makeRoute = function(verb, route, handlers, controller = "") {
 	let originalRoute = route;
 
 	if (route.indexOf("/") !== 0) {
-		if (controller && route !== "index") {
+		if (controller && !~route.indexOf("index")) {
 			route = `${controller}/${route}`;
-		} else if (controller && route === "index") {
+		} else if (controller && !!~route.indexOf("index")) {
 			route = controller;
 		} else {
 			route = `/${route}`;
@@ -127,6 +127,7 @@ let makeRoute = function(verb, route, handlers, controller = "") {
 	} else if (Array.isArray(handlers)) {
 		handlers = handlers.map(wrapHandler);
 	}
+
 	server[verb](route, handlers);
 }
 

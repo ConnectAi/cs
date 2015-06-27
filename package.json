@@ -32,6 +32,7 @@
     "consoleplusplus": "^1.2.0",
     "cookie": "^0.1.2",
     "express": "^3.4.0",
+    "express-session": "^1.11.3",
     "harmony-reflect": "0.0.13",
     "hbs": "^2.4.0",
     "nib": "~1.0.1",
