@@ -95,6 +95,7 @@ let pipe = function(req, res, next) {
 
 let wrapHandler = function(handler) {
 	return function(req, res, next) {
+		//console.log(req.url, "keys", req.route.keys);
 		let params = req.route.keys.map((key) => req.params[key.name]);
 		handler.call(this, req, res, next, ...params);
 	};
@@ -110,7 +111,7 @@ let makeRoute = function(verb, route, handlers, controller = "") {
 		if (controller && !~route.indexOf("index")) {
 			route = `${controller}/${route}`;
 		} else if (controller && !!~route.indexOf("index")) {
-			route = controller;
+			route = route;
 		} else {
 			route = `/${route}`;
 		}
