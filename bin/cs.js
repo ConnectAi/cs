@@ -110,7 +110,9 @@ program.command("run [app]")
 		nodemon({
 			script: "index.js",
 			ext: "js json",
-			exec: "node"
+			exec: "node",
+			restartable: "rs",
+			ignore: ["public/*", "private/*"]
 		});
 
 		nodemon
